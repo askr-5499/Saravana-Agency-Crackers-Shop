@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Saravana Agency Crackers Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* --- Hero bar at top --- */
+    .login-header {
+      background: var(--primary);
+      padding: 18px 24px;
+      text-align: center;
+    }
+    .login-header .brand {
+      font-family: var(--font-head);
+      color: var(--accent);
+      font-size: 26px;
+    }
+    .login-header .sub {
+      color: #f5d9b5;
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    /* --- Main layout --- */
+    .login-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      background: var(--bg);
+    }
+    .login-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: var(--shadow);
+    }
+
+    /* --- Tabs --- */
+    .tab-bar {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 10px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* --- Admin hint box --- */
+    .admin-hint {
+      background: var(--accent-lt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .admin-hint strong { color: var(--primary); }
+
+    /* --- Divider --- */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* --- Links --- */
+    .switch-link {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+    .switch-link a { color: var(--primary); font-weight: 600; cursor: pointer; }
+
+    /* --- Footer --- */
+    .login-footer {
+      background: var(--primary);
+      text-align: center;
+      padding: 14px;
+      color: #f5d9b5;
+      font-size: 13px;
+    }
+    .login-footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="login-header">
+  <div class="brand">✨ Saravana Agency Crackers Shop</div>
+  <div class="sub">Sri Ramapuram, Eranampatti, Tamil Nadu &nbsp;|&nbsp; 📞 096779 84858</div>
+</div>
+
+<!-- Main -->
+<div class="login-wrapper">
+  <div class="login-box">
+
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+      <button class="tab-btn" onclick="switchTab('register')">Register</button>
+      <button class="tab-btn" onclick="switchTab('admin')">Admin</button>
+    </div>
+
+    <!-- ===== CUSTOMER LOGIN ===== -->
+    <div class="tab-panel active" id="tab-login">
+      <h3 style="color:var(--primary);margin-bottom:20px;">Welcome Back!</h3>
+      <div id="login-error" class="alert alert-danger" style="display:none;"></div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="login-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doLogin()" style="padding:12px;font-size:16px;">
+        Login →
+      </button>
+      <div class="switch-link">
+        Don't have an account? <a onclick="switchTab('register')">Register here</a>
+      </div>
+    </div>
+
+    <!-- ===== CUSTOMER REGISTER ===== -->
+    <div class="tab-panel" id="tab-register">
+      <h3 style="color:var(--primary);margin-bottom:20px;">Create Account</h3>
+      <div id="reg-error"   class="alert alert-danger"  style="display:none;"></div>
+      <div id="reg-success" class="alert alert-success" style="display:none;"></div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="reg-name" placeholder="Your full name" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="reg-phone" placeholder="10-digit mobile" maxlength="10" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="reg-pass" placeholder="Create a password (min 6 chars)" />
+      </div>
+      <button class="btn btn-accent btn-full" onclick="doRegister()" style="padding:12px;font-size:16px;color:var(--primary);">
+        Create Account →
+      </button>
+      <div class="switch-link">
+        Already have an account? <a onclick="switchTab('login')">Login</a>
+      </div>
+    </div>
+
+    <!-- ===== ADMIN LOGIN ===== -->
+    <div class="tab-panel" id="tab-admin">
+      <h3 style="color:var(--primary);margin-bottom:12px;">Admin Login</h3>
+      <div class="admin-hint">
+        🔐 <strong>Admin Area</strong> — For shop owners only.<br>
+        Default: username <strong>admin</strong> / password <strong>admin123</strong>
+      </div>
+      <div id="admin-error" class="alert alert-danger" style="display:none;"></div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="admin-user" placeholder="admin" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="admin-pass" placeholder="Enter admin password" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doAdminLogin()" style="padding:12px;font-size:16px;">
+        Admin Login →
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="login-footer">
+  &copy; 2025 Saravana Agency Crackers Shop &nbsp;|&nbsp;
+  <a href="index.html">← Back to Shop</a>
+</div>
+
+<div id="toast"></div>
+<script src="data.js"></script>
+<script>
+  // If already logged in, redirect
+  const cur = AuthDB.current();
+  if (cur) {
+    window.location.href = cur.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', ['login','register','admin'][i] === name);
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-password').value;
+    const err   = document.getElementById('login-error');
+    err.style.display = 'none';
+    if (!email || !pass) { err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return; }
+    const result = AuthDB.login(email, pass);
+    if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
+    window.location.href = result.user.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+  }
+
+  function doRegister() {
+    const name  = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const pass  = document.getElementById('reg-pass').value;
+    const err   = document.getElementById('reg-error');
+    const suc   = document.getElementById('reg-success');
+    err.style.display = 'none'; suc.style.display = 'none';
+    if (!name || !email || !phone || !pass) {
+      err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return;
+    }
+    if (pass.length < 6) {
+      err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      err.textContent = 'Enter a valid 10-digit phone number.'; err.style.display = 'block'; return;
+    }
+    const result = AuthDB.register(name, email, phone, pass);
+    if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
+    suc.textContent = 'Account created! Logging you in…';
+    suc.style.display = 'block';
+    AuthDB.login(email, pass);
+    setTimeout(() => window.location.href = 'customer-dashboard.html', 1200);
+  }
+
+  function doAdminLogin() {
+    const user = document.getElementById('admin-user').value.trim();
+    const pass = document.getElementById('admin-pass').value;
+    const err  = document.getElementById('admin-error');
+    err.style.display = 'none';
+    if (!user || !pass) { err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return; }
+    const result = AuthDB.login(user, pass);
+    if (!result.ok || result.user.role !== 'admin') {
+      err.textContent = 'Invalid admin credentials.'; err.style.display = 'block'; return;
+    }
+    window.location.href = 'admin-dashboard.html';
+  }
+
+  // Press Enter to submit
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const active = document.querySelector('.tab-panel.active')?.id;
+    if (active === 'tab-login')    doLogin();
+    if (active === 'tab-register') doRegister();
+    if (active === 'tab-admin')    doAdminLogin();
+  });
+</script>
+</body>
+</html>

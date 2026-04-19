@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saravana Agency Crackers Shop — Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* --- Banner --- */
+    .promo-banner {
+      background: var(--accent);
+      color: var(--primary);
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      background: var(--primary);
+      padding: 48px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      color: var(--accent);
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #f5d9b5;
+      max-width: 500px;
+      margin: 0 auto 20px;
+      font-size: 16px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-info {
+      margin-top: 28px;
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-info-item {
+      color: #f5d9b5;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* --- Category Filter --- */
+    .cat-section {
+      background: #fff;
+      padding: 14px 24px;
+      border-bottom: 2px solid var(--accent);
+      overflow-x: auto;
+      display: flex;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .cat-btn {
+      border: 1.5px solid var(--border);
+      background: #fff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      transition: all .2s;
+    }
+
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: var(--primary);
+      color: var(--accent);
+      border-color: var(--primary);
+    }
+
+    /* --- Section heading --- */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 12px;
+    }
+
+    .section-head h2 {
+      font-family: var(--font-head);
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    /* --- Product grid --- */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      padding: 0 24px 32px;
+    }
+
+    /* --- Search --- */
+    .search-bar {
+      padding: 14px 24px 0;
+    }
+
+    .search-bar input {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--accent-dk);
+    }
+
+    /* --- Contact strip --- */
+    .contact-strip {
+      background: var(--primary);
+      padding: 24px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .contact-item {
+      color: #f5d9b5;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-item a {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background: var(--primary-dk);
+      color: #f5d9b5;
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--accent);
+    }
+
+    /* --- Cart badge on navbar --- */
+    .cart-count-badge {
+      background: var(--accent);
+      color: var(--primary);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* --- Empty state --- */
+    .empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      grid-column: 1 / -1;
+      color: var(--text-muted);
+    }
+
+    .empty-state .icon {
+      font-size: 52px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Promo Banner -->
+  <div class="promo-banner">
+    🎉 Diwali Special Sale — Up to 40% OFF! &nbsp;|&nbsp; Free Delivery above ₹1000 &nbsp;|&nbsp; 📞 096779 84858
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div>
+        <div class="logo-text">✨ Saravana Agency Crackers Shop</div>
+        <div class="logo-sub">Sri Ramapuram, Eranampatti, Tamil Nadu</div>
+      </div>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="index.html">🏠 Shop</a></li>
+      <li id="nav-account"></li>
+      <li>
+        <button class="btn-accent" onclick="openCart()"
+          style="border-radius:6px;padding:7px 14px;font-size:14px;font-weight:700;border:none;background:var(--accent);color:var(--primary);">
+          🛒 Cart <span class="cart-count-badge" id="cart-badge">0</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Light Up Your Celebrations!</h1>
+    <p>Premium quality crackers sourced directly from Sivakasi. Safe, certified, and delivered to your door.</p>
+    <div class="hero-actions">
+      <button class="btn btn-accent" onclick="scrollToProducts()" style="font-size:16px;padding:12px 28px;">
+        🛍️ Shop Now
+      </button>
+      <a href="tel:09677984858" class="btn btn-outline"
+        style="color:var(--accent);border-color:var(--accent);font-size:16px;padding:12px 28px;">
+        📞 Call to Order
+      </a>
+    </div>
+    <div class="hero-info">
+      <div class="hero-info-item">⏰ Open 24 Hours</div>
+      <div class="hero-info-item">⭐ 4.4 Rating (17 Reviews)</div>
+      <div class="hero-info-item">🚚 Free Delivery above ₹1000</div>
+      <div class="hero-info-item">🏭 Sivakasi Certified</div>
+    </div>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="cat-section" id="cat-section">
+    <button class="cat-btn active" onclick="filterCat('all', this)">All Products</button>
+    <button class="cat-btn" onclick="filterCat('sparklers', this)">✨ Sparklers</button>
+    <button class="cat-btn" onclick="filterCat('ground', this)">🌀 Ground Crackers</button>
+    <button class="cat-btn" onclick="filterCat('sky', this)">🚀 Sky Shots</button>
+    <button class="cat-btn" onclick="filterCat('fancy', this)">🎆 Fancy Items</button>
+    <button class="cat-btn" onclick="filterCat('gift', this)">🎁 Gift Boxes</button>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar" id="products-top">
+    <input type="text" id="search-input" placeholder="🔍  Search products..." oninput="renderProducts()" />
+  </div>
+
+  <!-- Section Heading -->
+  <div class="section-head">
+    <h2 id="section-title">All Products</h2>
+    <span id="product-count" style="color:var(--text-muted);font-size:13px;"></span>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="products-grid" id="products-grid"></div>
+
+  <!-- Contact Strip -->
+  <div class="contact-strip">
+    <div class="contact-item">📍 Sri Ramapuram - Reddiyarchatram Rd, Eranampatti, TN 624622</div>
+    <div class="contact-item">📞 <a href="tel:09677984858">096779 84858</a></div>
+    <div class="contact-item">⏰ Open 24 Hours</div>
+    <div class="contact-item">
+      <a href="https://wa.me/919677984858?text=Hi Sir, I want to order crackers" target="_blank"
+        style="background:#25D366;color:#fff;padding:6px 16px;border-radius:6px;font-weight:700;font-size:13px;">
+        💬 Order on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Saravana Agency Crackers Shop &nbsp;|&nbsp;
+    <a href="login.html">Login / Register</a> &nbsp;|&nbsp;
+    All rights reserved.
+  </footer>
+
+  <!-- Cart Side Panel -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-panel-header">
+      <h3>🛒 Your Cart</h3>
+      <button onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-panel-body" id="cart-body"></div>
+    <div class="cart-panel-footer" id="cart-footer"></div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>📦 Place Order</h3>
+        <button class="modal-close" onclick="closeCheckout()">✕</button>
+      </div>
+      <div id="checkout-content"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="data.js"></script>
+  <script>
+    /* ---- State ---- */
+    let currentCat = 'all';
+
+    /* ---- Init ---- */
+    window.onload = function () {
+      updateNavAccount();
+      updateCartBadge();
+      renderProducts();
+    };
+
+    /* ---- Nav account link ---- */
+    function updateNavAccount() {
+      const user = AuthDB.current();
+      const el = document.getElementById('nav-account');
+      if (user) {
+        el.innerHTML = user.role === 'admin'
+          ? `<a href="admin-dashboard.html">⚙️ Admin</a>`
+          : `<a href="customer-dashboard.html">👤 ${user.name.split(' ')[0]}</a>`;
+      } else {
+        el.innerHTML = `<a href="login.html">Login / Register</a>`;
+      }
+    }
+
+    /* ---- Scroll to products ---- */
+    function scrollToProducts() {
+      document.getElementById('products-top').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ---- Category filter ---- */
+    function filterCat(cat, btn) {
+      currentCat = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const labels = {
+        all: 'All Products', sparklers: '✨ Sparklers', ground: '🌀 Ground Crackers',
+        sky: '🚀 Sky Shots', fancy: '🎆 Fancy Items', gift: '🎁 Gift Boxes'
+      };
+      document.getElementById('section-title').textContent = labels[cat] || 'Products';
+      renderProducts();
+    }
+
+    /* ---- Render Products ---- */
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const query = document.getElementById('search-input').value.toLowerCase();
+      let products = ProductsDB.getActive();
+
+      // Filter by category
+      if (currentCat !== 'all') products = products.filter(p => p.category === currentCat);
+      // Filter by search
+      if (query) products = products.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query) ||
+        (p.badge && p.badge.toLowerCase().includes(query))
+      );
+
+      document.getElementById('product-count').textContent = products.length + ' items';
+      updateCartBadge();
+
+      if (!products.length) {
+        grid.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>No products found.</p></div>`;
+        return;
+      }
+
+      const cart = CartDB.get();
+      grid.innerHTML = products.map(p => {
+        const disc = discountPct(p.price, p.mrp);
+        const qty = cart[p.id] || 0;
+        const outOfStock = p.stock === 0;
+        const imgHtml = p.image
+          ? `<img src="${p.image}" alt="${p.name}" />`
+          : `<div class="emoji-placeholder">${p.emoji || '🎆'}</div>`;
+
+        return `
+        <div class="product-card">
+          <div class="product-card-img">
+            ${imgHtml}
+            ${outOfStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
+          </div>
+          <div class="product-card-body">
+            <div class="cat-tag">${categoryLabel(p.category)}</div>
+            <h4>${p.name}</h4>
+            ${p.badge ? `<div class="product-badge"><span class="badge badge-gold">${p.badge}</span></div>` : ''}
+            <div class="price-row">
+              <span class="price">₹${p.price}</span>
+              <span class="mrp">₹${p.mrp}</span>
+              ${disc > 0 ? `<span class="disc">${disc}% off</span>` : ''}
+            </div>
+            <small style="color:var(--text-muted);font-size:12px;">per ${p.unit} &nbsp;|&nbsp; Stock: ${p.stock}</small>
+            <div style="margin-top:10px;">
+              ${outOfStock
+            ? `<button class="btn btn-outline btn-full" disabled style="opacity:.5;cursor:not-allowed;">Out of Stock</button>`
+            : qty === 0
+              ? `<button class="btn btn-primary btn-full" onclick="addToCart('${p.id}')">+ Add to Cart</button>`
+              : `<div class="qty-ctrl" style="width:100%;justify-content:space-between;">
+                      <button onclick="changeQty('${p.id}', -1)">−</button>
+                      <span>${qty}</span>
+                      <button onclick="changeQty('${p.id}', 1)">+</button>
+                    </div>`
+          }
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    /* ---- Cart actions ---- */
+    function addToCart(id) {
+      CartDB.add(id);
+      updateCartBadge();
+      renderProducts();
+      showToast('✅ Added to cart!');
+      renderCartPanel();
+    }
+
+    function changeQty(id, delta) {
+      const cur = (CartDB.get()[id] || 0) + delta;
+      CartDB.set(id, cur);
+      updateCartBadge();
+      renderProducts();
+      renderCartPanel();
+    }
+
+    function removeFromCart(id) {
+      CartDB.remove(id);
+      updateCartBadge();
+      renderProducts();
+      renderCartPanel();
+    }
+
+    function updateCartBadge() {
+      document.getElementById('cart-badge').textContent = CartDB.count();
+    }
+
+    /* ---- Cart Panel ---- */
+    function openCart() {
+      document.getElementById('cart-panel').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      renderCartPanel();
+    }
+    function closeCart() {
+      document.getElementById('cart-panel').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+    }
+
+    function renderCartPanel() {
+      const items = CartDB.items();
+      const body = document.getElementById('cart-body');
+      const footer = document.getElementById('cart-footer');
+
+      if (!items.length) {
+        body.innerHTML = `<div style="text-align:center;padding:48px 16px;color:var(--text-muted);">
+        <div style="font-size:48px;margin-bottom:12px;">🛒</div>
+        <p>Your cart is empty</p>
+        <p style="font-size:13px;margin-top:6px;">Add some crackers to get started!</p>
+      </div>`;
+        footer.innerHTML = '';
+        return;
+      }
+
+      body.innerHTML = items.map(item => {
+        const imgHtml = item.image
+          ? `<img src="${item.image}" alt="${item.name}" />`
+          : item.emoji || '🎆';
+        return `
+        <div class="cart-item">
+          <div class="cart-item-img">${typeof imgHtml === 'string' && imgHtml.startsWith('<') ? imgHtml : `<span style="font-size:28px;">${imgHtml}</span>`}</div>
+          <div class="cart-item-info">
+            <h5>${item.name}</h5>
+            <div class="ci-price">₹${item.price} × ${item.qty} = ₹${item.lineTotal}</div>
+            <div class="qty-ctrl" style="margin-top:6px;width:100px;">
+              <button onclick="changeQty('${item.id}',-1)">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeQty('${item.id}',1)">+</button>
+            </div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">🗑</button>
+        </div>`;
+      }).join('');
+
+      const sub = CartDB.total();
+      const del = sub >= 1000 ? 0 : 60;
+      const grand = sub + del;
+
+      footer.innerHTML = `
+      <div class="cart-total-row"><span>Subtotal</span><span>₹${sub}</span></div>
+      <div class="cart-total-row"><span>Delivery</span>
+        <span>${del === 0 ? '<b style="color:var(--success)">FREE</b>' : '₹' + del}</span>
+      </div>
+      <div class="cart-grand-total"><span>Total</span><span>₹${grand}</span></div>
+      <button class="btn btn-primary btn-full" style="font-size:16px;padding:12px;" onclick="goCheckout()">
+        Proceed to Checkout →
+      </button>`;
+    }
+
+    /* ---- Checkout ---- */
+    function goCheckout() {
+      const user = AuthDB.current();
+      const items = CartDB.items();
+      if (!items.length) return;
+      if (!user || user.role !== 'customer') {
+        closeCart();
+        showToast('Please login to place order!');
+        setTimeout(() => window.location.href = 'login.html', 1500);
+        return;
+      }
+      closeCart();
+      openCheckoutModal(user, items);
+    }
+
+    function openCheckoutModal(user, items) {
+      const sub = CartDB.total();
+      const del = sub >= 1000 ? 0 : 60;
+      const grand = sub + del;
+
+      document.getElementById('checkout-content').innerHTML = `
+      <div class="alert alert-info">🛒 ${items.length} item(s) &nbsp;|&nbsp; Total: ₹${grand}</div>
+      <div class="form-group">
+        <label>Delivery Address</label>
+        <textarea id="co-address" rows="3" placeholder="Enter your full delivery address, area, pincode"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input id="co-name" value="${user.name}" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input id="co-phone" value="${user.phone || ''}" placeholder="Your mobile number" />
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;">
+        ${items.map(i => `
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);font-size:13px;">
+            <span>${i.emoji || ''} ${i.name} × ${i.qty}</span>
+            <span style="font-weight:600;">₹${i.lineTotal}</span>
+          </div>`).join('')}
+        <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--accent-lt);font-weight:700;font-size:15px;">
+          <span>Grand Total</span><span>₹${grand}</span>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">💵 Payment: Cash on Delivery</p>
+      <button class="btn btn-primary btn-full" style="padding:12px;font-size:16px;" onclick="placeOrder()">
+        ✅ Confirm Order
+      </button>`;
+
+      document.getElementById('checkout-modal').classList.add('open');
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkout-modal').classList.remove('open');
+    }
+
+    function placeOrder() {
+      const user = AuthDB.current();
+      const address = document.getElementById('co-address').value.trim();
+      const name = document.getElementById('co-name').value.trim();
+      const phone = document.getElementById('co-phone').value.trim();
+      if (!address) { showToast('⚠️ Please enter delivery address!'); return; }
+      if (!phone) { showToast('⚠️ Please enter phone number!'); return; }
+      const items = CartDB.items();
+      const total = CartDB.total();
+      const order = OrdersDB.place(user.id, name, phone, address, items, total);
+      closeCheckout();
+      document.getElementById('checkout-content').innerHTML = `
+      <div style="text-align:center;padding:24px 0;">
+        <div style="font-size:56px;margin-bottom:12px;">🎉</div>
+        <h3 style="color:var(--success);margin-bottom:8px;">Order Placed!</h3>
+        <p style="color:var(--text-muted);">Order ID: <strong>${order.id}</strong></p>
+        <p style="color:var(--text-muted);margin-top:6px;">We'll deliver to your address within 2-3 days.</p>
+        <a href="customer-dashboard.html" class="btn btn-primary" style="margin-top:20px;">View My Orders</a>
+      </div>`;
+      document.getElementById('checkout-modal').classList.add('open');
+      updateCartBadge();
+      renderProducts();
+    }
+  </script>
+</body>
+
+</html>

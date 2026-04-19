@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Saravana Agency Crackers Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* --- Product grid (admin) --- */
+    .admin-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .admin-product-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .admin-product-card.inactive { opacity: 0.55; }
+    .apc-img {
+      height: 110px;
+      background: var(--accent-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .apc-img img { width: 100%; height: 100%; object-fit: cover; }
+    .apc-status {
+      position: absolute;
+      top: 8px; right: 8px;
+      font-size: 11px;
+    }
+    .apc-body { padding: 12px; }
+    .apc-body h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .apc-body .apc-price { font-size: 15px; font-weight: 700; color: var(--primary); }
+    .apc-body .apc-mrp  { font-size: 12px; color: var(--text-muted); text-decoration: line-through; margin-left: 6px; }
+    .apc-body .apc-stock { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    .apc-body .apc-stock.low { color: var(--danger); font-weight: 600; }
+    .apc-actions { display: flex; gap: 6px; padding: 0 12px 12px; }
+
+    /* --- Order management --- */
+    .order-row-actions select {
+      font-size: 13px;
+      padding: 5px 8px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* --- Image upload area --- */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--accent-lt);
+      transition: border-color .2s;
+    }
+    .upload-area:hover { border-color: var(--accent-dk); }
+    .upload-area input[type="file"] { display: none; }
+    #img-preview {
+      max-width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      display: none;
+    }
+
+    /* --- Customers table helper --- */
+    .no-data { text-align: center; padding: 40px; color: var(--text-muted); font-size: 15px; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div>
+      <div class="logo-text">✨ Saravana Agency — Admin</div>
+      <div class="logo-sub">Shop Management Panel</div>
+    </div>
+  </div>
+  <ul class="navbar-links">
+    <li><a href="index.html" target="_blank">🏠 View Shop</a></li>
+    <li><button onclick="doLogout()">Logout</button></li>
+  </ul>
+</nav>
+
+<!-- Dashboard Layout -->
+<div class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section-title">Admin Panel</div>
+    <a class="sidebar-link active" onclick="showSection('overview')" id="link-overview">
+      <span class="icon">📊</span> Overview
+    </a>
+    <a class="sidebar-link" onclick="showSection('products')" id="link-products">
+      <span class="icon">🎆</span> Products
+    </a>
+    <a class="sidebar-link" onclick="showSection('orders')" id="link-orders">
+      <span class="icon">📦</span> All Orders
+    </a>
+    <a class="sidebar-link" onclick="showSection('customers')" id="link-customers">
+      <span class="icon">👥</span> Customers
+    </a>
+    <a class="sidebar-link" onclick="doLogout()">
+      <span class="icon">🚪</span> Logout
+    </a>
+  </div>
+
+  <!-- Main -->
+  <div class="dashboard-main">
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="section-page active" id="section-overview">
+      <h2>📊 Dashboard Overview</h2>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="card" style="margin-bottom:20px;">
+        <h4 style="color:var(--primary);margin-bottom:14px;">⚠️ Low Stock Products (≤ 10 units)</h4>
+        <div id="low-stock-list"></div>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--primary);margin-bottom:14px;">📦 Recent Orders</h4>
+        <div id="recent-orders-list"></div>
+      </div>
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="section-page" id="section-products">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+        <h2 style="margin-bottom:0;">🎆 Products</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" id="product-search" placeholder="Search..." oninput="renderAdminProducts()"
+            style="padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;outline:none;width:200px;" />
+          <button class="btn btn-accent" onclick="openProductModal()">+ Add Product</button>
+        </div>
+      </div>
+      <div class="admin-products-grid" id="admin-products-grid"></div>
+    </div>
+
+    <!-- ===== ORDERS ===== -->
+    <div class="section-page" id="section-orders">
+      <h2>📦 All Orders</h2>
+      <div id="all-orders-container"></div>
+    </div>
+
+    <!-- ===== CUSTOMERS ===== -->
+    <div class="section-page" id="section-customers">
+      <h2>👥 Customers</h2>
+      <div class="table-wrap">
+        <table id="customers-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Joined</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody id="customers-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PRODUCT MODAL ===== -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <h3 id="modal-title">Add New Product</h3>
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+    </div>
+
+    <input type="hidden" id="edit-id" />
+
+    <!-- Image Upload -->
+    <div class="form-group">
+      <label>Product Image (optional)</label>
+      <div class="upload-area" onclick="document.getElementById('img-input').click()">
+        <img id="img-preview" src="" alt="Preview" />
+        <div id="upload-hint">
+          <div style="font-size:32px;margin-bottom:6px;">📷</div>
+          <p style="font-size:13px;color:var(--text-muted);">Click to upload image (JPG, PNG)</p>
+        </div>
+        <input type="file" id="img-input" accept="image/*" onchange="previewImage(event)" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Product Name *</label>
+      <input type="text" id="p-name" placeholder="e.g. Gold Sparklers (36 pcs)" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="p-cat">
+          <option value="sparklers">✨ Sparklers</option>
+          <option value="ground">🌀 Ground Crackers</option>
+          <option value="sky">🚀 Sky Shots</option>
+          <option value="fancy">🎆 Fancy Items</option>
+          <option value="gift">🎁 Gift Boxes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Emoji Icon</label>
+        <input type="text" id="p-emoji" placeholder="e.g. ✨ 🎆 🌸 🚀" maxlength="4" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Selling Price (₹) *</label>
+        <input type="number" id="p-price" placeholder="120" min="0" oninput="calcDiscount()" />
+      </div>
+      <div class="form-group">
+        <label>MRP / Original Price (₹)</label>
+        <input type="number" id="p-mrp" placeholder="180" min="0" oninput="calcDiscount()" />
+      </div>
+    </div>
+
+    <div id="discount-preview" style="font-size:13px;color:var(--success);margin:-8px 0 12px;font-weight:600;"></div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Stock Quantity *</label>
+        <input type="number" id="p-stock" placeholder="50" min="0" />
+      </div>
+      <div class="form-group">
+        <label>Unit</label>
+        <select id="p-unit">
+          <option value="box">Box</option>
+          <option value="pcs">Piece (pcs)</option>
+          <option value="set">Set</option>
+          <option value="roll">Roll</option>
+          <option value="kit">Kit</option>
+          <option value="pack">Pack</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Badge Label (optional)</label>
+        <input type="text" id="p-badge" placeholder="e.g. Bestseller, New, Popular" />
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="p-active">
+          <option value="true">✅ Active (visible)</option>
+          <option value="false">❌ Hidden from shop</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="modal-error" class="alert alert-danger" style="display:none;"></div>
+    <div style="display:flex;gap:10px;margin-top:4px;">
+      <button class="btn btn-primary btn-full" onclick="saveProduct()">💾 Save Product</button>
+      <button class="btn btn-outline" onclick="closeProductModal()" style="min-width:100px;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ORDER DETAIL MODAL ===== -->
+<div class="modal-overlay" id="order-detail-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Order Details</h3>
+      <button class="modal-close" onclick="document.getElementById('order-detail-modal').classList.remove('open')">✕</button>
+    </div>
+    <div id="order-detail-content"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="data.js"></script>
+<script>
+  /* ---- Auth guard ---- */
+  const admin = AuthDB.requireAdmin('login.html');
+  if (!admin) throw new Error('Not admin');
+
+  let editImageB64 = '';   // holds current image for the modal
+
+  /* ---- Section switch ---- */
+  function showSection(name) {
+    document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + name).classList.add('active');
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('link-' + name)?.classList.add('active');
+    if (name === 'overview')   renderOverview();
+    if (name === 'products')   renderAdminProducts();
+    if (name === 'orders')     renderAllOrders();
+    if (name === 'customers')  renderCustomers();
+  }
+
+  /* ================================================================
+     OVERVIEW
+  ================================================================ */
+  function renderOverview() {
+    const products  = ProductsDB.getAll();
+    const orders    = OrdersDB.getAll();
+    const customers = AuthDB.getUsers();
+    const revenue   = orders.reduce((s, o) => s + o.total, 0);
+
+    document.getElementById('stats-grid').innerHTML = `
+      <div class="stat-card"><div class="stat-icon">🎆</div>
+        <div class="stat-value">${products.filter(p => p.active).length}</div>
+        <div class="stat-label">Active Products</div></div>
+      <div class="stat-card"><div class="stat-icon">📦</div>
+        <div class="stat-value">${orders.length}</div>
+        <div class="stat-label">Total Orders</div></div>
+      <div class="stat-card"><div class="stat-icon">👥</div>
+        <div class="stat-value">${customers.length}</div>
+        <div class="stat-label">Customers</div></div>
+      <div class="stat-card"><div class="stat-icon">💰</div>
+        <div class="stat-value">₹${revenue.toLocaleString('en-IN')}</div>
+        <div class="stat-label">Total Revenue</div></div>`;
+
+    // Low stock
+    const low = products.filter(p => p.stock <= 10 && p.active);
+    document.getElementById('low-stock-list').innerHTML = low.length
+      ? `<div class="table-wrap"><table>
+          <thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Action</th></tr></thead>
+          <tbody>${low.map(p => `
+            <tr>
+              <td>${p.emoji || ''} ${p.name}</td>
+              <td>${categoryLabel(p.category)}</td>
+              <td><span class="badge badge-red">${p.stock} left</span></td>
+              <td><button class="btn btn-outline btn-sm" onclick="quickEditStock('${p.id}','${p.name}')">Update Stock</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table></div>`
+      : `<p style="color:var(--success);font-size:14px;">✅ All products have sufficient stock.</p>`;
+
+    // Recent orders
+    const recent = orders.slice(0, 5);
+    document.getElementById('recent-orders-list').innerHTML = recent.length
+      ? `<div class="table-wrap"><table>
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>${recent.map(o => `
+            <tr>
+              <td><code style="font-size:12px;">${o.id}</code></td>
+              <td>${o.userName}</td>
+              <td>₹${o.total}</td>
+              <td>${statusBadge(o.status)}</td>
+              <td>${formatDate(o.placedAt)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table></div>`
+      : `<p class="no-data">No orders yet.</p>`;
+  }
+
+  /* ================================================================
+     PRODUCTS
+  ================================================================ */
+  function renderAdminProducts() {
+    const query    = (document.getElementById('product-search')?.value || '').toLowerCase();
+    let products = ProductsDB.getAll();
+    if (query) products = products.filter(p =>
+      p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)
+    );
+
+    document.getElementById('admin-products-grid').innerHTML = products.map(p => {
+      const disc    = discountPct(p.price, p.mrp);
+      const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}" />` : p.emoji || '🎆';
+      return `
+        <div class="admin-product-card ${p.active ? '' : 'inactive'}">
+          <div class="apc-img">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" />` : `<span style="font-size:48px;">${p.emoji || '🎆'}</span>`}
+            <div class="apc-status">
+              ${p.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Hidden</span>'}
+            </div>
+          </div>
+          <div class="apc-body">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">${categoryLabel(p.category)}</div>
+            <h4>${p.name}</h4>
+            ${p.badge ? `<span class="badge badge-gold" style="margin:4px 0;display:inline-block;">${p.badge}</span>` : ''}
+            <div style="margin-top:6px;">
+              <span class="apc-price">₹${p.price}</span>
+              <span class="apc-mrp">₹${p.mrp}</span>
+              ${disc > 0 ? `<span class="badge badge-green" style="margin-left:4px;">${disc}% off</span>` : ''}
+            </div>
+            <div class="apc-stock ${p.stock <= 10 ? 'low' : ''}">
+              📦 Stock: ${p.stock} ${p.unit}${p.stock <= 10 ? ' ⚠️' : ''}
+            </div>
+          </div>
+          <div class="apc-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="openProductModal('${p.id}')">✏️ Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}','${p.name.replace(/'/g,'\\\'')}')" title="Delete">🗑</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  /* ---- Open Product Modal ---- */
+  function openProductModal(id) {
+    editImageB64 = '';
+    document.getElementById('modal-error').style.display = 'none';
+    document.getElementById('discount-preview').textContent = '';
+    document.getElementById('img-preview').style.display = 'none';
+    document.getElementById('upload-hint').style.display = 'block';
+
+    if (id) {
+      const p = ProductsDB.getById(id);
+      if (!p) return;
+      document.getElementById('modal-title').textContent = '✏️ Edit Product';
+      document.getElementById('edit-id').value  = id;
+      document.getElementById('p-name').value   = p.name;
+      document.getElementById('p-cat').value    = p.category;
+      document.getElementById('p-emoji').value  = p.emoji;
+      document.getElementById('p-price').value  = p.price;
+      document.getElementById('p-mrp').value    = p.mrp;
+      document.getElementById('p-stock').value  = p.stock;
+      document.getElementById('p-unit').value   = p.unit;
+      document.getElementById('p-badge').value  = p.badge;
+      document.getElementById('p-active').value = String(p.active);
+      if (p.image) {
+        editImageB64 = p.image;
+        document.getElementById('img-preview').src   = p.image;
+        document.getElementById('img-preview').style.display = 'block';
+        document.getElementById('upload-hint').style.display = 'none';
+      }
+      calcDiscount();
+    } else {
+      document.getElementById('modal-title').textContent = '+ Add New Product';
+      document.getElementById('edit-id').value  = '';
+      document.getElementById('p-name').value   = '';
+      document.getElementById('p-cat').value    = 'sparklers';
+      document.getElementById('p-emoji').value  = '';
+      document.getElementById('p-price').value  = '';
+      document.getElementById('p-mrp').value    = '';
+      document.getElementById('p-stock').value  = '';
+      document.getElementById('p-unit').value   = 'box';
+      document.getElementById('p-badge').value  = '';
+      document.getElementById('p-active').value = 'true';
+    }
+
+    document.getElementById('product-modal').classList.add('open');
+  }
+
+  function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('open');
+  }
+
+  function calcDiscount() {
+    const price = parseFloat(document.getElementById('p-price').value);
+    const mrp   = parseFloat(document.getElementById('p-mrp').value);
+    const el    = document.getElementById('discount-preview');
+    if (price > 0 && mrp > price) {
+      el.textContent = '✅ Discount: ' + Math.round((1 - price / mrp) * 100) + '% off';
+    } else {
+      el.textContent = '';
+    }
+  }
+
+  /* ---- Image preview ---- */
+  function previewImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      editImageB64 = e.target.result;
+      document.getElementById('img-preview').src   = editImageB64;
+      document.getElementById('img-preview').style.display = 'block';
+      document.getElementById('upload-hint').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---- Save Product ---- */
+  function saveProduct() {
+    const err   = document.getElementById('modal-error');
+    err.style.display = 'none';
+
+    const name  = document.getElementById('p-name').value.trim();
+    const cat   = document.getElementById('p-cat').value;
+    const emoji = document.getElementById('p-emoji').value.trim();
+    const price = parseFloat(document.getElementById('p-price').value);
+    const mrp   = parseFloat(document.getElementById('p-mrp').value) || price;
+    const stock = parseInt(document.getElementById('p-stock').value);
+    const unit  = document.getElementById('p-unit').value;
+    const badge = document.getElementById('p-badge').value.trim();
+    const active = document.getElementById('p-active').value === 'true';
+    const editId = document.getElementById('edit-id').value;
+
+    if (!name || isNaN(price) || price <= 0 || isNaN(stock) || stock < 0) {
+      err.textContent = 'Please fill Name, Price, and Stock correctly.';
+      err.style.display = 'block';
+      return;
+    }
+
+    const data = { name, category: cat, emoji, price, mrp, stock, unit, badge, active, image: editImageB64 };
+
+    if (editId) {
+      ProductsDB.update(editId, data);
+      showToast('✅ Product updated!');
+    } else {
+      ProductsDB.add(data);
+      showToast('✅ Product added!');
+    }
+
+    closeProductModal();
+    renderAdminProducts();
+    renderOverview();
+  }
+
+  /* ---- Delete Product ---- */
+  function deleteProduct(id, name) {
+    if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
+    ProductsDB.delete(id);
+    renderAdminProducts();
+    renderOverview();
+    showToast('🗑 Product deleted.');
+  }
+
+  /* ---- Quick Stock Edit ---- */
+  function quickEditStock(id, name) {
+    const p   = ProductsDB.getById(id);
+    if (!p) return;
+    const val = prompt(`Update stock for "${name}":\nCurrent stock: ${p.stock}`, p.stock);
+    if (val === null) return;
+    const n = parseInt(val);
+    if (isNaN(n) || n < 0) { showToast('Invalid stock value.'); return; }
+    ProductsDB.update(id, { stock: n });
+    renderOverview();
+    renderAdminProducts();
+    showToast('✅ Stock updated!');
+  }
+
+  /* ================================================================
+     ORDERS
+  ================================================================ */
+  function renderAllOrders() {
+    const orders = OrdersDB.getAll();
+    const el     = document.getElementById('all-orders-container');
+
+    if (!orders.length) {
+      el.innerHTML = `<div class="no-data">No orders placed yet.</div>`;
+      return;
+    }
+
+    el.innerHTML = orders.map(o => `
+      <div class="card" style="margin-bottom:16px;padding:0;overflow:hidden;">
+        <div style="background:var(--accent-lt);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid var(--border);">
+          <div>
+            <strong style="color:var(--primary);font-size:14px;">${o.id}</strong>
+            <span style="color:var(--text-muted);font-size:12px;margin-left:10px;">${formatDate(o.placedAt)}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            ${statusBadge(o.status)}
+            <div class="order-row-actions">
+              <select onchange="updateOrderStatus('${o.id}', this.value)">
+                ${['Confirmed','Packed','Shipped','Delivered','Cancelled'].map(s =>
+                  `<option value="${s}" ${o.status === s ? 'selected' : ''}>${s}</option>`
+                ).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div style="padding:14px 18px;">
+          <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:10px;font-size:14px;">
+            <span>👤 <strong>${o.userName}</strong></span>
+            <span>📞 ${o.userPhone}</span>
+            <span>💰 Total: <strong style="color:var(--primary);">₹${o.total}</strong></span>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">📍 ${o.userAddress}</div>
+          <div style="font-size:13px;">
+            ${o.items.map(i => `<span style="display:inline-block;background:var(--accent-lt);padding:3px 10px;border-radius:4px;margin:2px;">${i.emoji || '🎆'} ${i.name} ×${i.qty}</span>`).join('')}
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function updateOrderStatus(id, status) {
+    OrdersDB.updateStatus(id, status);
+    showToast(`✅ Order status updated to "${status}"`);
+    renderAllOrders();
+    renderOverview();
+  }
+
+  /* ================================================================
+     CUSTOMERS
+  ================================================================ */
+  function renderCustomers() {
+    const users  = AuthDB.getUsers();
+    const orders = OrdersDB.getAll();
+    const tbody  = document.getElementById('customers-tbody');
+
+    if (!users.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="no-data">No customers registered yet.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = users.map((u, i) => {
+      const orderCount = orders.filter(o => o.userId === u.id).length;
+      return `
+        <tr>
+          <td>${i + 1}</td>
+          <td><strong>${u.name}</strong></td>
+          <td>${u.email}</td>
+          <td>${u.phone}</td>
+          <td>${formatDate(u.createdAt)}</td>
+          <td><span class="badge badge-blue">${orderCount} orders</span></td>
+        </tr>`;
+    }).join('');
+  }
+
+  function doLogout() {
+    AuthDB.logout();
+    window.location.href = 'index.html';
+  }
+
+  /* ---- Init ---- */
+  renderOverview();
+</script>
+</body>
+</html>

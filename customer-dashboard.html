@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account — Saravana Agency Crackers Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* --- Order card --- */
+    .order-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .order-card-head {
+      background: var(--accent-lt);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-card-head .order-id { font-weight: 700; color: var(--primary); font-size: 14px; }
+    .order-card-head .order-date { font-size: 12px; color: var(--text-muted); }
+    .order-items-list { padding: 14px 18px; }
+    .order-item-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .order-item-row:last-child { border-bottom: none; }
+    .order-total-row {
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      background: var(--accent-lt);
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 15px;
+      border-top: 1px solid var(--border);
+    }
+    .order-address {
+      padding: 8px 18px 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* --- Profile card --- */
+    .profile-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--accent);
+      font-family: var(--font-head);
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .profile-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .profile-info-row:last-child { border-bottom: none; }
+    .profile-info-row .label { color: var(--text-muted); font-weight: 600; }
+
+    /* --- Empty state --- */
+    .empty-state { text-align: center; padding: 48px 16px; color: var(--text-muted); }
+    .empty-state .icon { font-size: 52px; margin-bottom: 14px; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div>
+      <a href="index.html" style="text-decoration:none;">
+        <div class="logo-text">✨ Saravana Agency Crackers Shop</div>
+        <div class="logo-sub">My Account</div>
+      </a>
+    </div>
+  </div>
+  <ul class="navbar-links">
+    <li><a href="index.html">🏠 Shop</a></li>
+    <li><span id="nav-username" style="color:#f5d9b5;font-size:14px;padding:7px 8px;"></span></li>
+    <li><button onclick="doLogout()">Logout</button></li>
+  </ul>
+</nav>
+
+<!-- Dashboard -->
+<div class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section-title">Customer Menu</div>
+    <a class="sidebar-link active" onclick="showSection('orders')" id="link-orders">
+      <span class="icon">📦</span> My Orders
+    </a>
+    <a class="sidebar-link" onclick="showSection('profile')" id="link-profile">
+      <span class="icon">👤</span> My Profile
+    </a>
+    <a class="sidebar-link" href="index.html">
+      <span class="icon">🛍️</span> Continue Shopping
+    </a>
+    <a class="sidebar-link" onclick="doLogout()">
+      <span class="icon">🚪</span> Logout
+    </a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="dashboard-main">
+
+    <!-- ===== ORDERS SECTION ===== -->
+    <div class="section-page active" id="section-orders">
+      <h2>📦 My Orders</h2>
+      <div id="orders-container"></div>
+    </div>
+
+    <!-- ===== PROFILE SECTION ===== -->
+    <div class="section-page" id="section-profile">
+      <h2>👤 My Profile</h2>
+      <div class="card" style="max-width:480px;">
+        <div class="profile-avatar" id="profile-avatar">?</div>
+        <div id="profile-info"></div>
+        <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px;">
+          <h4 style="margin-bottom:14px;color:var(--primary);">Change Password</h4>
+          <div id="pass-msg" class="alert" style="display:none;"></div>
+          <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" id="cur-pass" placeholder="Enter current password" />
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="new-pass" placeholder="Enter new password" />
+          </div>
+          <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="data.js"></script>
+<script>
+  /* ---- Auth guard ---- */
+  const user = AuthDB.requireCustomer('login.html');
+  if (!user) throw new Error('Not logged in');
+
+  document.getElementById('nav-username').textContent = '👤 ' + user.name;
+  document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
+
+  /* ---- Section switch ---- */
+  function showSection(name) {
+    document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + name).classList.add('active');
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('link-' + name)?.classList.add('active');
+  }
+
+  /* ---- Render Orders ---- */
+  function renderOrders() {
+    const orders    = OrdersDB.getByUser(user.id);
+    const container = document.getElementById('orders-container');
+
+    if (!orders.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">📦</div>
+          <p style="font-size:16px;font-weight:600;margin-bottom:8px;">No orders yet!</p>
+          <p style="margin-bottom:20px;">You haven't placed any orders.</p>
+          <a href="index.html" class="btn btn-primary">Shop Now</a>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = orders.map(o => `
+      <div class="order-card">
+        <div class="order-card-head">
+          <div>
+            <div class="order-id">Order: ${o.id}</div>
+            <div class="order-date">Placed on ${formatDate(o.placedAt)}</div>
+          </div>
+          ${statusBadge(o.status)}
+        </div>
+        <div class="order-items-list">
+          ${o.items.map(i => `
+            <div class="order-item-row">
+              <span>${i.emoji || '🎆'} ${i.name} × ${i.qty}</span>
+              <span style="font-weight:600;">₹${i.lineTotal}</span>
+            </div>`).join('')}
+        </div>
+        <div class="order-total-row">
+          <span>Total Paid</span>
+          <span>₹${o.total}</span>
+        </div>
+        <div class="order-address">
+          📍 ${o.userAddress} &nbsp;|&nbsp; 📞 ${o.userPhone}
+        </div>
+      </div>`).join('');
+  }
+
+  /* ---- Render Profile ---- */
+  function renderProfile() {
+    const users = AuthDB.getUsers();
+    const full  = users.find(u => u.id === user.id);
+    if (!full) return;
+    document.getElementById('profile-info').innerHTML = `
+      <div class="profile-info-row">
+        <span class="label">Name</span><span>${full.name}</span>
+      </div>
+      <div class="profile-info-row">
+        <span class="label">Email</span><span>${full.email}</span>
+      </div>
+      <div class="profile-info-row">
+        <span class="label">Phone</span><span>${full.phone}</span>
+      </div>
+      <div class="profile-info-row">
+        <span class="label">Member Since</span><span>${formatDate(full.createdAt)}</span>
+      </div>`;
+  }
+
+  /* ---- Change Password ---- */
+  function changePassword() {
+    const curPass  = document.getElementById('cur-pass').value;
+    const newPass  = document.getElementById('new-pass').value;
+    const msg      = document.getElementById('pass-msg');
+    msg.style.display = 'none';
+
+    if (!curPass || !newPass) {
+      msg.className = 'alert alert-danger'; msg.textContent = 'Please fill both fields.';
+      msg.style.display = 'block'; return;
+    }
+    if (newPass.length < 6) {
+      msg.className = 'alert alert-danger'; msg.textContent = 'New password must be at least 6 characters.';
+      msg.style.display = 'block'; return;
+    }
+
+    const users = AuthDB.getUsers();
+    const idx   = users.findIndex(u => u.id === user.id);
+    if (idx === -1 || users[idx].password !== curPass) {
+      msg.className = 'alert alert-danger'; msg.textContent = 'Current password is incorrect.';
+      msg.style.display = 'block'; return;
+    }
+    users[idx].password = newPass;
+    AuthDB.saveUsers(users);
+    msg.className = 'alert alert-success'; msg.textContent = '✅ Password updated successfully!';
+    msg.style.display = 'block';
+    document.getElementById('cur-pass').value = '';
+    document.getElementById('new-pass').value = '';
+  }
+
+  function doLogout() {
+    AuthDB.logout();
+    window.location.href = 'index.html';
+  }
+
+  /* ---- Init ---- */
+  renderOrders();
+  renderProfile();
+</script>
+</body>
+</html>
