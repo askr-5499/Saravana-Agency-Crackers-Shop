@@ -4,19 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Account — Saravana Agency Crackers Shop</title>
+  <meta name="description" content="View your orders and manage your account at Saravana Agency Crackers." />
   <link rel="stylesheet" href="style.css" />
   <style>
     /* --- Order card --- */
     .order-card {
-      background: #fff;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       overflow: hidden;
+      transition: var(--transition);
+    }
+    .order-card:hover {
+      border-color: var(--border-gold);
+      box-shadow: var(--shadow-gold);
     }
     .order-card-head {
-      background: var(--accent-lt);
-      padding: 12px 18px;
+      background: var(--gold-subtle);
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -24,29 +31,30 @@
       gap: 8px;
       border-bottom: 1px solid var(--border);
     }
-    .order-card-head .order-id { font-weight: 700; color: var(--primary); font-size: 14px; }
+    .order-card-head .order-id { font-weight: 700; color: var(--gold); font-size: 14px; }
     .order-card-head .order-date { font-size: 12px; color: var(--text-muted); }
-    .order-items-list { padding: 14px 18px; }
+    .order-items-list { padding: 16px 20px; }
     .order-item-row {
       display: flex;
       justify-content: space-between;
-      padding: 6px 0;
+      padding: 8px 0;
       border-bottom: 1px solid var(--border);
       font-size: 14px;
+      color: var(--text-primary);
     }
     .order-item-row:last-child { border-bottom: none; }
     .order-total-row {
-      padding: 12px 18px;
+      padding: 14px 20px;
       display: flex;
       justify-content: space-between;
-      background: var(--accent-lt);
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 15px;
+      background: var(--gold-subtle);
+      font-weight: 800;
+      color: var(--gold);
+      font-size: 16px;
       border-top: 1px solid var(--border);
     }
     .order-address {
-      padding: 8px 18px 12px;
+      padding: 10px 20px 14px;
       font-size: 13px;
       color: var(--text-muted);
       border-top: 1px solid var(--border);
@@ -54,48 +62,51 @@
 
     /* --- Profile card --- */
     .profile-avatar {
-      width: 72px; height: 72px;
+      width: 80px; height: 80px;
       border-radius: 50%;
-      background: var(--primary);
-      color: var(--accent);
+      background: linear-gradient(135deg, var(--gold), var(--neon-orange));
+      color: #0a0a0f;
       font-family: var(--font-head);
-      font-size: 26px;
+      font-size: 30px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 30px rgba(244, 162, 37, 0.3);
     }
     .profile-info-row {
       display: flex;
       justify-content: space-between;
-      padding: 10px 0;
+      padding: 12px 0;
       border-bottom: 1px solid var(--border);
       font-size: 14px;
     }
     .profile-info-row:last-child { border-bottom: none; }
-    .profile-info-row .label { color: var(--text-muted); font-weight: 600; }
+    .profile-info-row .label { color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+    .profile-info-row .value { color: var(--text-primary); }
 
     /* --- Empty state --- */
-    .empty-state { text-align: center; padding: 48px 16px; color: var(--text-muted); }
-    .empty-state .icon { font-size: 52px; margin-bottom: 14px; }
+    .empty-state { text-align: center; padding: 56px 16px; color: var(--text-muted); }
+    .empty-state .icon { font-size: 56px; margin-bottom: 16px; }
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar">
+<nav class="navbar" id="main-navbar">
   <div class="navbar-brand">
     <div>
       <a href="index.html" style="text-decoration:none;">
-        <div class="logo-text">✨ Saravana Agency Crackers Shop</div>
+        <div class="logo-text">🪔 Saravana Agency Crackers</div>
         <div class="logo-sub">My Account</div>
       </a>
     </div>
   </div>
   <ul class="navbar-links">
     <li><a href="index.html">🏠 Shop</a></li>
-    <li><span id="nav-username" style="color:#f5d9b5;font-size:14px;padding:7px 8px;"></span></li>
-    <li><button onclick="doLogout()">Logout</button></li>
+    <li><span id="nav-username" style="color:var(--text-secondary);font-size:14px;padding:7px 8px;"></span></li>
+    <li><button onclick="doLogout()">🚪 Logout</button></li>
   </ul>
 </nav>
 
@@ -131,11 +142,11 @@
     <!-- ===== PROFILE SECTION ===== -->
     <div class="section-page" id="section-profile">
       <h2>👤 My Profile</h2>
-      <div class="card" style="max-width:480px;">
+      <div class="card" style="max-width:500px;">
         <div class="profile-avatar" id="profile-avatar">?</div>
         <div id="profile-info"></div>
-        <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px;">
-          <h4 style="margin-bottom:14px;color:var(--primary);">Change Password</h4>
+        <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:20px;">
+          <h4 style="margin-bottom:16px;color:var(--gold);font-family:var(--font-head);font-size:18px;">Change Password</h4>
           <div id="pass-msg" class="alert" style="display:none;"></div>
           <div class="form-group">
             <label>Current Password</label>
@@ -180,9 +191,9 @@
       container.innerHTML = `
         <div class="empty-state">
           <div class="icon">📦</div>
-          <p style="font-size:16px;font-weight:600;margin-bottom:8px;">No orders yet!</p>
-          <p style="margin-bottom:20px;">You haven't placed any orders.</p>
-          <a href="index.html" class="btn btn-primary">Shop Now</a>
+          <p style="font-size:18px;font-weight:600;margin-bottom:8px;color:var(--text-primary);">No orders yet!</p>
+          <p style="margin-bottom:24px;">You haven't placed any orders.</p>
+          <a href="index.html" class="btn btn-primary" style="font-size:16px;padding:14px 28px;">Shop Now</a>
         </div>`;
       return;
     }
@@ -200,7 +211,7 @@
           ${o.items.map(i => `
             <div class="order-item-row">
               <span>${i.emoji || '🎆'} ${i.name} × ${i.qty}</span>
-              <span style="font-weight:600;">₹${i.lineTotal}</span>
+              <span style="font-weight:600;color:var(--gold);">₹${i.lineTotal}</span>
             </div>`).join('')}
         </div>
         <div class="order-total-row">
@@ -220,16 +231,16 @@
     if (!full) return;
     document.getElementById('profile-info').innerHTML = `
       <div class="profile-info-row">
-        <span class="label">Name</span><span>${full.name}</span>
+        <span class="label">Name</span><span class="value">${full.name}</span>
       </div>
       <div class="profile-info-row">
-        <span class="label">Email</span><span>${full.email}</span>
+        <span class="label">Email</span><span class="value">${full.email}</span>
       </div>
       <div class="profile-info-row">
-        <span class="label">Phone</span><span>${full.phone}</span>
+        <span class="label">Phone</span><span class="value">${full.phone}</span>
       </div>
       <div class="profile-info-row">
-        <span class="label">Member Since</span><span>${formatDate(full.createdAt)}</span>
+        <span class="label">Member Since</span><span class="value">${formatDate(full.createdAt)}</span>
       </div>`;
   }
 

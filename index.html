@@ -4,215 +4,660 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saravana Agency Crackers Shop — Home</title>
+  <title>Saravana Agency Crackers — Premium Sivakasi Fireworks</title>
+  <meta name="description" content="Buy premium quality Sivakasi crackers online. Sparklers, sky shots, fancy items, gift boxes with up to 40% off. Safe, certified, fast delivery across India." />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* --- Banner --- */
-    .promo-banner {
-      background: var(--accent);
-      color: var(--primary);
-      text-align: center;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    /* --- Hero Section --- */
+    /* ========== HERO SECTION ========== */
     .hero {
-      background: var(--primary);
-      padding: 48px 24px;
-      text-align: center;
       position: relative;
-    }
-
-    .hero h1 {
-      font-family: var(--font-head);
-      color: var(--accent);
-      font-size: 38px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #f5d9b5;
-      max-width: 500px;
-      margin: 0 auto 20px;
-      font-size: 16px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .hero-info {
-      margin-top: 28px;
-      display: flex;
-      gap: 28px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .hero-info-item {
-      color: #f5d9b5;
-      font-size: 14px;
+      min-height: 100vh;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #1a1020 0%, #0a0a0f 60%);
     }
-
-    /* --- Category Filter --- */
-    .cat-section {
-      background: #fff;
-      padding: 14px 24px;
-      border-bottom: 2px solid var(--accent);
-      overflow-x: auto;
-      display: flex;
+    .hero-bg-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg-canvas canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.85) 80%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 40px 24px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
-      white-space: nowrap;
-    }
-
-    .cat-btn {
-      border: 1.5px solid var(--border);
-      background: #fff;
-      padding: 6px 18px;
-      border-radius: 20px;
+      background: rgba(244, 162, 37, 0.1);
+      border: 1px solid rgba(244, 162, 37, 0.25);
+      color: var(--gold);
+      padding: 8px 20px;
+      border-radius: 50px;
       font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      transition: all .2s;
+      font-weight: 600;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      color: var(--text-primary);
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .hero h1 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--neon-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      color: var(--text-secondary);
+      font-size: clamp(16px, 2vw, 20px);
+      max-width: 550px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat .value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--gold);
+      text-shadow: 0 0 15px rgba(244, 162, 37, 0.3);
+    }
+    .hero-stat .label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    .scroll-indicator .arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.5;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
     }
 
-    .cat-btn.active,
-    .cat-btn:hover {
-      background: var(--primary);
-      color: var(--accent);
-      border-color: var(--primary);
+    /* ========== FLOATING DIYA DECORATORS ========== */
+    .diya-float {
+      position: absolute;
+      font-size: 24px;
+      animation: diayFloat 6s ease-in-out infinite;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes diayFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
     }
 
-    /* --- Section heading --- */
-    .section-head {
+    /* ========== SECTION HEADERS ========== */
+    .section-wrapper {
+      position: relative;
+      z-index: 1;
+      padding: 80px 0;
+    }
+    .section-wrapper .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+    .section-header .section-label::before,
+    .section-header .section-label::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .section-header .section-label::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .section-header h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .section-header h2 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ========== CATEGORIES SECTION ========== */
+    .categories-section {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .category-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 40px 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+    }
+    .category-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(244, 162, 37, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .category-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), var(--shadow-gold);
+    }
+    .category-card:hover::before { opacity: 1; }
+    .category-card .cat-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(244, 162, 37, 0.3));
+      transition: transform 0.4s;
+    }
+    .category-card:hover .cat-icon { transform: scale(1.15) rotate(5deg); }
+    .category-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .category-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .category-card .cat-count {
+      margin-top: 14px;
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      background: var(--gold-subtle);
+      border: 1px solid var(--border-gold);
+    }
+
+    /* ========== PRODUCTS SECTION ========== */
+    .products-section {
+      background: var(--bg-secondary);
+    }
+    .products-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 24px 12px;
-    }
-
-    .section-head h2 {
-      font-family: var(--font-head);
-      color: var(--primary);
-      font-size: 20px;
-    }
-
-    /* --- Product grid --- */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      flex-wrap: wrap;
       gap: 16px;
-      padding: 0 24px 32px;
+      margin-bottom: 32px;
     }
-
-    /* --- Search --- */
-    .search-bar {
-      padding: 14px 24px 0;
+    .cat-filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-
-    .search-bar input {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 24px;
+    .cat-btn {
+      border: 1px solid var(--border);
+      background: var(--bg-glass);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: linear-gradient(135deg, var(--gold), var(--neon-orange));
+      color: #0a0a0f;
+      border-color: var(--gold);
+      box-shadow: 0 4px 15px rgba(244, 162, 37, 0.3);
+      font-weight: 700;
+    }
+    .search-container {
+      position: relative;
+    }
+    .search-container input {
+      width: 280px;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--bg-glass);
+      color: var(--text-primary);
       font-size: 14px;
       outline: none;
-      transition: border-color .2s;
+      backdrop-filter: blur(10px);
+      transition: var(--transition-fast);
     }
-
-    .search-bar input:focus {
-      border-color: var(--accent-dk);
+    .search-container input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(244, 162, 37, 0.1);
     }
-
-    /* --- Contact strip --- */
-    .contact-strip {
-      background: var(--primary);
-      padding: 24px;
-      display: flex;
+    .search-container input::placeholder { color: var(--text-muted); }
+    .search-container .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
+    }
+    .products-count {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
     }
 
-    .contact-item {
-      color: #f5d9b5;
+    /* ========== OFFERS SECTION ========== */
+    .offers-section {
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+    .offers-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(244, 162, 37, 0.03) 0%, transparent 50%);
+      animation: rotateGlow 20s linear infinite;
+    }
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .offer-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--neon-orange), var(--neon-pink));
+    }
+    .offer-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-gold);
+    }
+    .offer-card .offer-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .offer-card .offer-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold-subtle), rgba(244, 162, 37, 0.2));
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+    .offer-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .offer-card p {
       font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== WHY CHOOSE US ========== */
+    .why-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+    }
+    .why-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .why-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-gold);
+    }
+    .why-card .why-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: var(--gold-subtle);
+      border: 1px solid var(--border-gold);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      font-size: 28px;
+      transition: var(--transition);
+    }
+    .why-card:hover .why-icon {
+      background: linear-gradient(135deg, var(--gold), var(--neon-orange));
+      box-shadow: 0 0 30px rgba(244, 162, 37, 0.3);
+      transform: scale(1.1);
+    }
+    .why-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .why-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
-    .contact-item a {
-      color: var(--accent);
+    /* ========== CONTACT / CTA SECTION ========== */
+    .cta-section {
+      position: relative;
+      background: linear-gradient(135deg, #1a0f05, #0f0a15);
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(244, 162, 37, 0.08), transparent 60%);
+    }
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .cta-info h2 {
+      font-family: var(--font-head);
+      font-size: 36px;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .cta-info h2 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cta-info p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .cta-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cta-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .cta-contact-item .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold-subtle);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .cta-contact-item a {
+      color: var(--gold);
       font-weight: 600;
     }
-
-    /* --- Footer --- */
-    footer {
-      background: var(--primary-dk);
-      color: #f5d9b5;
+    .cta-map {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px;
       text-align: center;
-      padding: 16px;
+      backdrop-filter: blur(20px);
+    }
+    .cta-map .store-icon {
+      font-size: 56px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .cta-map h3 {
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .cta-map p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .cta-map-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    .cta-map-details .detail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 32px 24px;
+    }
+    footer .footer-brand {
+      font-family: var(--font-head);
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(244, 162, 37, 0.2);
+    }
+    footer p {
+      color: var(--text-muted);
       font-size: 13px;
     }
-
     footer a {
-      color: var(--accent);
+      color: var(--gold);
+      transition: var(--transition-fast);
+    }
+    footer a:hover {
+      text-shadow: 0 0 10px rgba(244, 162, 37, 0.3);
     }
 
-    /* --- Cart badge on navbar --- */
-    .cart-count-badge {
-      background: var(--accent);
-      color: var(--primary);
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 4px;
-      vertical-align: middle;
+    /* ========== PARALLAX DECORATORS ========== */
+    .parallax-deco {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* --- Empty state --- */
-    .empty-state {
-      text-align: center;
-      padding: 60px 24px;
-      grid-column: 1 / -1;
-      color: var(--text-muted);
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .hero { min-height: 90vh; }
+      .hero-stats { gap: 24px; }
+      .hero-stat .value { font-size: 22px; }
+      .cta-content { grid-template-columns: 1fr; gap: 40px; }
+      .products-toolbar { flex-direction: column; align-items: flex-start; }
+      .search-container input { width: 100%; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .category-card { padding: 24px 16px; }
+      .category-card .cat-icon { font-size: 36px; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
     }
-
-    .empty-state .icon {
-      font-size: 52px;
-      margin-bottom: 12px;
+    @media (max-width: 480px) {
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-actions { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
 
 <body>
+  <!-- Particles Canvas -->
+  <canvas id="particles-canvas"></canvas>
 
   <!-- Promo Banner -->
-  <div class="promo-banner">
+  <div class="page-banner" id="promo-banner">
     🎉 Diwali Special Sale — Up to 40% OFF! &nbsp;|&nbsp; Free Delivery above ₹1000 &nbsp;|&nbsp; 📞 096779 84858
   </div>
 
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="navbar" id="main-navbar">
     <div class="navbar-brand">
       <div>
-        <div class="logo-text">✨ Saravana Agency Crackers Shop</div>
-        <div class="logo-sub">Sri Ramapuram, Eranampatti, Tamil Nadu</div>
+        <div class="logo-text">🪔 Saravana Agency</div>
+        <div class="logo-sub">Premium Sivakasi Crackers</div>
       </div>
     </div>
     <ul class="navbar-links">
@@ -220,77 +665,229 @@
       <li id="nav-account"></li>
       <li>
         <button class="btn-accent" onclick="openCart()"
-          style="border-radius:6px;padding:7px 14px;font-size:14px;font-weight:700;border:none;background:var(--accent);color:var(--primary);">
+          style="border-radius:50px;padding:8px 20px;font-size:14px;font-weight:700;border:none;background:linear-gradient(135deg,var(--gold),var(--neon-orange));color:#0a0a0f;display:inline-flex;align-items:center;gap:6px;">
           🛒 Cart <span class="cart-count-badge" id="cart-badge">0</span>
         </button>
       </li>
     </ul>
   </nav>
 
-  <!-- Hero -->
-  <div class="hero">
-    <h1>Light Up Your Celebrations!</h1>
-    <p>Premium quality crackers sourced directly from Sivakasi. Safe, certified, and delivered to your door.</p>
-    <div class="hero-actions">
-      <button class="btn btn-accent" onclick="scrollToProducts()" style="font-size:16px;padding:12px 28px;">
-        🛍️ Shop Now
-      </button>
-      <a href="tel:09677984858" class="btn btn-outline"
-        style="color:var(--accent);border-color:var(--accent);font-size:16px;padding:12px 28px;">
-        📞 Call to Order
-      </a>
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-canvas">
+      <canvas id="fireworks-canvas"></canvas>
     </div>
-    <div class="hero-info">
-      <div class="hero-info-item">⏰ Open 24 Hours</div>
-      <div class="hero-info-item">⭐ 4.4 Rating (17 Reviews)</div>
-      <div class="hero-info-item">🚚 Free Delivery above ₹1000</div>
-      <div class="hero-info-item">🏭 Sivakasi Certified</div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✨ Premium Sivakasi Crackers</div>
+      <h1>Light Up Your <span class="gold">Celebration</span></h1>
+      <p class="hero-sub">Experience the magic of Diwali with our handcrafted, premium quality fireworks. Safe, certified, and delivered right to your doorstep.</p>
+      <div class="hero-actions">
+        <button class="btn btn-glow" onclick="scrollToProducts()" id="hero-shop-btn">
+          🛍️ Shop Now
+        </button>
+        <a href="tel:09677984858" class="btn btn-outline" style="font-size:16px;padding:16px 32px;border-radius:var(--radius-md);">
+          📞 Call to Order
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="value">500+</div><div class="label">Products</div></div>
+        <div class="hero-stat"><div class="value">4.4★</div><div class="label">Rating</div></div>
+        <div class="hero-stat"><div class="value">10K+</div><div class="label">Happy Customers</div></div>
+        <div class="hero-stat"><div class="value">24/7</div><div class="label">Support</div></div>
+      </div>
     </div>
-  </div>
-
-  <!-- Category Filter -->
-  <div class="cat-section" id="cat-section">
-    <button class="cat-btn active" onclick="filterCat('all', this)">All Products</button>
-    <button class="cat-btn" onclick="filterCat('sparklers', this)">✨ Sparklers</button>
-    <button class="cat-btn" onclick="filterCat('ground', this)">🌀 Ground Crackers</button>
-    <button class="cat-btn" onclick="filterCat('sky', this)">🚀 Sky Shots</button>
-    <button class="cat-btn" onclick="filterCat('fancy', this)">🎆 Fancy Items</button>
-    <button class="cat-btn" onclick="filterCat('gift', this)">🎁 Gift Boxes</button>
-  </div>
-
-  <!-- Search -->
-  <div class="search-bar" id="products-top">
-    <input type="text" id="search-input" placeholder="🔍  Search products..." oninput="renderProducts()" />
-  </div>
-
-  <!-- Section Heading -->
-  <div class="section-head">
-    <h2 id="section-title">All Products</h2>
-    <span id="product-count" style="color:var(--text-muted);font-size:13px;"></span>
-  </div>
-
-  <!-- Products Grid -->
-  <div class="products-grid" id="products-grid"></div>
-
-  <!-- Contact Strip -->
-  <div class="contact-strip">
-    <div class="contact-item">📍 Sri Ramapuram - Reddiyarchatram Rd, Eranampatti, TN 624622</div>
-    <div class="contact-item">📞 <a href="tel:09677984858">096779 84858</a></div>
-    <div class="contact-item">⏰ Open 24 Hours</div>
-    <div class="contact-item">
-      <a href="https://wa.me/919677984858?text=Hi Sir, I want to order crackers" target="_blank"
-        style="background:#25D366;color:#fff;padding:6px 16px;border-radius:6px;font-weight:700;font-size:13px;">
-        💬 Order on WhatsApp
-      </a>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="arrow"></div>
     </div>
-  </div>
+  </section>
+
+  <!-- ==================== CATEGORIES SECTION ==================== -->
+  <section class="section-wrapper categories-section" id="categories-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">🎆 Browse Collection</div>
+        <h2>Shop by <span class="gold">Category</span></h2>
+        <p>Find the perfect crackers for every celebration</p>
+      </div>
+      <div class="categories-grid stagger-children" id="categories-grid">
+        <div class="category-card" onclick="scrollToProductsFiltered('sparklers')">
+          <span class="cat-icon">✨</span>
+          <h3>Sparklers</h3>
+          <p>Classic gold & colour sparklers for the whole family</p>
+          <span class="cat-count" id="cat-count-sparklers">0 products</span>
+        </div>
+        <div class="category-card" onclick="scrollToProductsFiltered('sky')">
+          <span class="cat-icon">🚀</span>
+          <h3>Sky Shots</h3>
+          <p>Multi-colour aerial displays that light up the sky</p>
+          <span class="cat-count" id="cat-count-sky">0 products</span>
+        </div>
+        <div class="category-card" onclick="scrollToProductsFiltered('fancy')">
+          <span class="cat-icon">🎇</span>
+          <h3>Fancy Items</h3>
+          <p>Waterfalls, fountains & spectacular visual effects</p>
+          <span class="cat-count" id="cat-count-fancy">0 products</span>
+        </div>
+        <div class="category-card" onclick="scrollToProductsFiltered('gift')">
+          <span class="cat-icon">🎁</span>
+          <h3>Gift Boxes</h3>
+          <p>Curated gift packs perfect for Diwali celebrations</p>
+          <span class="cat-count" id="cat-count-gift">0 products</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURED PRODUCTS ==================== -->
+  <section class="section-wrapper products-section" id="products-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">🛍️ Shop Crackers</div>
+        <h2>Our <span class="gold">Products</span></h2>
+        <p>Premium quality crackers at unbeatable prices</p>
+      </div>
+
+      <div class="products-toolbar reveal" id="products-top">
+        <div class="cat-filter-bar" id="cat-section">
+          <button class="cat-btn active" onclick="filterCat('all', this)">All Products</button>
+          <button class="cat-btn" onclick="filterCat('sparklers', this)">✨ Sparklers</button>
+          <button class="cat-btn" onclick="filterCat('ground', this)">🌀 Ground</button>
+          <button class="cat-btn" onclick="filterCat('sky', this)">🚀 Sky Shots</button>
+          <button class="cat-btn" onclick="filterCat('fancy', this)">🎇 Fancy</button>
+          <button class="cat-btn" onclick="filterCat('gift', this)">🎁 Gift Boxes</button>
+        </div>
+        <div class="search-container">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search products..." oninput="renderProducts()" />
+        </div>
+      </div>
+
+      <div class="products-count"><span id="section-title">All Products</span> — <span id="product-count">0</span> items</div>
+      <div class="products-grid stagger-children" id="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== OFFERS SECTION ==================== -->
+  <section class="section-wrapper offers-section" id="offers-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">🔥 Special Deals</div>
+        <h2>Festival <span class="gold">Offers</span></h2>
+        <p>Grab these exclusive Diwali deals before they expire</p>
+      </div>
+      <div class="offers-grid stagger-children">
+        <div class="offer-card">
+          <span class="offer-icon">🎆</span>
+          <div class="offer-badge badge-glow">40% OFF</div>
+          <h3>Diwali Mega Sale</h3>
+          <p>Up to 40% off on all premium sky shots and fancy crackers this festive season</p>
+        </div>
+        <div class="offer-card">
+          <span class="offer-icon">🚚</span>
+          <div class="offer-badge badge-glow">FREE</div>
+          <h3>Free Delivery</h3>
+          <p>Free home delivery on all orders above ₹1000. No hidden charges, door-to-door service</p>
+        </div>
+        <div class="offer-card">
+          <span class="offer-icon">🎁</span>
+          <div class="offer-badge badge-glow">COMBO</div>
+          <h3>Family Gift Boxes</h3>
+          <p>Special combo packs starting at ₹399 — save up to 30% with our curated gift boxes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHY CHOOSE US ==================== -->
+  <section class="section-wrapper why-section" id="why-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">⭐ Why Us</div>
+        <h2>Why Choose <span class="gold">Saravana Agency</span></h2>
+        <p>Trusted by thousands of families across Tamil Nadu</p>
+      </div>
+      <div class="why-grid stagger-children">
+        <div class="why-card">
+          <div class="why-icon">🛡️</div>
+          <h3>100% Safe & Tested</h3>
+          <p>Every product is quality tested and meets all safety standards. Your family's safety is our priority.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">✅</div>
+          <h3>Sivakasi Certified</h3>
+          <p>Direct from Sivakasi manufacturers. Authentic quality crackers with proper ISO certification.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🚀</div>
+          <h3>Fast Delivery</h3>
+          <p>Same day dispatch. Get your crackers delivered in 2-3 business days with careful packaging.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💰</div>
+          <h3>Best Prices</h3>
+          <p>Factory-direct pricing. No middleman means you get the best deals with up to 40% savings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT / CTA ==================== -->
+  <section class="section-wrapper cta-section" id="cta-section">
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="cta-info">
+          <h2>Visit Our <span class="gold">Store</span></h2>
+          <p>Come explore our massive collection of premium crackers. Walk-in customers get special in-store discounts and instant pickup.</p>
+          <div class="cta-contacts">
+            <div class="cta-contact-item">
+              <div class="icon">📍</div>
+              <span>Sri Ramapuram - Reddiyarchatram Rd, Eranampatti, TN 624622</span>
+            </div>
+            <div class="cta-contact-item">
+              <div class="icon">📞</div>
+              <a href="tel:09677984858">096779 84858</a>
+            </div>
+            <div class="cta-contact-item">
+              <div class="icon">⏰</div>
+              <span>Open 24 Hours</span>
+            </div>
+          </div>
+        </div>
+        <div class="cta-map">
+          <span class="store-icon">🏪</span>
+          <h3>Saravana Agency</h3>
+          <p>Premium Crackers Shop</p>
+          <div class="cta-map-details">
+            <div class="detail">⭐ 4.4 Rating (17+ Reviews)</div>
+            <div class="detail">🏭 Direct from Sivakasi</div>
+            <div class="detail">📦 Free Delivery above ₹1000</div>
+            <div class="detail">🧒 Kids-Safe Products Available</div>
+          </div>
+          <a href="https://wa.me/919677984858?text=Hi Sir, I want to order crackers" target="_blank"
+            class="btn btn-glow" style="margin-top:24px;font-size:15px;padding:14px 28px;">
+            💬 Order on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
-    &copy; 2025 Saravana Agency Crackers Shop &nbsp;|&nbsp;
-    <a href="login.html">Login / Register</a> &nbsp;|&nbsp;
-    All rights reserved.
+    <div class="footer-brand">🪔 Saravana Agency Crackers Shop</div>
+    <p>&copy; 2025 All rights reserved. &nbsp;|&nbsp;
+      <a href="login.html">Login / Register</a> &nbsp;|&nbsp;
+      <a href="admin-dashboard.html">Admin</a>
+    </p>
   </footer>
+
+  <!-- WhatsApp FAB -->
+  <a href="https://wa.me/919677984858?text=Hi%20Sir%2C%20I%20want%20to%20order%20crackers" target="_blank" class="whatsapp-fab" id="whatsapp-fab">
+    <span class="fab-icon">💬</span>
+    <span class="fab-text">Order via WhatsApp</span>
+  </a>
 
   <!-- Cart Side Panel -->
   <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
@@ -317,14 +914,236 @@
   <div id="toast"></div>
   <script src="data.js"></script>
   <script>
-    /* ---- State ---- */
+    /* ================================================================
+       FIREWORKS CANVAS ANIMATION
+    ================================================================ */
+    (function() {
+      const canvas = document.getElementById('fireworks-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H;
+      let particles = [];
+      let fireworks = [];
+      let hue = 30;
+
+      function resize() {
+        W = canvas.width = canvas.parentElement.clientWidth;
+        H = canvas.height = canvas.parentElement.clientHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      class Firework {
+        constructor() {
+          this.x = W * (0.2 + Math.random() * 0.6);
+          this.y = H;
+          this.targetY = H * (0.15 + Math.random() * 0.35);
+          this.speed = 3 + Math.random() * 3;
+          this.angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.3;
+          this.vx = Math.cos(this.angle) * this.speed;
+          this.vy = Math.sin(this.angle) * this.speed;
+          this.hue = 20 + Math.random() * 40;
+          this.trail = [];
+          this.alive = true;
+        }
+        update() {
+          this.trail.push({ x: this.x, y: this.y });
+          if (this.trail.length > 8) this.trail.shift();
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.y <= this.targetY) {
+            this.explode();
+            this.alive = false;
+          }
+        }
+        explode() {
+          const count = 40 + Math.floor(Math.random() * 40);
+          const baseHue = this.hue;
+          for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 / count) * i;
+            const speed = 1 + Math.random() * 4;
+            particles.push(new Particle(this.x, this.y, angle, speed, baseHue));
+          }
+        }
+        draw() {
+          for (let i = 0; i < this.trail.length; i++) {
+            const alpha = i / this.trail.length * 0.5;
+            ctx.beginPath();
+            ctx.arc(this.trail[i].x, this.trail[i].y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${alpha})`;
+            ctx.fill();
+          }
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = `hsl(${this.hue}, 100%, 80%)`;
+          ctx.fill();
+        }
+      }
+
+      class Particle {
+        constructor(x, y, angle, speed, hue) {
+          this.x = x;
+          this.y = y;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.hue = hue + Math.random() * 30 - 15;
+          this.alpha = 1;
+          this.decay = 0.01 + Math.random() * 0.02;
+          this.gravity = 0.04;
+          this.size = 1.5 + Math.random() * 1.5;
+        }
+        update() {
+          this.vx *= 0.98;
+          this.vy *= 0.98;
+          this.vy += this.gravity;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= this.decay;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 65%, ${this.alpha})`;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 65%, ${this.alpha * 0.3})`;
+          ctx.fill();
+        }
+      }
+
+      let lastFirework = 0;
+      function animate(t) {
+        requestAnimationFrame(animate);
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(10, 10, 15, 0.15)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'lighter';
+
+        if (t - lastFirework > (800 + Math.random() * 1200)) {
+          fireworks.push(new Firework());
+          lastFirework = t;
+        }
+
+        fireworks = fireworks.filter(f => f.alive);
+        fireworks.forEach(f => { f.update(); f.draw(); });
+        particles = particles.filter(p => p.alpha > 0.01);
+        particles.forEach(p => { p.update(); p.draw(); });
+      }
+      requestAnimationFrame(animate);
+    })();
+
+    /* ================================================================
+       FLOATING PARTICLES (Sparks)
+    ================================================================ */
+    (function() {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H;
+      let sparks = [];
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      class Spark {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * W;
+          this.y = Math.random() * H;
+          this.size = 0.5 + Math.random() * 2;
+          this.vx = (Math.random() - 0.5) * 0.3;
+          this.vy = -0.2 - Math.random() * 0.5;
+          this.alpha = 0.1 + Math.random() * 0.4;
+          this.hue = 25 + Math.random() * 25;
+          this.pulse = Math.random() * Math.PI * 2;
+          this.pulseSpeed = 0.02 + Math.random() * 0.03;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.pulse += this.pulseSpeed;
+          if (this.y < -10 || this.x < -10 || this.x > W + 10) this.reset();
+          if (this.y < -10) { this.y = H + 10; }
+        }
+        draw() {
+          const a = this.alpha * (0.5 + Math.sin(this.pulse) * 0.5);
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${a})`;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${a * 0.2})`;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 50; i++) sparks.push(new Spark());
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, W, H);
+        sparks.forEach(s => { s.update(); s.draw(); });
+      }
+      animate();
+    })();
+
+    /* ================================================================
+       SCROLL REVEAL ANIMATIONS
+    ================================================================ */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    /* ================================================================
+       NAVBAR SCROLL EFFECT
+    ================================================================ */
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('main-navbar');
+      if (window.scrollY > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    /* ================================================================
+       PARALLAX EFFECT ON HERO
+    ================================================================ */
+    window.addEventListener('scroll', () => {
+      const hero = document.getElementById('hero');
+      const scrollY = window.scrollY;
+      const heroH = hero.offsetHeight;
+      if (scrollY < heroH) {
+        const content = hero.querySelector('.hero-content');
+        content.style.transform = `translateY(${scrollY * 0.3}px)`;
+        content.style.opacity = 1 - scrollY / heroH;
+      }
+    });
+
+    /* ================================================================
+       STATE & INIT
+    ================================================================ */
     let currentCat = 'all';
 
-    /* ---- Init ---- */
     window.onload = function () {
       updateNavAccount();
       updateCartBadge();
       renderProducts();
+      updateCategoryCounts();
     };
 
     /* ---- Nav account link ---- */
@@ -342,7 +1161,30 @@
 
     /* ---- Scroll to products ---- */
     function scrollToProducts() {
-      document.getElementById('products-top').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToProductsFiltered(cat) {
+      currentCat = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      const btns = document.querySelectorAll('.cat-btn');
+      const labels = { all: 'All Products', sparklers: '✨ Sparklers', ground: '🌀 Ground', sky: '🚀 Sky Shots', fancy: '🎇 Fancy', gift: '🎁 Gift Boxes' };
+      btns.forEach(b => { if (b.textContent.trim() === (labels[cat] || '').trim()) b.classList.add('active'); });
+      renderProducts();
+      setTimeout(() => {
+        document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    /* ---- Update category counts ---- */
+    function updateCategoryCounts() {
+      const products = ProductsDB.getActive();
+      const cats = ['sparklers', 'sky', 'fancy', 'gift'];
+      cats.forEach(c => {
+        const count = products.filter(p => p.category === c).length;
+        const el = document.getElementById('cat-count-' + c);
+        if (el) el.textContent = count + ' products';
+      });
     }
 
     /* ---- Category filter ---- */
@@ -352,7 +1194,7 @@
       btn.classList.add('active');
       const labels = {
         all: 'All Products', sparklers: '✨ Sparklers', ground: '🌀 Ground Crackers',
-        sky: '🚀 Sky Shots', fancy: '🎆 Fancy Items', gift: '🎁 Gift Boxes'
+        sky: '🚀 Sky Shots', fancy: '🎇 Fancy Items', gift: '🎁 Gift Boxes'
       };
       document.getElementById('section-title').textContent = labels[cat] || 'Products';
       renderProducts();
@@ -364,16 +1206,14 @@
       const query = document.getElementById('search-input').value.toLowerCase();
       let products = ProductsDB.getActive();
 
-      // Filter by category
       if (currentCat !== 'all') products = products.filter(p => p.category === currentCat);
-      // Filter by search
       if (query) products = products.filter(p =>
         p.name.toLowerCase().includes(query) ||
         p.category.toLowerCase().includes(query) ||
         (p.badge && p.badge.toLowerCase().includes(query))
       );
 
-      document.getElementById('product-count').textContent = products.length + ' items';
+      document.getElementById('product-count').textContent = products.length;
       updateCartBadge();
 
       if (!products.length) {
@@ -399,16 +1239,16 @@
           <div class="product-card-body">
             <div class="cat-tag">${categoryLabel(p.category)}</div>
             <h4>${p.name}</h4>
-            ${p.badge ? `<div class="product-badge"><span class="badge badge-gold">${p.badge}</span></div>` : ''}
+            ${p.badge ? `<div class="product-badge"><span class="badge badge-gold badge-glow">${p.badge}</span></div>` : ''}
             <div class="price-row">
               <span class="price">₹${p.price}</span>
               <span class="mrp">₹${p.mrp}</span>
               ${disc > 0 ? `<span class="disc">${disc}% off</span>` : ''}
             </div>
             <small style="color:var(--text-muted);font-size:12px;">per ${p.unit} &nbsp;|&nbsp; Stock: ${p.stock}</small>
-            <div style="margin-top:10px;">
+            <div style="margin-top:12px;">
               ${outOfStock
-            ? `<button class="btn btn-outline btn-full" disabled style="opacity:.5;cursor:not-allowed;">Out of Stock</button>`
+            ? `<button class="btn btn-outline btn-full" disabled style="opacity:.4;cursor:not-allowed;">Out of Stock</button>`
             : qty === 0
               ? `<button class="btn btn-primary btn-full" onclick="addToCart('${p.id}')">+ Add to Cart</button>`
               : `<div class="qty-ctrl" style="width:100%;justify-content:space-between;">
@@ -421,6 +1261,10 @@
           </div>
         </div>`;
       }).join('');
+
+      // Re-observe new elements for stagger animation
+      grid.classList.remove('visible');
+      setTimeout(() => grid.classList.add('visible'), 50);
     }
 
     /* ---- Cart actions ---- */
@@ -455,11 +1299,13 @@
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
       document.getElementById('cart-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
       renderCartPanel();
     }
     function closeCart() {
       document.getElementById('cart-panel').classList.remove('open');
       document.getElementById('cart-overlay').classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     function renderCartPanel() {
@@ -468,10 +1314,10 @@
       const footer = document.getElementById('cart-footer');
 
       if (!items.length) {
-        body.innerHTML = `<div style="text-align:center;padding:48px 16px;color:var(--text-muted);">
-        <div style="font-size:48px;margin-bottom:12px;">🛒</div>
-        <p>Your cart is empty</p>
-        <p style="font-size:13px;margin-top:6px;">Add some crackers to get started!</p>
+        body.innerHTML = `<div style="text-align:center;padding:60px 16px;color:var(--text-muted);">
+        <div style="font-size:56px;margin-bottom:16px;">🛒</div>
+        <p style="font-size:16px;font-weight:600;margin-bottom:6px;">Your cart is empty</p>
+        <p style="font-size:13px;">Add some crackers to get started!</p>
       </div>`;
         footer.innerHTML = '';
         return;
@@ -487,7 +1333,7 @@
           <div class="cart-item-info">
             <h5>${item.name}</h5>
             <div class="ci-price">₹${item.price} × ${item.qty} = ₹${item.lineTotal}</div>
-            <div class="qty-ctrl" style="margin-top:6px;width:100px;">
+            <div class="qty-ctrl" style="margin-top:8px;width:110px;">
               <button onclick="changeQty('${item.id}',-1)">−</button>
               <span>${item.qty}</span>
               <button onclick="changeQty('${item.id}',1)">+</button>
@@ -504,12 +1350,34 @@
       footer.innerHTML = `
       <div class="cart-total-row"><span>Subtotal</span><span>₹${sub}</span></div>
       <div class="cart-total-row"><span>Delivery</span>
-        <span>${del === 0 ? '<b style="color:var(--success)">FREE</b>' : '₹' + del}</span>
+        <span>${del === 0 ? '<b style="color:var(--neon-green)">FREE</b>' : '₹' + del}</span>
       </div>
       <div class="cart-grand-total"><span>Total</span><span>₹${grand}</span></div>
-      <button class="btn btn-primary btn-full" style="font-size:16px;padding:12px;" onclick="goCheckout()">
+      <button class="btn btn-primary btn-full" style="font-size:16px;padding:14px;" onclick="goCheckout()">
         Proceed to Checkout →
+      </button>
+      <button class="btn btn-full" onclick="orderViaWhatsApp()" style="margin-top:10px;font-size:14px;padding:12px;background:#25D366;color:#fff;border:none;border-radius:var(--radius-sm);">
+        💬 Order via WhatsApp
       </button>`;
+    }
+
+    /* ---- WhatsApp Order ---- */
+    function orderViaWhatsApp() {
+      const items = CartDB.items();
+      if (!items.length) return;
+      const sub = CartDB.total();
+      const del = sub >= 1000 ? 0 : 60;
+      const grand = sub + del;
+      let msg = '🎆 *New Order from Website*\n\n';
+      items.forEach(item => {
+        msg += `• ${item.emoji || '🎆'} ${item.name} × ${item.qty} = ₹${item.lineTotal}\n`;
+      });
+      msg += `\n💰 *Subtotal:* ₹${sub}`;
+      msg += `\n🚚 *Delivery:* ${del === 0 ? 'FREE' : '₹' + del}`;
+      msg += `\n✅ *Total:* ₹${grand}`;
+      msg += '\n\nPlease confirm my order. 🙏';
+      const url = 'https://wa.me/919677984858?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
     }
 
     /* ---- Checkout ---- */
@@ -550,16 +1418,16 @@
       </div>
       <div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;">
         ${items.map(i => `
-          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);font-size:13px;">
+          <div style="display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;">
             <span>${i.emoji || ''} ${i.name} × ${i.qty}</span>
-            <span style="font-weight:600;">₹${i.lineTotal}</span>
+            <span style="font-weight:600;color:var(--gold);">₹${i.lineTotal}</span>
           </div>`).join('')}
-        <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--accent-lt);font-weight:700;font-size:15px;">
+        <div style="display:flex;justify-content:space-between;padding:12px 14px;background:var(--gold-subtle);font-weight:700;font-size:15px;color:var(--gold);">
           <span>Grand Total</span><span>₹${grand}</span>
         </div>
       </div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">💵 Payment: Cash on Delivery</p>
-      <button class="btn btn-primary btn-full" style="padding:12px;font-size:16px;" onclick="placeOrder()">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">💵 Payment: Cash on Delivery</p>
+      <button class="btn btn-primary btn-full" style="padding:14px;font-size:16px;" onclick="placeOrder()">
         ✅ Confirm Order
       </button>`;
 
@@ -582,12 +1450,12 @@
       const order = OrdersDB.place(user.id, name, phone, address, items, total);
       closeCheckout();
       document.getElementById('checkout-content').innerHTML = `
-      <div style="text-align:center;padding:24px 0;">
-        <div style="font-size:56px;margin-bottom:12px;">🎉</div>
-        <h3 style="color:var(--success);margin-bottom:8px;">Order Placed!</h3>
-        <p style="color:var(--text-muted);">Order ID: <strong>${order.id}</strong></p>
-        <p style="color:var(--text-muted);margin-top:6px;">We'll deliver to your address within 2-3 days.</p>
-        <a href="customer-dashboard.html" class="btn btn-primary" style="margin-top:20px;">View My Orders</a>
+      <div style="text-align:center;padding:32px 0;">
+        <div style="font-size:64px;margin-bottom:16px;">🎉</div>
+        <h3 style="color:var(--neon-green);margin-bottom:10px;font-size:22px;">Order Placed!</h3>
+        <p style="color:var(--text-secondary);">Order ID: <strong style="color:var(--gold);">${order.id}</strong></p>
+        <p style="color:var(--text-muted);margin-top:8px;">We'll deliver to your address within 2-3 days.</p>
+        <a href="customer-dashboard.html" class="btn btn-primary" style="margin-top:24px;">View My Orders</a>
       </div>`;
       document.getElementById('checkout-modal').classList.add('open');
       updateCartBadge();
