@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +8,11 @@
   <meta name="description" content="Login or register to shop premium Sivakasi crackers at Saravana Agency." />
   <link rel="stylesheet" href="style.css" />
   <style>
-    body { display: flex; flex-direction: column; min-height: 100vh; }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
     /* --- Hero bar at top --- */
     .login-header {
@@ -16,12 +21,14 @@
       padding: 24px 24px;
       text-align: center;
     }
+
     .login-header .brand {
       font-family: var(--font-head);
       color: var(--gold);
       font-size: 28px;
       text-shadow: 0 0 20px rgba(244, 162, 37, 0.3);
     }
+
     .login-header .sub {
       color: var(--text-secondary);
       font-size: 13px;
@@ -40,6 +47,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .login-wrapper::before {
       content: '';
       position: absolute;
@@ -52,6 +60,7 @@
       background: radial-gradient(circle, rgba(244, 162, 37, 0.05), transparent 60%);
       pointer-events: none;
     }
+
     .login-box {
       background: var(--bg-card);
       backdrop-filter: blur(20px);
@@ -73,6 +82,7 @@
       margin-bottom: 28px;
       gap: 4px;
     }
+
     .tab-btn {
       flex: 1;
       background: none;
@@ -87,13 +97,23 @@
       cursor: pointer;
       letter-spacing: 0.5px;
     }
+
     .tab-btn.active {
       color: var(--gold);
       border-bottom-color: var(--gold);
     }
-    .tab-btn:hover { color: var(--text-secondary); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+
+    .tab-btn:hover {
+      color: var(--text-secondary);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
 
     /* --- Admin hint box --- */
     .admin-hint {
@@ -105,7 +125,10 @@
       color: var(--text-secondary);
       margin-bottom: 20px;
     }
-    .admin-hint strong { color: var(--gold); }
+
+    .admin-hint strong {
+      color: var(--gold);
+    }
 
     /* --- Divider --- */
     .or-divider {
@@ -116,7 +139,9 @@
       color: var(--text-muted);
       font-size: 13px;
     }
-    .or-divider::before, .or-divider::after {
+
+    .or-divider::before,
+    .or-divider::after {
       content: '';
       flex: 1;
       height: 1px;
@@ -130,13 +155,17 @@
       color: var(--text-muted);
       margin-top: 20px;
     }
+
     .switch-link a {
       color: var(--gold);
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition-fast);
     }
-    .switch-link a:hover { text-shadow: 0 0 10px rgba(244, 162, 37, 0.3); }
+
+    .switch-link a:hover {
+      text-shadow: 0 0 10px rgba(244, 162, 37, 0.3);
+    }
 
     /* --- Footer --- */
     .login-footer {
@@ -147,7 +176,10 @@
       color: var(--text-muted);
       font-size: 13px;
     }
-    .login-footer a { color: var(--gold); }
+
+    .login-footer a {
+      color: var(--gold);
+    }
 
     /* Floating decorations */
     .login-deco {
@@ -157,162 +189,172 @@
       pointer-events: none;
       animation: diayFloat 6s ease-in-out infinite;
     }
+
     @keyframes diayFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(10deg); }
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(10deg);
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- Header -->
-<div class="login-header">
-  <div class="brand"> Saravana Agency Crackers</div>
-  <div class="sub">Sri Ramapuram, Eranampatti, Tamil Nadu &nbsp;|&nbsp;  096779 84858</div>
-</div>
-
-<!-- Main -->
-<div class="login-wrapper">
-  <!-- Floating decorations -->
-  <span class="login-deco" style="top:10%;left:10%;animation-delay:0s;"></span>
-  <span class="login-deco" style="top:20%;right:15%;animation-delay:1s;"></span>
-  <span class="login-deco" style="bottom:15%;left:20%;animation-delay:2s;"></span>
-  <span class="login-deco" style="bottom:25%;right:10%;animation-delay:0.5s;"></span>
-
-  <div class="login-box">
-
-    <!-- Tabs -->
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('login')">Login</button>
-      <button class="tab-btn" onclick="switchTab('register')">Register</button>
-    </div>
-
-    <!-- ===== CUSTOMER LOGIN ===== -->
-    <div class="tab-panel active" id="tab-login">
-      <h3 style="color:var(--gold);margin-bottom:6px;font-family:var(--font-head);font-size:24px;">Welcome Back!</h3>
-      <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Sign in to continue shopping</p>
-      <div id="login-error" class="alert alert-danger" style="display:none;"></div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="text" id="login-email" placeholder="you@example.com" />
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-password" placeholder="Enter your password" />
-      </div>
-      <button class="btn btn-primary btn-full" onclick="doLogin()" style="padding:14px;font-size:16px;">
-        Login →
-      </button>
-      <div class="switch-link">
-        Don't have an account? <a onclick="switchTab('register')">Register here</a>
-      </div>
-    </div>
-
-    <!-- ===== CUSTOMER REGISTER ===== -->
-    <div class="tab-panel" id="tab-register">
-      <h3 style="color:var(--gold);margin-bottom:6px;font-family:var(--font-head);font-size:24px;">Create Account</h3>
-      <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Join us for exclusive Diwali deals</p>
-      <div id="reg-error"   class="alert alert-danger"  style="display:none;"></div>
-      <div id="reg-success" class="alert alert-success" style="display:none;"></div>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="reg-name" placeholder="Your full name" />
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="reg-email" placeholder="you@example.com" />
-        </div>
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="tel" id="reg-phone" placeholder="10-digit mobile" maxlength="10" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="reg-pass" placeholder="Create a password (min 6 chars)" />
-      </div>
-      <button class="btn btn-primary btn-full" onclick="doRegister()" style="padding:14px;font-size:16px;">
-        Create Account →
-      </button>
-      <div class="switch-link">
-        Already have an account? <a onclick="switchTab('login')">Login</a>
-      </div>
-    </div>
-
-    <!-- Admin tab removed, now fully handled inside Login tab -->
-
+  <!-- Header -->
+  <div class="login-header">
+    <div class="brand"> Saravana Agency Crackers</div>
+    <div class="sub">Sri Ramapuram, Eranampatti, Tamil Nadu &nbsp;|&nbsp; 96779 84858</div>
   </div>
-</div>
 
-<!-- Footer -->
-<div class="login-footer">
-  &copy; 2025 Saravana Agency Crackers Shop &nbsp;|&nbsp;
-  <a href="index.html">← Back to Shop</a>
-</div>
+  <!-- Main -->
+  <div class="login-wrapper">
+    <!-- Floating decorations -->
+    <span class="login-deco" style="top:10%;left:10%;animation-delay:0s;"></span>
+    <span class="login-deco" style="top:20%;right:15%;animation-delay:1s;"></span>
+    <span class="login-deco" style="bottom:15%;left:20%;animation-delay:2s;"></span>
+    <span class="login-deco" style="bottom:25%;right:10%;animation-delay:0.5s;"></span>
 
-<div id="toast"></div>
-<script src="data.js"></script>
-<script>
-  // If already logged in, redirect
-  const cur = AuthDB.current();
-  if (cur) {
-    window.location.href = cur.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
-  }
+    <div class="login-box">
 
-  function switchTab(name) {
-    document.querySelectorAll('.tab-btn').forEach((b, i) => {
-      b.classList.toggle('active', ['login','register','admin'][i] === name);
+      <!-- Tabs -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+        <button class="tab-btn" onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- ===== CUSTOMER LOGIN ===== -->
+      <div class="tab-panel active" id="tab-login">
+        <h3 style="color:var(--gold);margin-bottom:6px;font-family:var(--font-head);font-size:24px;">Welcome Back!</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Sign in to continue shopping</p>
+        <div id="login-error" class="alert alert-danger" style="display:none;"></div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="text" id="login-email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password" />
+        </div>
+        <button class="btn btn-primary btn-full" onclick="doLogin()" style="padding:14px;font-size:16px;">
+          Login →
+        </button>
+        <div class="switch-link">
+          Don't have an account? <a onclick="switchTab('register')">Register here</a>
+        </div>
+      </div>
+
+      <!-- ===== CUSTOMER REGISTER ===== -->
+      <div class="tab-panel" id="tab-register">
+        <h3 style="color:var(--gold);margin-bottom:6px;font-family:var(--font-head);font-size:24px;">Create Account</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Join us for exclusive Diwali deals</p>
+        <div id="reg-error" class="alert alert-danger" style="display:none;"></div>
+        <div id="reg-success" class="alert alert-success" style="display:none;"></div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="reg-name" placeholder="Your full name" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="reg-email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="reg-phone" placeholder="10-digit mobile" maxlength="10" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="reg-pass" placeholder="Create a password (min 6 chars)" />
+        </div>
+        <button class="btn btn-primary btn-full" onclick="doRegister()" style="padding:14px;font-size:16px;">
+          Create Account →
+        </button>
+        <div class="switch-link">
+          Already have an account? <a onclick="switchTab('login')">Login</a>
+        </div>
+      </div>
+
+      <!-- Admin tab removed, now fully handled inside Login tab -->
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="login-footer">
+    &copy; 2025 Saravana Agency Crackers Shop &nbsp;|&nbsp;
+    <a href="index.html">← Back to Shop</a>
+  </div>
+
+  <div id="toast"></div>
+  <script src="data.js"></script>
+  <script>
+    // If already logged in, redirect
+    const cur = AuthDB.current();
+    if (cur) {
+      window.location.href = cur.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', ['login', 'register', 'admin'][i] === name);
+      });
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    function doLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value;
+      const err = document.getElementById('login-error');
+      err.style.display = 'none';
+      if (!email || !pass) { err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return; }
+      const result = AuthDB.login(email, pass);
+      if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
+      window.location.href = result.user.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+    }
+
+    function doRegister() {
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const pass = document.getElementById('reg-pass').value;
+      const err = document.getElementById('reg-error');
+      const suc = document.getElementById('reg-success');
+      err.style.display = 'none'; suc.style.display = 'none';
+      if (!name || !email || !phone || !pass) {
+        err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return;
+      }
+      if (pass.length < 6) {
+        err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        err.textContent = 'Enter a valid 10-digit phone number.'; err.style.display = 'block'; return;
+      }
+      const result = AuthDB.register(name, email, phone, pass);
+      if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
+      suc.textContent = 'Account created! Logging you in…';
+      suc.style.display = 'block';
+      AuthDB.login(email, pass);
+      setTimeout(() => window.location.href = 'customer-dashboard.html', 1200);
+    }
+
+    // doAdminLogin removed as it's handled by doLogin -> AuthDB
+
+    // Press Enter to submit
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const active = document.querySelector('.tab-panel.active')?.id;
+      if (active === 'tab-login') doLogin();
+      if (active === 'tab-register') doRegister();
     });
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-  }
-
-  function doLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const pass  = document.getElementById('login-password').value;
-    const err   = document.getElementById('login-error');
-    err.style.display = 'none';
-    if (!email || !pass) { err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return; }
-    const result = AuthDB.login(email, pass);
-    if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
-    window.location.href = result.user.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
-  }
-
-  function doRegister() {
-    const name  = document.getElementById('reg-name').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const phone = document.getElementById('reg-phone').value.trim();
-    const pass  = document.getElementById('reg-pass').value;
-    const err   = document.getElementById('reg-error');
-    const suc   = document.getElementById('reg-success');
-    err.style.display = 'none'; suc.style.display = 'none';
-    if (!name || !email || !phone || !pass) {
-      err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return;
-    }
-    if (pass.length < 6) {
-      err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return;
-    }
-    if (!/^\d{10}$/.test(phone)) {
-      err.textContent = 'Enter a valid 10-digit phone number.'; err.style.display = 'block'; return;
-    }
-    const result = AuthDB.register(name, email, phone, pass);
-    if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
-    suc.textContent = 'Account created! Logging you in…';
-    suc.style.display = 'block';
-    AuthDB.login(email, pass);
-    setTimeout(() => window.location.href = 'customer-dashboard.html', 1200);
-  }
-
-  // doAdminLogin removed as it's handled by doLogin -> AuthDB
-
-  // Press Enter to submit
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') return;
-    const active = document.querySelector('.tab-panel.active')?.id;
-    if (active === 'tab-login')    doLogin();
-    if (active === 'tab-register') doRegister();
-  });
-</script>
+  </script>
 </body>
+
 </html>
