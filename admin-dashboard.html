@@ -123,13 +123,13 @@
 <nav class="navbar" id="main-navbar">
   <div class="navbar-brand">
     <div>
-      <div class="logo-text">🪔 Saravana Agency — Admin</div>
+      <div class="logo-text"> Saravana Agency — Admin</div>
       <div class="logo-sub">Shop Management Panel</div>
     </div>
   </div>
   <ul class="navbar-links">
-    <li><a href="index.html" target="_blank">🏠 View Shop</a></li>
-    <li><button onclick="doLogout()">🚪 Logout</button></li>
+    <li><a href="index.html" target="_blank"> View Shop</a></li>
+    <li><button onclick="doLogout()"> Logout</button></li>
   </ul>
 </nav>
 
@@ -140,19 +140,19 @@
   <div class="sidebar">
     <div class="sidebar-section-title">Admin Panel</div>
     <a class="sidebar-link active" onclick="showSection('overview')" id="link-overview">
-      <span class="icon">📊</span> Overview
+      <span class="icon"></span> Overview
     </a>
     <a class="sidebar-link" onclick="showSection('products')" id="link-products">
-      <span class="icon">🎆</span> Products
+      <span class="icon"></span> Products
     </a>
     <a class="sidebar-link" onclick="showSection('orders')" id="link-orders">
-      <span class="icon">📦</span> All Orders
+      <span class="icon"></span> All Orders
     </a>
     <a class="sidebar-link" onclick="showSection('customers')" id="link-customers">
-      <span class="icon">👥</span> Customers
+      <span class="icon"></span> Customers
     </a>
     <a class="sidebar-link" onclick="doLogout()">
-      <span class="icon">🚪</span> Logout
+      <span class="icon"></span> Logout
     </a>
   </div>
 
@@ -161,14 +161,14 @@
 
     <!-- ===== OVERVIEW ===== -->
     <div class="section-page active" id="section-overview">
-      <h2>📊 Dashboard Overview</h2>
+      <h2> Dashboard Overview</h2>
       <div class="stats-grid" id="stats-grid"></div>
       <div class="card" style="margin-bottom:24px;">
-        <h4 style="color:var(--gold);margin-bottom:16px;font-family:var(--font-head);font-size:18px;">⚠️ Low Stock Products (≤ 10 units)</h4>
+        <h4 style="color:var(--gold);margin-bottom:16px;font-family:var(--font-head);font-size:18px;"> Low Stock Products (≤ 10 units)</h4>
         <div id="low-stock-list"></div>
       </div>
       <div class="card">
-        <h4 style="color:var(--gold);margin-bottom:16px;font-family:var(--font-head);font-size:18px;">📦 Recent Orders</h4>
+        <h4 style="color:var(--gold);margin-bottom:16px;font-family:var(--font-head);font-size:18px;"> Recent Orders</h4>
         <div id="recent-orders-list"></div>
       </div>
     </div>
@@ -176,9 +176,9 @@
     <!-- ===== PRODUCTS ===== -->
     <div class="section-page" id="section-products">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-        <h2 style="margin-bottom:0;">🎆 Products</h2>
+        <h2 style="margin-bottom:0;"> Products</h2>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <input type="text" id="product-search" placeholder="🔍 Search..." oninput="renderAdminProducts()"
+          <input type="text" id="product-search" placeholder=" Search..." oninput="renderAdminProducts()"
             style="padding:10px 16px;border:1px solid var(--border);border-radius:50px;font-size:14px;outline:none;width:220px;background:var(--bg-glass);color:var(--text-primary);" />
           <button class="btn btn-primary" onclick="openProductModal()">+ Add Product</button>
         </div>
@@ -188,13 +188,13 @@
 
     <!-- ===== ORDERS ===== -->
     <div class="section-page" id="section-orders">
-      <h2>📦 All Orders</h2>
+      <h2> All Orders</h2>
       <div id="all-orders-container"></div>
     </div>
 
     <!-- ===== CUSTOMERS ===== -->
     <div class="section-page" id="section-customers">
-      <h2>👥 Customers</h2>
+      <h2> Customers</h2>
       <div class="table-wrap">
         <table id="customers-table">
           <thead>
@@ -231,7 +231,7 @@
       <div class="upload-area" onclick="document.getElementById('img-input').click()">
         <img id="img-preview" src="" alt="Preview" />
         <div id="upload-hint">
-          <div style="font-size:36px;margin-bottom:8px;">📷</div>
+          <div style="font-size:36px;margin-bottom:8px;"></div>
           <p style="font-size:13px;color:var(--text-muted);">Click to upload image (JPG, PNG)</p>
         </div>
         <input type="file" id="img-input" accept="image/*" onchange="previewImage(event)" />
@@ -243,21 +243,17 @@
       <input type="text" id="p-name" placeholder="e.g. Gold Sparklers (36 pcs)" />
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label>Category *</label>
-        <select id="p-cat">
-          <option value="sparklers">✨ Sparklers</option>
-          <option value="ground">🌀 Ground Crackers</option>
-          <option value="sky">🚀 Sky Shots</option>
-          <option value="fancy">🎇 Fancy Items</option>
-          <option value="gift">🎁 Gift Boxes</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Emoji Icon</label>
-        <input type="text" id="p-emoji" placeholder="e.g. ✨ 🎆 🌸 🚀" maxlength="4" />
-      </div>
+    <div class="form-group" id="cat-group">
+      <label>Category *</label>
+      <select id="p-cat" onchange="handleCategoryChange()">
+        <option value="sparklers"> Sparklers</option>
+        <option value="ground"> Ground Crackers</option>
+        <option value="sky"> Sky Shots</option>
+        <option value="fancy"> Fancy Items</option>
+        <option value="gift"> Gift Boxes</option>
+        <option value="new_cat_option" style="color: var(--neon-green); font-weight: bold;">+ Add New Category...</option>
+      </select>
+      <input type="text" id="p-cat-new" placeholder="Enter custom category name..." style="display:none; margin-top:8px;" />
     </div>
 
     <div class="form-row">
@@ -299,15 +295,15 @@
       <div class="form-group">
         <label>Status</label>
         <select id="p-active">
-          <option value="true">✅ Active (visible)</option>
-          <option value="false">❌ Hidden from shop</option>
+          <option value="true"> Active (visible)</option>
+          <option value="false"> Hidden from shop</option>
         </select>
       </div>
     </div>
 
     <div id="modal-error" class="alert alert-danger" style="display:none;"></div>
     <div style="display:flex;gap:10px;margin-top:8px;">
-      <button class="btn btn-primary btn-full" onclick="saveProduct()">💾 Save Product</button>
+      <button class="btn btn-primary btn-full" onclick="saveProduct()"> Save Product</button>
       <button class="btn btn-outline" onclick="closeProductModal()" style="min-width:100px;">Cancel</button>
     </div>
   </div>
@@ -355,16 +351,16 @@
     const revenue   = orders.reduce((s, o) => s + o.total, 0);
 
     document.getElementById('stats-grid').innerHTML = `
-      <div class="stat-card"><div class="stat-icon">🎆</div>
+      <div class="stat-card"><div class="stat-icon"></div>
         <div class="stat-value">${products.filter(p => p.active).length}</div>
         <div class="stat-label">Active Products</div></div>
-      <div class="stat-card"><div class="stat-icon">📦</div>
+      <div class="stat-card"><div class="stat-icon"></div>
         <div class="stat-value">${orders.length}</div>
         <div class="stat-label">Total Orders</div></div>
-      <div class="stat-card"><div class="stat-icon">👥</div>
+      <div class="stat-card"><div class="stat-icon"></div>
         <div class="stat-value">${customers.length}</div>
         <div class="stat-label">Customers</div></div>
-      <div class="stat-card"><div class="stat-icon">💰</div>
+      <div class="stat-card"><div class="stat-icon"></div>
         <div class="stat-value">₹${revenue.toLocaleString('en-IN')}</div>
         <div class="stat-label">Total Revenue</div></div>`;
 
@@ -382,7 +378,7 @@
             </tr>`).join('')}
           </tbody>
         </table></div>`
-      : `<p style="color:var(--neon-green);font-size:14px;">✅ All products have sufficient stock.</p>`;
+      : `<p style="color:var(--neon-green);font-size:14px;"> All products have sufficient stock.</p>`;
 
     // Recent orders
     const recent = orders.slice(0, 5);
@@ -417,7 +413,7 @@
       return `
         <div class="admin-product-card ${p.active ? '' : 'inactive'}">
           <div class="apc-img">
-            ${p.image ? `<img src="${p.image}" alt="${p.name}" />` : `<span style="font-size:48px;">${p.emoji || '🎆'}</span>`}
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" />` : `<span style="font-size:48px;">${p.emoji || ''}</span>`}
             <div class="apc-status">
               ${p.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Hidden</span>'}
             </div>
@@ -432,12 +428,12 @@
               ${disc > 0 ? `<span class="badge badge-green" style="margin-left:6px;">${disc}% off</span>` : ''}
             </div>
             <div class="apc-stock ${p.stock <= 10 ? 'low' : ''}">
-              📦 Stock: ${p.stock} ${p.unit}${p.stock <= 10 ? ' ⚠️' : ''}
+               Stock: ${p.stock} ${p.unit}${p.stock <= 10 ? ' ' : ''}
             </div>
           </div>
           <div class="apc-actions">
-            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="openProductModal('${p.id}')">✏️ Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}','${p.name.replace(/'/g,"\\'")}')" title="Delete">🗑</button>
+            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="openProductModal('${p.id}')"> Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}','${p.name.replace(/'/g,"\\'")}')" title="Delete">🗑️</button>
           </div>
         </div>`;
     }).join('');
@@ -454,11 +450,21 @@
     if (id) {
       const p = ProductsDB.getById(id);
       if (!p) return;
-      document.getElementById('modal-title').textContent = '✏️ Edit Product';
+      document.getElementById('modal-title').textContent = ' Edit Product';
       document.getElementById('edit-id').value  = id;
       document.getElementById('p-name').value   = p.name;
-      document.getElementById('p-cat').value    = p.category;
-      document.getElementById('p-emoji').value  = p.emoji;
+      const sel = document.getElementById('p-cat');
+      let optionExists = false;
+      for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === p.category) { optionExists = true; break; }
+      }
+      if (optionExists) {
+        sel.value = p.category;
+      } else {
+        sel.value = 'new_cat_option';
+        document.getElementById('p-cat-new').style.display = 'block';
+        document.getElementById('p-cat-new').value = p.category;
+      }
       document.getElementById('p-price').value  = p.price;
       document.getElementById('p-mrp').value    = p.mrp;
       document.getElementById('p-stock').value  = p.stock;
@@ -477,7 +483,8 @@
       document.getElementById('edit-id').value  = '';
       document.getElementById('p-name').value   = '';
       document.getElementById('p-cat').value    = 'sparklers';
-      document.getElementById('p-emoji').value  = '';
+      document.getElementById('p-cat-new').style.display = 'none';
+      document.getElementById('p-cat-new').value = '';
       document.getElementById('p-price').value  = '';
       document.getElementById('p-mrp').value    = '';
       document.getElementById('p-stock').value  = '';
@@ -498,7 +505,7 @@
     const mrp   = parseFloat(document.getElementById('p-mrp').value);
     const el    = document.getElementById('discount-preview');
     if (price > 0 && mrp > price) {
-      el.textContent = '✅ Discount: ' + Math.round((1 - price / mrp) * 100) + '% off';
+      el.textContent = ' Discount: ' + Math.round((1 - price / mrp) * 100) + '% off';
     } else {
       el.textContent = '';
     }
@@ -518,14 +525,28 @@
     reader.readAsDataURL(file);
   }
 
+  function handleCategoryChange() {
+    const sel = document.getElementById('p-cat');
+    if (sel.value === 'new_cat_option') {
+      document.getElementById('p-cat-new').style.display = 'block';
+      document.getElementById('p-cat-new').focus();
+    } else {
+      document.getElementById('p-cat-new').style.display = 'none';
+      document.getElementById('p-cat-new').value = '';
+    }
+  }
+
   /* ---- Save Product ---- */
   function saveProduct() {
     const err   = document.getElementById('modal-error');
     err.style.display = 'none';
 
     const name  = document.getElementById('p-name').value.trim();
-    const cat   = document.getElementById('p-cat').value;
-    const emoji = document.getElementById('p-emoji').value.trim();
+    let cat   = document.getElementById('p-cat').value;
+    if (cat === 'new_cat_option') {
+      cat = document.getElementById('p-cat-new').value.trim() || 'Uncategorized';
+    }
+    const emoji = ''; // Emoji icon removed
     const price = parseFloat(document.getElementById('p-price').value);
     const mrp   = parseFloat(document.getElementById('p-mrp').value) || price;
     const stock = parseInt(document.getElementById('p-stock').value);
@@ -544,10 +565,10 @@
 
     if (editId) {
       ProductsDB.update(editId, data);
-      showToast('✅ Product updated!');
+      showToast(' Product updated!');
     } else {
       ProductsDB.add(data);
-      showToast('✅ Product added!');
+      showToast(' Product added!');
     }
 
     closeProductModal();
@@ -561,7 +582,7 @@
     ProductsDB.delete(id);
     renderAdminProducts();
     renderOverview();
-    showToast('🗑 Product deleted.');
+    showToast(' Product deleted.');
   }
 
   /* ---- Quick Stock Edit ---- */
@@ -575,7 +596,7 @@
     ProductsDB.update(id, { stock: n });
     renderOverview();
     renderAdminProducts();
-    showToast('✅ Stock updated!');
+    showToast(' Stock updated!');
   }
 
   /* ================================================================
@@ -610,13 +631,13 @@
         </div>
         <div class="order-admin-body">
           <div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;">
-            <span>👤 <strong>${o.userName}</strong></span>
-            <span>📞 ${o.userPhone}</span>
-            <span>💰 Total: <strong style="color:var(--gold);">₹${o.total}</strong></span>
+            <span> <strong>${o.userName}</strong></span>
+            <span> ${o.userPhone}</span>
+            <span> Total: <strong style="color:var(--gold);">₹${o.total}</strong></span>
           </div>
-          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">📍 ${o.userAddress}</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;"> ${o.userAddress}</div>
           <div style="font-size:13px;">
-            ${o.items.map(i => `<span style="display:inline-block;background:var(--gold-subtle);padding:4px 12px;border-radius:6px;margin:2px;border:1px solid var(--border-gold);">${i.emoji || '🎆'} ${i.name} ×${i.qty}</span>`).join('')}
+            ${o.items.map(i => `<span style="display:inline-block;background:var(--gold-subtle);padding:4px 12px;border-radius:6px;margin:2px;border:1px solid var(--border-gold);">${i.emoji || ''} ${i.name} ×${i.qty}</span>`).join('')}
           </div>
         </div>
       </div>`).join('');
@@ -624,7 +645,7 @@
 
   function updateOrderStatus(id, status) {
     OrdersDB.updateStatus(id, status);
-    showToast(`✅ Order status updated to "${status}"`);
+    showToast(` Order status updated to "${status}"`);
     renderAllOrders();
     renderOverview();
   }

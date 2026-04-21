@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Saravana Agency Crackers — Premium Sivakasi Fireworks</title>
-  <meta name="description" content="Buy premium quality Sivakasi crackers online. Sparklers, sky shots, fancy items, gift boxes with up to 40% off. Safe, certified, fast delivery across India." />
+  <meta name="description"
+    content="Buy premium quality Sivakasi crackers online. Sparklers, sky shots, fancy items, gift boxes with up to 40% off. Safe, certified, fast delivery across India." />
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ========== HERO SECTION ========== */
@@ -19,27 +20,32 @@
       overflow: hidden;
       background: radial-gradient(ellipse at center, #1a1020 0%, #0a0a0f 60%);
     }
+
     .hero-bg-canvas {
       position: absolute;
       inset: 0;
       z-index: 0;
     }
+
     .hero-bg-canvas canvas {
       width: 100%;
       height: 100%;
     }
+
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.85) 80%);
+      background: radial-gradient(ellipse at center, rgba(10, 10, 15, 0.3) 0%, rgba(10, 10, 15, 0.85) 80%);
       z-index: 1;
     }
+
     .hero-content {
       position: relative;
       z-index: 2;
       max-width: 800px;
       padding: 40px 24px;
     }
+
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -56,6 +62,7 @@
       text-transform: uppercase;
       animation: badge-pulse 2s ease-in-out infinite;
     }
+
     .hero h1 {
       font-family: var(--font-head);
       color: var(--text-primary);
@@ -64,12 +71,14 @@
       margin-bottom: 20px;
       letter-spacing: -1px;
     }
+
     .hero h1 .gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--neon-orange));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .hero-sub {
       color: var(--text-secondary);
       font-size: clamp(16px, 2vw, 20px);
@@ -77,6 +86,7 @@
       margin: 0 auto 36px;
       line-height: 1.6;
     }
+
     .hero-actions {
       display: flex;
       gap: 16px;
@@ -84,21 +94,25 @@
       flex-wrap: wrap;
       margin-bottom: 48px;
     }
+
     .hero-stats {
       display: flex;
       gap: 48px;
       justify-content: center;
       flex-wrap: wrap;
     }
+
     .hero-stat {
       text-align: center;
     }
+
     .hero-stat .value {
       font-size: 28px;
       font-weight: 800;
       color: var(--gold);
       text-shadow: 0 0 15px rgba(244, 162, 37, 0.3);
     }
+
     .hero-stat .label {
       font-size: 12px;
       color: var(--text-muted);
@@ -106,6 +120,7 @@
       letter-spacing: 1px;
       margin-top: 4px;
     }
+
     .scroll-indicator {
       position: absolute;
       bottom: 32px;
@@ -122,6 +137,7 @@
       text-transform: uppercase;
       animation: scrollBounce 2s ease-in-out infinite;
     }
+
     .scroll-indicator .arrow {
       width: 24px;
       height: 24px;
@@ -130,9 +146,17 @@
       transform: rotate(45deg);
       opacity: 0.5;
     }
+
     @keyframes scrollBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(10px);
+      }
     }
 
     /* ========== FLOATING DIYA DECORATORS ========== */
@@ -144,9 +168,17 @@
       pointer-events: none;
       z-index: 0;
     }
+
     @keyframes diayFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(10deg); }
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(10deg);
+      }
     }
 
     /* ========== SECTION HEADERS ========== */
@@ -155,15 +187,18 @@
       z-index: 1;
       padding: 80px 0;
     }
+
     .section-wrapper .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
+
     .section-header {
       text-align: center;
       margin-bottom: 56px;
     }
+
     .section-header .section-label {
       display: inline-flex;
       align-items: center;
@@ -175,6 +210,7 @@
       letter-spacing: 3px;
       margin-bottom: 16px;
     }
+
     .section-header .section-label::before,
     .section-header .section-label::after {
       content: '';
@@ -182,21 +218,25 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold));
     }
+
     .section-header .section-label::after {
       background: linear-gradient(90deg, var(--gold), transparent);
     }
+
     .section-header h2 {
       font-family: var(--font-head);
       font-size: clamp(28px, 4vw, 44px);
       color: var(--text-primary);
       margin-bottom: 14px;
     }
+
     .section-header h2 .gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .section-header p {
       color: var(--text-secondary);
       font-size: 16px;
@@ -210,11 +250,13 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
+
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 24px;
     }
+
     .category-card {
       position: relative;
       background: var(--bg-card);
@@ -227,6 +269,7 @@
       overflow: hidden;
       backdrop-filter: blur(20px);
     }
+
     .category-card::before {
       content: '';
       position: absolute;
@@ -235,12 +278,17 @@
       opacity: 0;
       transition: opacity 0.4s;
     }
+
     .category-card:hover {
       border-color: var(--border-gold);
       transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3), var(--shadow-gold);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), var(--shadow-gold);
     }
-    .category-card:hover::before { opacity: 1; }
+
+    .category-card:hover::before {
+      opacity: 1;
+    }
+
     .category-card .cat-icon {
       font-size: 48px;
       margin-bottom: 16px;
@@ -248,17 +296,23 @@
       filter: drop-shadow(0 0 10px rgba(244, 162, 37, 0.3));
       transition: transform 0.4s;
     }
-    .category-card:hover .cat-icon { transform: scale(1.15) rotate(5deg); }
+
+    .category-card:hover .cat-icon {
+      transform: scale(1.15) rotate(5deg);
+    }
+
     .category-card h3 {
       font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 8px;
     }
+
     .category-card p {
       font-size: 13px;
       color: var(--text-secondary);
     }
+
     .category-card .cat-count {
       margin-top: 14px;
       display: inline-block;
@@ -275,6 +329,7 @@
     .products-section {
       background: var(--bg-secondary);
     }
+
     .products-toolbar {
       display: flex;
       align-items: center;
@@ -283,11 +338,13 @@
       gap: 16px;
       margin-bottom: 32px;
     }
+
     .cat-filter-bar {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
     }
+
     .cat-btn {
       border: 1px solid var(--border);
       background: var(--bg-glass);
@@ -300,6 +357,7 @@
       cursor: pointer;
       backdrop-filter: blur(10px);
     }
+
     .cat-btn.active,
     .cat-btn:hover {
       background: linear-gradient(135deg, var(--gold), var(--neon-orange));
@@ -308,9 +366,11 @@
       box-shadow: 0 4px 15px rgba(244, 162, 37, 0.3);
       font-weight: 700;
     }
+
     .search-container {
       position: relative;
     }
+
     .search-container input {
       width: 280px;
       padding: 10px 16px 10px 40px;
@@ -323,11 +383,16 @@
       backdrop-filter: blur(10px);
       transition: var(--transition-fast);
     }
+
     .search-container input:focus {
       border-color: var(--gold);
       box-shadow: 0 0 20px rgba(244, 162, 37, 0.1);
     }
-    .search-container input::placeholder { color: var(--text-muted); }
+
+    .search-container input::placeholder {
+      color: var(--text-muted);
+    }
+
     .search-container .search-icon {
       position: absolute;
       left: 14px;
@@ -336,12 +401,15 @@
       font-size: 16px;
       color: var(--text-muted);
       pointer-events: none;
+      z-index: 2;
     }
+
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 24px;
     }
+
     .products-count {
       color: var(--text-muted);
       font-size: 14px;
@@ -354,6 +422,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .offers-section::before {
       content: '';
       position: absolute;
@@ -364,10 +433,17 @@
       background: radial-gradient(ellipse at center, rgba(244, 162, 37, 0.03) 0%, transparent 50%);
       animation: rotateGlow 20s linear infinite;
     }
+
     @keyframes rotateGlow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
+
     .offers-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -375,6 +451,7 @@
       position: relative;
       z-index: 1;
     }
+
     .offer-card {
       background: var(--bg-card);
       backdrop-filter: blur(20px);
@@ -386,6 +463,7 @@
       overflow: hidden;
       transition: var(--transition);
     }
+
     .offer-card::before {
       content: '';
       position: absolute;
@@ -395,16 +473,19 @@
       height: 4px;
       background: linear-gradient(90deg, var(--gold), var(--neon-orange), var(--neon-pink));
     }
+
     .offer-card:hover {
       border-color: var(--border-gold);
       transform: translateY(-6px);
       box-shadow: var(--shadow-gold);
     }
+
     .offer-card .offer-icon {
       font-size: 48px;
       margin-bottom: 16px;
       display: block;
     }
+
     .offer-card .offer-badge {
       display: inline-block;
       background: linear-gradient(135deg, var(--gold-subtle), rgba(244, 162, 37, 0.2));
@@ -417,12 +498,14 @@
       margin-bottom: 16px;
       animation: badge-pulse 2s ease-in-out infinite;
     }
+
     .offer-card h3 {
       font-size: 20px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 8px;
     }
+
     .offer-card p {
       font-size: 14px;
       color: var(--text-secondary);
@@ -433,11 +516,13 @@
       background: var(--bg-secondary);
       border-top: 1px solid var(--border);
     }
+
     .why-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 28px;
     }
+
     .why-card {
       background: var(--bg-card);
       backdrop-filter: blur(20px);
@@ -449,11 +534,13 @@
       position: relative;
       overflow: hidden;
     }
+
     .why-card:hover {
       border-color: var(--border-gold);
       transform: translateY(-6px);
       box-shadow: var(--shadow-gold);
     }
+
     .why-card .why-icon {
       width: 64px;
       height: 64px;
@@ -467,17 +554,20 @@
       font-size: 28px;
       transition: var(--transition);
     }
+
     .why-card:hover .why-icon {
       background: linear-gradient(135deg, var(--gold), var(--neon-orange));
       box-shadow: 0 0 30px rgba(244, 162, 37, 0.3);
       transform: scale(1.1);
     }
+
     .why-card h3 {
       font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 10px;
     }
+
     .why-card p {
       font-size: 14px;
       color: var(--text-secondary);
@@ -491,12 +581,14 @@
       border-top: 1px solid var(--border);
       overflow: hidden;
     }
+
     .cta-section::before {
       content: '';
       position: absolute;
       inset: 0;
       background: radial-gradient(ellipse at 30% 50%, rgba(244, 162, 37, 0.08), transparent 60%);
     }
+
     .cta-content {
       position: relative;
       z-index: 1;
@@ -505,29 +597,34 @@
       gap: 64px;
       align-items: center;
     }
+
     .cta-info h2 {
       font-family: var(--font-head);
       font-size: 36px;
       color: var(--text-primary);
       margin-bottom: 16px;
     }
+
     .cta-info h2 .gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .cta-info p {
       color: var(--text-secondary);
       font-size: 16px;
       margin-bottom: 32px;
       line-height: 1.7;
     }
+
     .cta-contacts {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
+
     .cta-contact-item {
       display: flex;
       align-items: center;
@@ -535,6 +632,7 @@
       color: var(--text-secondary);
       font-size: 15px;
     }
+
     .cta-contact-item .icon {
       width: 44px;
       height: 44px;
@@ -547,10 +645,12 @@
       font-size: 20px;
       flex-shrink: 0;
     }
+
     .cta-contact-item a {
       color: var(--gold);
       font-weight: 600;
     }
+
     .cta-map {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -559,29 +659,34 @@
       text-align: center;
       backdrop-filter: blur(20px);
     }
+
     .cta-map .store-icon {
       font-size: 56px;
       margin-bottom: 20px;
       display: block;
     }
+
     .cta-map h3 {
       color: var(--gold);
       font-family: var(--font-head);
       font-size: 22px;
       margin-bottom: 12px;
     }
+
     .cta-map p {
       color: var(--text-secondary);
       font-size: 14px;
       line-height: 1.6;
       margin-bottom: 20px;
     }
+
     .cta-map-details {
       display: flex;
       flex-direction: column;
       gap: 8px;
       text-align: left;
     }
+
     .cta-map-details .detail {
       display: flex;
       align-items: center;
@@ -597,6 +702,7 @@
       text-align: center;
       padding: 32px 24px;
     }
+
     footer .footer-brand {
       font-family: var(--font-head);
       font-size: 20px;
@@ -604,14 +710,17 @@
       margin-bottom: 10px;
       text-shadow: 0 0 10px rgba(244, 162, 37, 0.2);
     }
+
     footer p {
       color: var(--text-muted);
       font-size: 13px;
     }
+
     footer a {
       color: var(--gold);
       transition: var(--transition-fast);
     }
+
     footer a:hover {
       text-shadow: 0 0 10px rgba(244, 162, 37, 0.3);
     }
@@ -625,20 +734,60 @@
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
-      .hero { min-height: 90vh; }
-      .hero-stats { gap: 24px; }
-      .hero-stat .value { font-size: 22px; }
-      .cta-content { grid-template-columns: 1fr; gap: 40px; }
-      .products-toolbar { flex-direction: column; align-items: flex-start; }
-      .search-container input { width: 100%; }
-      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .category-card { padding: 24px 16px; }
-      .category-card .cat-icon { font-size: 36px; }
-      .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+      .hero {
+        min-height: 90vh;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      .hero-stat .value {
+        font-size: 22px;
+      }
+
+      .cta-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .products-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-container input {
+        width: 100%;
+      }
+
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .category-card {
+        padding: 24px 16px;
+      }
+
+      .category-card .cat-icon {
+        font-size: 36px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
     }
+
     @media (max-width: 480px) {
-      .categories-grid { grid-template-columns: repeat(2, 1fr); }
-      .hero-actions { flex-direction: column; align-items: center; }
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -649,15 +798,20 @@
 
   <!-- Promo Banner -->
   <div class="page-banner" id="promo-banner">
-    🎉 Diwali Special Sale — Up to 40% OFF! &nbsp;|&nbsp; Free Delivery above ₹1000 &nbsp;|&nbsp; 📞 096779 84858
+    🎉 Diwali Special Sale — Up to 40% OFF! &nbsp;|&nbsp; 🚚 Free Delivery above ₹1000 &nbsp;|&nbsp; 📞 96779 84858
   </div>
 
   <!-- Navbar -->
   <nav class="navbar" id="main-navbar">
     <div class="navbar-brand">
-      <div>
-        <div class="logo-text">🪔 Saravana Agency</div>
-        <div class="logo-sub">Premium Sivakasi Crackers</div>
+      <div style="display:flex; align-items:center;">
+        <img src="logo.png" alt="Saravana Agency"
+          style="height:42px; width:42px; border-radius:50%; margin-right:12px; border:2px solid var(--gold); object-fit:cover;"
+          onerror="this.style.display='none'">
+        <div>
+          <div class="logo-text" style="font-size: clamp(16px, 2vw, 20px);">Saravana Agency</div>
+          <div class="logo-sub">Crackers Shop</div>
+        </div>
       </div>
     </div>
     <ul class="navbar-links">
@@ -681,20 +835,34 @@
     <div class="hero-content">
       <div class="hero-badge">✨ Premium Sivakasi Crackers</div>
       <h1>Light Up Your <span class="gold">Celebration</span></h1>
-      <p class="hero-sub">Experience the magic of Diwali with our handcrafted, premium quality fireworks. Safe, certified, and delivered right to your doorstep.</p>
+      <p class="hero-sub">Experience the magic of Diwali with our handcrafted, premium quality fireworks. Safe,
+        certified, and delivered right to your doorstep.</p>
       <div class="hero-actions">
         <button class="btn btn-glow" onclick="scrollToProducts()" id="hero-shop-btn">
-          🛍️ Shop Now
+          🎇 Shop Now
         </button>
-        <a href="tel:09677984858" class="btn btn-outline" style="font-size:16px;padding:16px 32px;border-radius:var(--radius-md);">
+        <a href="tel:9677984858" class="btn btn-outline"
+          style="font-size:16px;padding:16px 32px;border-radius:var(--radius-md);">
           📞 Call to Order
         </a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="value">500+</div><div class="label">Products</div></div>
-        <div class="hero-stat"><div class="value">4.4★</div><div class="label">Rating</div></div>
-        <div class="hero-stat"><div class="value">10K+</div><div class="label">Happy Customers</div></div>
-        <div class="hero-stat"><div class="value">24/7</div><div class="label">Support</div></div>
+        <div class="hero-stat">
+          <div class="value">500+</div>
+          <div class="label">Products</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">4.4</div>
+          <div class="label">Rating</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">10K+</div>
+          <div class="label">Happy Customers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">24/7</div>
+          <div class="label">Support</div>
+        </div>
       </div>
     </div>
     <div class="scroll-indicator">
@@ -703,38 +871,41 @@
     </div>
   </section>
 
-  <!-- ==================== CATEGORIES SECTION ==================== -->
-  <section class="section-wrapper categories-section" id="categories-section">
+  <!-- ==================== QUICK LINKS SECTION ==================== -->
+  <section class="section-wrapper categories-section" id="quick-links-section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">🎆 Browse Collection</div>
-        <h2>Shop by <span class="gold">Category</span></h2>
-        <p>Find the perfect crackers for every celebration</p>
+        <div class="section-label">ℹ️ Discover More</div>
+        <h2>Important <span class="gold">Information</span></h2>
+        <p>Find everything you need to know about our shop and safety</p>
       </div>
-      <div class="categories-grid stagger-children" id="categories-grid">
-        <div class="category-card" onclick="scrollToProductsFiltered('sparklers')">
-          <span class="cat-icon">✨</span>
-          <h3>Sparklers</h3>
-          <p>Classic gold & colour sparklers for the whole family</p>
-          <span class="cat-count" id="cat-count-sparklers">0 products</span>
+      <div class="categories-grid stagger-children" id="quick-links-grid">
+        <div class="category-card"
+          onclick="document.getElementById('info-section').scrollIntoView({behavior: 'smooth'})">
+          <span class="cat-icon" style="font-size:40px;">🏬</span>
+          <h3>About Us</h3>
+          <p>Learn more about Saravana Agency Crackers</p>
+          <span class="cat-count"
+            style="cursor:pointer; background:var(--gold-subtle); color:var(--gold); padding:6px 16px; border-radius:20px; display:inline-block; margin-top:16px;">Read
+            More →</span>
         </div>
-        <div class="category-card" onclick="scrollToProductsFiltered('sky')">
-          <span class="cat-icon">🚀</span>
-          <h3>Sky Shots</h3>
-          <p>Multi-colour aerial displays that light up the sky</p>
-          <span class="cat-count" id="cat-count-sky">0 products</span>
+        <div class="category-card"
+          onclick="document.getElementById('info-section').scrollIntoView({behavior: 'smooth'})">
+          <span class="cat-icon" style="font-size:40px;">🛡️</span>
+          <h3>Safety Tips</h3>
+          <p>Important Dos and Don'ts for a safe celebration</p>
+          <span class="cat-count"
+            style="cursor:pointer; background:var(--gold-subtle); color:var(--gold); padding:6px 16px; border-radius:20px; display:inline-block; margin-top:16px;">Read
+            More →</span>
         </div>
-        <div class="category-card" onclick="scrollToProductsFiltered('fancy')">
-          <span class="cat-icon">🎇</span>
-          <h3>Fancy Items</h3>
-          <p>Waterfalls, fountains & spectacular visual effects</p>
-          <span class="cat-count" id="cat-count-fancy">0 products</span>
-        </div>
-        <div class="category-card" onclick="scrollToProductsFiltered('gift')">
-          <span class="cat-icon">🎁</span>
-          <h3>Gift Boxes</h3>
-          <p>Curated gift packs perfect for Diwali celebrations</p>
-          <span class="cat-count" id="cat-count-gift">0 products</span>
+        <div class="category-card"
+          onclick="document.getElementById('info-section').scrollIntoView({behavior: 'smooth'})">
+          <span class="cat-icon" style="font-size:40px;">📞</span>
+          <h3>Contact Us</h3>
+          <p>Get in touch for orders, details, and queries</p>
+          <span class="cat-count"
+            style="cursor:pointer; background:var(--gold-subtle); color:var(--gold); padding:6px 16px; border-radius:20px; display:inline-block; margin-top:16px;">Read
+            More →</span>
         </div>
       </div>
     </div>
@@ -744,7 +915,7 @@
   <section class="section-wrapper products-section" id="products-section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">🛍️ Shop Crackers</div>
+        <div class="section-label">🎆 Shop Crackers</div>
         <h2>Our <span class="gold">Products</span></h2>
         <p>Premium quality crackers at unbeatable prices</p>
       </div>
@@ -764,7 +935,8 @@
         </div>
       </div>
 
-      <div class="products-count"><span id="section-title">All Products</span> — <span id="product-count">0</span> items</div>
+      <div class="products-count"><span id="section-title">All Products</span> — <span id="product-count">0</span> items
+      </div>
       <div class="products-grid stagger-children" id="products-grid"></div>
     </div>
   </section>
@@ -773,13 +945,13 @@
   <section class="section-wrapper offers-section" id="offers-section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">🔥 Special Deals</div>
+        <div class="section-label">🏷️ Special Deals</div>
         <h2>Festival <span class="gold">Offers</span></h2>
         <p>Grab these exclusive Diwali deals before they expire</p>
       </div>
       <div class="offers-grid stagger-children">
         <div class="offer-card">
-          <span class="offer-icon">🎆</span>
+          <span class="offer-icon">🔥</span>
           <div class="offer-badge badge-glow">40% OFF</div>
           <h3>Diwali Mega Sale</h3>
           <p>Up to 40% off on all premium sky shots and fancy crackers this festive season</p>
@@ -791,7 +963,7 @@
           <p>Free home delivery on all orders above ₹1000. No hidden charges, door-to-door service</p>
         </div>
         <div class="offer-card">
-          <span class="offer-icon">🎁</span>
+          <span class="offer-icon">🎉</span>
           <div class="offer-badge badge-glow">COMBO</div>
           <h3>Family Gift Boxes</h3>
           <p>Special combo packs starting at ₹399 — save up to 30% with our curated gift boxes</p>
@@ -815,12 +987,12 @@
           <p>Every product is quality tested and meets all safety standards. Your family's safety is our priority.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon">✅</div>
+          <div class="why-icon">🏭</div>
           <h3>Sivakasi Certified</h3>
           <p>Direct from Sivakasi manufacturers. Authentic quality crackers with proper ISO certification.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon">🚀</div>
+          <div class="why-icon">⏱️</div>
           <h3>Fast Delivery</h3>
           <p>Same day dispatch. Get your crackers delivered in 2-3 business days with careful packaging.</p>
         </div>
@@ -839,7 +1011,8 @@
       <div class="cta-content reveal">
         <div class="cta-info">
           <h2>Visit Our <span class="gold">Store</span></h2>
-          <p>Come explore our massive collection of premium crackers. Walk-in customers get special in-store discounts and instant pickup.</p>
+          <p>Come explore our massive collection of premium crackers. Walk-in customers get special in-store discounts
+            and instant pickup.</p>
           <div class="cta-contacts">
             <div class="cta-contact-item">
               <div class="icon">📍</div>
@@ -847,10 +1020,10 @@
             </div>
             <div class="cta-contact-item">
               <div class="icon">📞</div>
-              <a href="tel:09677984858">096779 84858</a>
+              <a href="tel:9677984858">96779 84858</a>
             </div>
             <div class="cta-contact-item">
-              <div class="icon">⏰</div>
+              <div class="icon">🕒</div>
               <span>Open 24 Hours</span>
             </div>
           </div>
@@ -860,15 +1033,253 @@
           <h3>Saravana Agency</h3>
           <p>Premium Crackers Shop</p>
           <div class="cta-map-details">
-            <div class="detail">⭐ 4.4 Rating (17+ Reviews)</div>
-            <div class="detail">🏭 Direct from Sivakasi</div>
-            <div class="detail">📦 Free Delivery above ₹1000</div>
-            <div class="detail">🧒 Kids-Safe Products Available</div>
+            <div class="detail"> 4.4 Rating (17+ Reviews)</div>
+            <div class="detail"> Direct from Sivakasi</div>
+            <div class="detail"> Free Delivery above ₹1000</div>
+            <div class="detail"> Kids-Safe Products Available</div>
           </div>
-          <a href="https://wa.me/919677984858?text=Hi Sir, I want to order crackers" target="_blank"
-            class="btn btn-glow" style="margin-top:24px;font-size:15px;padding:14px 28px;">
-            💬 Order on WhatsApp
-          </a>
+          <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap;">
+            <a href="https://wa.me/919677984858?text=Hi Sir, I want to order crackers" target="_blank"
+              class="btn btn-glow" style="font-size:14px;padding:12px 24px;">
+              💬 WhatsApp
+            </a>
+            <a href="https://maps.app.goo.gl/9Hg13Uy5Mi6ztae89" target="_blank" class="btn btn-outline"
+              style="font-size:14px;padding:12px 24px;background:var(--bg-glass);">
+              📍 Get Directions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .info-section {
+      background: var(--bg-card);
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .info-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 15px;
+      padding: 0 24px;
+    }
+
+    .info-content h2 {
+      font-family: var(--font-head);
+      color: var(--gold);
+      font-size: 32px;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-gold);
+      padding-bottom: 12px;
+    }
+
+    .info-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .info-content p {
+      margin-bottom: 16px;
+    }
+
+    .info-content ul {
+      margin-left: 24px;
+      margin-bottom: 24px;
+    }
+
+    .info-content li {
+      margin-bottom: 10px;
+    }
+  </style>
+
+  <!-- ==================== DETAILS SECTION ==================== -->
+  <section class="section-wrapper info-section" id="info-section">
+    <div class="container info-content">
+      <h2>✨ About Us</h2>
+      <p><strong>Saravana Agency Crackers Shop</strong> is one of the trusted and well-known firecracker dealers located
+        in Reddiarchatram, Dindigul. We have been serving customers with quality fireworks for several years, making
+        every celebration more colorful, exciting, and memorable.</p>
+      <p>We offer a wide range of crackers including standard brands like Anil, Sony, and Sri Krishna, along with flower
+        pots, rockets, sparklers, kids special items, and festival combo boxes. Our goal is to provide high-quality
+        products at affordable prices while ensuring customer satisfaction.</p>
+      <p>Whether you are buying for personal celebrations or bulk orders for events, we are here to serve you with the
+        best deals and friendly support. During festive seasons like Diwali, we bring special offers and discounts to
+        make your shopping experience even better.</p>
+      <p>At Saravana Agency Crackers Shop, safety and quality are our top priorities. We also encourage the use of
+        eco-friendly (green) crackers for a safer and cleaner environment.</p>
+      <p>Visit us or contact us through WhatsApp to place your orders easily and celebrate your festival with joy and
+        brightness!</p>
+
+      <!-- Embedded styles for Safety Grid -->
+      <style>
+        .safety-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          margin-top: 40px;
+          margin-bottom: 40px;
+          background: var(--bg-glass);
+          border-radius: 16px;
+          padding: 40px;
+          border: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+          .safety-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 24px;
+          }
+        }
+
+        .safety-col h3 {
+          font-family: var(--font-head);
+          font-size: 28px;
+          color: var(--gold);
+          border-bottom: 3px solid var(--gold);
+          display: inline-block;
+          padding-bottom: 8px;
+          margin-top: 0;
+          margin-bottom: 32px;
+        }
+
+        .safety-col.donts h3 {
+          color: #ff4757;
+          border-bottom-color: #ff4757;
+        }
+
+        .safety-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 28px;
+        }
+
+        .safety-item-icon {
+          font-size: 20px;
+          flex-shrink: 0;
+          margin-top: -2px;
+        }
+
+        .safety-item-text h4 {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: 6px;
+          margin-top: 0;
+        }
+
+        .safety-item-text p {
+          font-size: 14px;
+          color: var(--text-secondary);
+          line-height: 1.6;
+          margin: 0;
+        }
+      </style>
+
+      <div class="safety-grid">
+        <div class="safety-col">
+          <h3>Do's</h3>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Instructions</h4>
+              <p>Display fireworks as per the instructions mentioned on the pack.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Outdoor</h4>
+              <p>Use fireworks only outdoor.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Branded Fireworks</h4>
+              <p>Buy fireworks from authorized / reputed manufacturers only.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Distance</h4>
+              <p>Light only one firework at a time, by one person. Others should watch from a safe distance.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Water</h4>
+              <p>Keep two buckets of water handy. In the event of fire or any mishap.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="safety-col donts">
+          <h3>Don'ts</h3>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't make tricks</h4>
+              <p>Never make your own fireworks.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't relight</h4>
+              <p>Never try to re-light or pick up fireworks that have not ignited fully.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't carry it</h4>
+              <p>Never carry fireworks in your pockets.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't Touch it</h4>
+              <p>After fireworks display never pick up fireworks that may be left over, they still may be active.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't wear loose clothes</h4>
+              <p>Do not wear loose clothing while using fireworks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>📞 Contact Information</h2>
+      <div
+        style="background:var(--bg-glass); border:1px solid var(--border-gold); box-shadow:0 0 20px rgba(244,162,37,0.1); border-radius:12px; padding:24px; margin-top:20px; border-left:4px solid var(--gold);">
+        <p style="font-size:18px; margin-bottom:12px; color:var(--text-primary);">📞 <strong>Phone & WhatsApp:</strong>
+          <a href="tel:9677984858" style="color:var(--gold); text-decoration:none; font-weight:bold;">96779 84858</a>
+        </p>
+        <p style="font-size:16px; margin-bottom:24px;">📍 <strong>Store Address:</strong> Sri Ramapuram, Eranampatti,
+          Tamil Nadu</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="tel:9677984858" class="btn btn-glow"
+            style="padding:10px 24px; font-size:14px; background:linear-gradient(135deg, var(--gold), var(--neon-orange)); color:#000; border:none;">📞
+            Call Now</a>
+          <a href="https://wa.me/919677984858?text=Hi%20Sir%2C%20I%20want%20to%20order%20crackers" target="_blank"
+            class="btn btn-outline" style="padding:10px 24px; font-size:14px; background:var(--bg-primary);">💬 WhatsApp
+            Us</a>
+          <a href="https://maps.app.goo.gl/9Hg13Uy5Mi6ztae89" target="_blank" class="btn btn-outline"
+            style="padding:10px 24px; font-size:14px; background:var(--bg-primary);">🗺️ Get Directions</a>
         </div>
       </div>
     </div>
@@ -876,24 +1287,19 @@
 
   <!-- Footer -->
   <footer>
-    <div class="footer-brand">🪔 Saravana Agency Crackers Shop</div>
+    <div class="footer-brand"> Saravana Agency Crackers Shop</div>
     <p>&copy; 2025 All rights reserved. &nbsp;|&nbsp;
-      <a href="login.html">Login / Register</a> &nbsp;|&nbsp;
-      <a href="admin-dashboard.html">Admin</a>
+      <a href="login.html">Login / Register</a>
     </p>
   </footer>
 
-  <!-- WhatsApp FAB -->
-  <a href="https://wa.me/919677984858?text=Hi%20Sir%2C%20I%20want%20to%20order%20crackers" target="_blank" class="whatsapp-fab" id="whatsapp-fab">
-    <span class="fab-icon">💬</span>
-    <span class="fab-text">Order via WhatsApp</span>
-  </a>
+  <!-- WhatsApp FAB completely removed as requested -->
 
   <!-- Cart Side Panel -->
   <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
   <div class="cart-panel" id="cart-panel">
     <div class="cart-panel-header">
-      <h3>🛒 Your Cart</h3>
+      <h3> Your Cart</h3>
       <button onclick="closeCart()">✕</button>
     </div>
     <div class="cart-panel-body" id="cart-body"></div>
@@ -904,7 +1310,7 @@
   <div class="modal-overlay" id="checkout-modal">
     <div class="modal">
       <div class="modal-header">
-        <h3>📦 Place Order</h3>
+        <h3> Place Order</h3>
         <button class="modal-close" onclick="closeCheckout()">✕</button>
       </div>
       <div id="checkout-content"></div>
@@ -917,7 +1323,7 @@
     /* ================================================================
        FIREWORKS CANVAS ANIMATION
     ================================================================ */
-    (function() {
+    (function () {
       const canvas = document.getElementById('fireworks-canvas');
       const ctx = canvas.getContext('2d');
       let W, H;
@@ -1035,7 +1441,7 @@
     /* ================================================================
        FLOATING PARTICLES (Sparks)
     ================================================================ */
-    (function() {
+    (function () {
       const canvas = document.getElementById('particles-canvas');
       const ctx = canvas.getContext('2d');
       let W, H;
@@ -1152,8 +1558,8 @@
       const el = document.getElementById('nav-account');
       if (user) {
         el.innerHTML = user.role === 'admin'
-          ? `<a href="admin-dashboard.html">⚙️ Admin</a>`
-          : `<a href="customer-dashboard.html">👤 ${user.name.split(' ')[0]}</a>`;
+          ? `<a href="admin-dashboard.html"> Admin</a>`
+          : `<a href="customer-dashboard.html"> ${user.name.split(' ')[0]}</a>`;
       } else {
         el.innerHTML = `<a href="login.html">Login / Register</a>`;
       }
@@ -1168,7 +1574,7 @@
       currentCat = cat;
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       const btns = document.querySelectorAll('.cat-btn');
-      const labels = { all: 'All Products', sparklers: '✨ Sparklers', ground: '🌀 Ground', sky: '🚀 Sky Shots', fancy: '🎇 Fancy', gift: '🎁 Gift Boxes' };
+      const labels = { all: 'All Products', sparklers: ' Sparklers', ground: ' Ground', sky: ' Sky Shots', fancy: ' Fancy', gift: ' Gift Boxes' };
       btns.forEach(b => { if (b.textContent.trim() === (labels[cat] || '').trim()) b.classList.add('active'); });
       renderProducts();
       setTimeout(() => {
@@ -1193,8 +1599,8 @@
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const labels = {
-        all: 'All Products', sparklers: '✨ Sparklers', ground: '🌀 Ground Crackers',
-        sky: '🚀 Sky Shots', fancy: '🎇 Fancy Items', gift: '🎁 Gift Boxes'
+        all: 'All Products', sparklers: ' Sparklers', ground: ' Ground Crackers',
+        sky: ' Sky Shots', fancy: ' Fancy Items', gift: ' Gift Boxes'
       };
       document.getElementById('section-title').textContent = labels[cat] || 'Products';
       renderProducts();
@@ -1217,7 +1623,7 @@
       updateCartBadge();
 
       if (!products.length) {
-        grid.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>No products found.</p></div>`;
+        grid.innerHTML = `<div class="empty-state"><div class="icon"></div><p>No products found.</p></div>`;
         return;
       }
 
@@ -1228,7 +1634,7 @@
         const outOfStock = p.stock === 0;
         const imgHtml = p.image
           ? `<img src="${p.image}" alt="${p.name}" />`
-          : `<div class="emoji-placeholder">${p.emoji || '🎆'}</div>`;
+          : `<div class="emoji-placeholder">${p.emoji || ''}</div>`;
 
         return `
         <div class="product-card">
@@ -1246,7 +1652,7 @@
               ${disc > 0 ? `<span class="disc">${disc}% off</span>` : ''}
             </div>
             <small style="color:var(--text-muted);font-size:12px;">per ${p.unit} &nbsp;|&nbsp; Stock: ${p.stock}</small>
-            <div style="margin-top:12px;">
+            <div style="margin-top:12px;" id="action-${p.id}">
               ${outOfStock
             ? `<button class="btn btn-outline btn-full" disabled style="opacity:.4;cursor:not-allowed;">Out of Stock</button>`
             : qty === 0
@@ -1268,11 +1674,32 @@
     }
 
     /* ---- Cart actions ---- */
+    function updateProductCard(id) {
+      const p = ProductsDB.getActive().find(x => x.id === id);
+      if (!p) return;
+      const qty = CartDB.get()[p.id] || 0;
+      const outOfStock = p.stock === 0;
+      let html = '';
+      if (outOfStock) {
+        html = '<button class="btn btn-outline btn-full" disabled style="opacity:.4;cursor:not-allowed;">Out of Stock</button>';
+      } else if (qty === 0) {
+        html = `<button class="btn btn-primary btn-full" onclick="addToCart('${p.id}')">+ Add to Cart</button>`;
+      } else {
+        html = `<div class="qty-ctrl" style="width:100%;justify-content:space-between;">
+                  <button onclick="changeQty('${p.id}', -1)">−</button>
+                  <span>${qty}</span>
+                  <button onclick="changeQty('${p.id}', 1)">+</button>
+                </div>`;
+      }
+      const el = document.getElementById(`action-${p.id}`);
+      if (el) el.innerHTML = html;
+    }
+
     function addToCart(id) {
       CartDB.add(id);
       updateCartBadge();
-      renderProducts();
-      showToast('✅ Added to cart!');
+      updateProductCard(id);
+      showToast('Added to cart!');
       renderCartPanel();
     }
 
@@ -1280,14 +1707,14 @@
       const cur = (CartDB.get()[id] || 0) + delta;
       CartDB.set(id, cur);
       updateCartBadge();
-      renderProducts();
+      updateProductCard(id);
       renderCartPanel();
     }
 
     function removeFromCart(id) {
       CartDB.remove(id);
       updateCartBadge();
-      renderProducts();
+      updateProductCard(id);
       renderCartPanel();
     }
 
@@ -1315,7 +1742,7 @@
 
       if (!items.length) {
         body.innerHTML = `<div style="text-align:center;padding:60px 16px;color:var(--text-muted);">
-        <div style="font-size:56px;margin-bottom:16px;">🛒</div>
+        <div style="font-size:56px;margin-bottom:16px;"></div>
         <p style="font-size:16px;font-weight:600;margin-bottom:6px;">Your cart is empty</p>
         <p style="font-size:13px;">Add some crackers to get started!</p>
       </div>`;
@@ -1326,7 +1753,7 @@
       body.innerHTML = items.map(item => {
         const imgHtml = item.image
           ? `<img src="${item.image}" alt="${item.name}" />`
-          : item.emoji || '🎆';
+          : item.emoji || '';
         return `
         <div class="cart-item">
           <div class="cart-item-img">${typeof imgHtml === 'string' && imgHtml.startsWith('<') ? imgHtml : `<span style="font-size:28px;">${imgHtml}</span>`}</div>
@@ -1339,7 +1766,7 @@
               <button onclick="changeQty('${item.id}',1)">+</button>
             </div>
           </div>
-          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">🗑</button>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">🗑️</button>
         </div>`;
       }).join('');
 
@@ -1357,7 +1784,7 @@
         Proceed to Checkout →
       </button>
       <button class="btn btn-full" onclick="orderViaWhatsApp()" style="margin-top:10px;font-size:14px;padding:12px;background:#25D366;color:#fff;border:none;border-radius:var(--radius-sm);">
-        💬 Order via WhatsApp
+         Order via WhatsApp
       </button>`;
     }
 
@@ -1368,14 +1795,14 @@
       const sub = CartDB.total();
       const del = sub >= 1000 ? 0 : 60;
       const grand = sub + del;
-      let msg = '🎆 *New Order from Website*\n\n';
+      let msg = ' *New Order from Website*\n\n';
       items.forEach(item => {
-        msg += `• ${item.emoji || '🎆'} ${item.name} × ${item.qty} = ₹${item.lineTotal}\n`;
+        msg += `• ${item.emoji || ''} ${item.name} × ${item.qty} = ₹${item.lineTotal}\n`;
       });
-      msg += `\n💰 *Subtotal:* ₹${sub}`;
-      msg += `\n🚚 *Delivery:* ${del === 0 ? 'FREE' : '₹' + del}`;
-      msg += `\n✅ *Total:* ₹${grand}`;
-      msg += '\n\nPlease confirm my order. 🙏';
+      msg += `\n *Subtotal:* ₹${sub}`;
+      msg += `\n *Delivery:* ${del === 0 ? 'FREE' : '₹' + del}`;
+      msg += `\n *Total:* ₹${grand}`;
+      msg += '\n\nPlease confirm my order. ';
       const url = 'https://wa.me/919677984858?text=' + encodeURIComponent(msg);
       window.open(url, '_blank');
     }
@@ -1401,7 +1828,7 @@
       const grand = sub + del;
 
       document.getElementById('checkout-content').innerHTML = `
-      <div class="alert alert-info">🛒 ${items.length} item(s) &nbsp;|&nbsp; Total: ₹${grand}</div>
+      <div class="alert alert-info"> ${items.length} item(s) &nbsp;|&nbsp; Total: ₹${grand}</div>
       <div class="form-group">
         <label>Delivery Address</label>
         <textarea id="co-address" rows="3" placeholder="Enter your full delivery address, area, pincode"></textarea>
@@ -1426,9 +1853,9 @@
           <span>Grand Total</span><span>₹${grand}</span>
         </div>
       </div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">💵 Payment: Cash on Delivery</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;"> Payment: Cash on Delivery</p>
       <button class="btn btn-primary btn-full" style="padding:14px;font-size:16px;" onclick="placeOrder()">
-        ✅ Confirm Order
+         Confirm Order
       </button>`;
 
       document.getElementById('checkout-modal').classList.add('open');
@@ -1443,15 +1870,15 @@
       const address = document.getElementById('co-address').value.trim();
       const name = document.getElementById('co-name').value.trim();
       const phone = document.getElementById('co-phone').value.trim();
-      if (!address) { showToast('⚠️ Please enter delivery address!'); return; }
-      if (!phone) { showToast('⚠️ Please enter phone number!'); return; }
+      if (!address) { showToast(' Please enter delivery address!'); return; }
+      if (!phone) { showToast(' Please enter phone number!'); return; }
       const items = CartDB.items();
       const total = CartDB.total();
       const order = OrdersDB.place(user.id, name, phone, address, items, total);
       closeCheckout();
       document.getElementById('checkout-content').innerHTML = `
       <div style="text-align:center;padding:32px 0;">
-        <div style="font-size:64px;margin-bottom:16px;">🎉</div>
+        <div style="font-size:64px;margin-bottom:16px;"></div>
         <h3 style="color:var(--neon-green);margin-bottom:10px;font-size:22px;">Order Placed!</h3>
         <p style="color:var(--text-secondary);">Order ID: <strong style="color:var(--gold);">${order.id}</strong></p>
         <p style="color:var(--text-muted);margin-top:8px;">We'll deliver to your address within 2-3 days.</p>

@@ -14,7 +14,7 @@ const DEFAULT_PRODUCTS = [
     stock: 50,
     unit: 'box',
     badge: 'Bestseller',
-    emoji: '✨',
+    emoji: '',
     image: '',
     active: true
   },
@@ -27,7 +27,7 @@ const DEFAULT_PRODUCTS = [
     stock: 35,
     unit: 'box',
     badge: 'New',
-    emoji: '🌟',
+    emoji: '',
     image: '',
     active: true
   },
@@ -40,7 +40,7 @@ const DEFAULT_PRODUCTS = [
     stock: 60,
     unit: 'box',
     badge: 'Popular',
-    emoji: '🌸',
+    emoji: '',
     image: '',
     active: true
   },
@@ -53,7 +53,7 @@ const DEFAULT_PRODUCTS = [
     stock: 80,
     unit: 'box',
     badge: '',
-    emoji: '🌀',
+    emoji: '',
     image: '',
     active: true
   },
@@ -66,7 +66,7 @@ const DEFAULT_PRODUCTS = [
     stock: 20,
     unit: 'set',
     badge: 'Popular',
-    emoji: '🎆',
+    emoji: '',
     image: '',
     active: true
   },
@@ -79,7 +79,7 @@ const DEFAULT_PRODUCTS = [
     stock: 15,
     unit: 'box',
     badge: 'New',
-    emoji: '⭐',
+    emoji: '',
     image: '',
     active: true
   },
@@ -92,7 +92,7 @@ const DEFAULT_PRODUCTS = [
     stock: 25,
     unit: 'pcs',
     badge: 'Wow Effect',
-    emoji: '🎇',
+    emoji: '',
     image: '',
     active: true
   },
@@ -105,7 +105,7 @@ const DEFAULT_PRODUCTS = [
     stock: 40,
     unit: 'set',
     badge: 'Trending',
-    emoji: '🌈',
+    emoji: '',
     image: '',
     active: true
   },
@@ -118,7 +118,7 @@ const DEFAULT_PRODUCTS = [
     stock: 30,
     unit: 'box',
     badge: 'Value Pack',
-    emoji: '🎁',
+    emoji: '',
     image: '',
     active: true
   },
@@ -131,7 +131,7 @@ const DEFAULT_PRODUCTS = [
     stock: 10,
     unit: 'box',
     badge: 'Best Value',
-    emoji: '🎊',
+    emoji: '',
     image: '',
     active: true
   },
@@ -144,7 +144,7 @@ const DEFAULT_PRODUCTS = [
     stock: 45,
     unit: 'kit',
     badge: 'Kids Safe',
-    emoji: '🧒',
+    emoji: '',
     image: '',
     active: true
   },
@@ -157,7 +157,7 @@ const DEFAULT_PRODUCTS = [
     stock: 100,
     unit: 'roll',
     badge: 'Classic',
-    emoji: '⚡',
+    emoji: '',
     image: '',
     active: true
   }
@@ -459,14 +459,15 @@ function discountPct(price, mrp) {
 }
 
 function categoryLabel(cat) {
+  if (!cat) return '';
   const labels = {
-    sparklers: '✨ Sparklers',
-    ground:    '🌀 Ground Crackers',
-    sky:       '🚀 Sky Shots',
-    fancy:     '🎆 Fancy Items',
-    gift:      '🎁 Gift Boxes'
+    sparklers: ' Sparklers',
+    ground:    ' Ground Crackers',
+    sky:       ' Sky Shots',
+    fancy:     ' Fancy Items',
+    gift:      ' Gift Boxes'
   };
-  return labels[cat] || cat;
+  return labels[cat.toLowerCase()] || cat;
 }
 
 function statusBadge(status) {

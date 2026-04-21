@@ -98,15 +98,15 @@
   <div class="navbar-brand">
     <div>
       <a href="index.html" style="text-decoration:none;">
-        <div class="logo-text">🪔 Saravana Agency Crackers</div>
+        <div class="logo-text"> Saravana Agency Crackers</div>
         <div class="logo-sub">My Account</div>
       </a>
     </div>
   </div>
   <ul class="navbar-links">
-    <li><a href="index.html">🏠 Shop</a></li>
+    <li><a href="index.html"> Shop</a></li>
     <li><span id="nav-username" style="color:var(--text-secondary);font-size:14px;padding:7px 8px;"></span></li>
-    <li><button onclick="doLogout()">🚪 Logout</button></li>
+    <li><button onclick="doLogout()"> Logout</button></li>
   </ul>
 </nav>
 
@@ -117,16 +117,16 @@
   <div class="sidebar">
     <div class="sidebar-section-title">Customer Menu</div>
     <a class="sidebar-link active" onclick="showSection('orders')" id="link-orders">
-      <span class="icon">📦</span> My Orders
+      <span class="icon"></span> My Orders
     </a>
     <a class="sidebar-link" onclick="showSection('profile')" id="link-profile">
-      <span class="icon">👤</span> My Profile
+      <span class="icon"></span> My Profile
     </a>
     <a class="sidebar-link" href="index.html">
-      <span class="icon">🛍️</span> Continue Shopping
+      <span class="icon"></span> Continue Shopping
     </a>
     <a class="sidebar-link" onclick="doLogout()">
-      <span class="icon">🚪</span> Logout
+      <span class="icon"></span> Logout
     </a>
   </div>
 
@@ -135,13 +135,13 @@
 
     <!-- ===== ORDERS SECTION ===== -->
     <div class="section-page active" id="section-orders">
-      <h2>📦 My Orders</h2>
+      <h2> My Orders</h2>
       <div id="orders-container"></div>
     </div>
 
     <!-- ===== PROFILE SECTION ===== -->
     <div class="section-page" id="section-profile">
-      <h2>👤 My Profile</h2>
+      <h2> My Profile</h2>
       <div class="card" style="max-width:500px;">
         <div class="profile-avatar" id="profile-avatar">?</div>
         <div id="profile-info"></div>
@@ -171,7 +171,7 @@
   const user = AuthDB.requireCustomer('login.html');
   if (!user) throw new Error('Not logged in');
 
-  document.getElementById('nav-username').textContent = '👤 ' + user.name;
+  document.getElementById('nav-username').textContent = ' ' + user.name;
   document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
 
   /* ---- Section switch ---- */
@@ -190,7 +190,7 @@
     if (!orders.length) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="icon">📦</div>
+          <div class="icon"></div>
           <p style="font-size:18px;font-weight:600;margin-bottom:8px;color:var(--text-primary);">No orders yet!</p>
           <p style="margin-bottom:24px;">You haven't placed any orders.</p>
           <a href="index.html" class="btn btn-primary" style="font-size:16px;padding:14px 28px;">Shop Now</a>
@@ -210,7 +210,7 @@
         <div class="order-items-list">
           ${o.items.map(i => `
             <div class="order-item-row">
-              <span>${i.emoji || '🎆'} ${i.name} × ${i.qty}</span>
+              <span>${i.emoji || ''} ${i.name} × ${i.qty}</span>
               <span style="font-weight:600;color:var(--gold);">₹${i.lineTotal}</span>
             </div>`).join('')}
         </div>
@@ -219,7 +219,7 @@
           <span>₹${o.total}</span>
         </div>
         <div class="order-address">
-          📍 ${o.userAddress} &nbsp;|&nbsp; 📞 ${o.userPhone}
+           ${o.userAddress} &nbsp;|&nbsp;  ${o.userPhone}
         </div>
       </div>`).join('');
   }
@@ -268,7 +268,7 @@
     }
     users[idx].password = newPass;
     AuthDB.saveUsers(users);
-    msg.className = 'alert alert-success'; msg.textContent = '✅ Password updated successfully!';
+    msg.className = 'alert alert-success'; msg.textContent = ' Password updated successfully!';
     msg.style.display = 'block';
     document.getElementById('cur-pass').value = '';
     document.getElementById('new-pass').value = '';
