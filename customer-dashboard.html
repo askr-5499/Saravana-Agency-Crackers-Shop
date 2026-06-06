@@ -165,6 +165,8 @@
 </div>
 
 <div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
 <script src="data.js"></script>
 <script>
   /* ---- Auth guard ---- */
@@ -183,8 +185,8 @@
   }
 
   /* ---- Render Orders ---- */
-  function renderOrders() {
-    const orders    = OrdersDB.getByUser(user.id);
+  async function renderOrders() {
+    const orders    = await OrdersDB.getByUser(user.id);
     const container = document.getElementById('orders-container');
 
     if (!orders.length) {

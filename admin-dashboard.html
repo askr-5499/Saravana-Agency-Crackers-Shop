@@ -321,6 +321,8 @@
 </div>
 
 <div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
 <script src="data.js"></script>
 <script>
   /* ---- Auth guard ---- */
@@ -330,23 +332,23 @@
   let editImageB64 = '';   // holds current image for the modal
 
   /* ---- Section switch ---- */
-  function showSection(name) {
+  async function showSection(name) {
     document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
     document.getElementById('section-' + name).classList.add('active');
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
     document.getElementById('link-' + name)?.classList.add('active');
-    if (name === 'overview')   renderOverview();
-    if (name === 'products')   renderAdminProducts();
-    if (name === 'orders')     renderAllOrders();
-    if (name === 'customers')  renderCustomers();
+    if (name === 'overview')   await renderOverview();
+    if (name === 'products')   await renderAdminProducts();
+    if (name === 'orders')     await renderAllOrders();
+    if (name === 'customers')  renderCustomers(); // Not async yet, Auth is local
   }
 
   /* ================================================================
      OVERVIEW
   ================================================================ */
-  function renderOverview() {
-    const products  = ProductsDB.getAll();
-    const orders    = OrdersDB.getAll();
+  async function renderOverview() {
+    const products  = await ProductsDB.getAll();
+    const orders    = await OrdersDB.getAll();
     const customers = AuthDB.getUsers();
     const revenue   = orders.reduce((s, o) => s + o.total, 0);
 
@@ -401,11 +403,11 @@
   /* ================================================================
      PRODUCTS
   ================================================================ */
-  function renderAdminProducts() {
+  async function renderAdminProducts() {
     const query    = (document.getElementById('product-search')?.value || '').toLowerCase();
-    let products = ProductsDB.getAll();
+    let products = await ProductsDB.getAll();
     if (query) products = products.filter(p =>
-      p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)
+      p.name.toLowerCase().includes(query) || (p.category && p.category.toLowerCase().includes(query))
     );
 
     document.getElementById('admin-products-grid').innerHTML = products.map(p => {
@@ -440,7 +442,7 @@
   }
 
   /* ---- Open Product Modal ---- */
-  function openProductModal(id) {
+  async function openProductModal(id) {
     editImageB64 = '';
     document.getElementById('modal-error').style.display = 'none';
     document.getElementById('discount-preview').textContent = '';
@@ -448,7 +450,7 @@
     document.getElementById('upload-hint').style.display = 'block';
 
     if (id) {
-      const p = ProductsDB.getById(id);
+      const p = await ProductsDB.getById(id);
       if (!p) return;
       document.getElementById('modal-title').textContent = ' Edit Product';
       document.getElementById('edit-id').value  = id;
@@ -537,7 +539,7 @@
   }
 
   /* ---- Save Product ---- */
-  function saveProduct() {
+  async function saveProduct() {
     const err   = document.getElementById('modal-error');
     err.style.display = 'none';
 
@@ -563,47 +565,55 @@
 
     const data = { name, category: cat, emoji, price, mrp, stock, unit, badge, active, image: editImageB64 };
 
+    const btn = document.querySelector('.modal .btn-primary');
+    const prevText = btn.innerHTML;
+    btn.innerHTML = 'Saving...';
+    btn.disabled = true;
+
     if (editId) {
-      ProductsDB.update(editId, data);
+      await ProductsDB.update(editId, data);
       showToast(' Product updated!');
     } else {
-      ProductsDB.add(data);
+      await ProductsDB.add(data);
       showToast(' Product added!');
     }
+    
+    btn.innerHTML = prevText;
+    btn.disabled = false;
 
     closeProductModal();
-    renderAdminProducts();
-    renderOverview();
+    await renderAdminProducts();
+    await renderOverview();
   }
 
   /* ---- Delete Product ---- */
-  function deleteProduct(id, name) {
+  async function deleteProduct(id, name) {
     if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
-    ProductsDB.delete(id);
-    renderAdminProducts();
-    renderOverview();
+    await ProductsDB.delete(id);
+    await renderAdminProducts();
+    await renderOverview();
     showToast(' Product deleted.');
   }
 
   /* ---- Quick Stock Edit ---- */
-  function quickEditStock(id, name) {
-    const p   = ProductsDB.getById(id);
+  async function quickEditStock(id, name) {
+    const p   = await ProductsDB.getById(id);
     if (!p) return;
     const val = prompt(`Update stock for "${name}":\nCurrent stock: ${p.stock}`, p.stock);
     if (val === null) return;
     const n = parseInt(val);
     if (isNaN(n) || n < 0) { showToast('Invalid stock value.'); return; }
-    ProductsDB.update(id, { stock: n });
-    renderOverview();
-    renderAdminProducts();
+    await ProductsDB.update(id, { stock: n });
+    await renderOverview();
+    await renderAdminProducts();
     showToast(' Stock updated!');
   }
 
   /* ================================================================
      ORDERS
   ================================================================ */
-  function renderAllOrders() {
-    const orders = OrdersDB.getAll();
+  async function renderAllOrders() {
+    const orders = await OrdersDB.getAll();
     const el     = document.getElementById('all-orders-container');
 
     if (!orders.length) {
@@ -643,19 +653,19 @@
       </div>`).join('');
   }
 
-  function updateOrderStatus(id, status) {
-    OrdersDB.updateStatus(id, status);
+  async function updateOrderStatus(id, status) {
+    await OrdersDB.updateStatus(id, status);
     showToast(` Order status updated to "${status}"`);
-    renderAllOrders();
-    renderOverview();
+    await renderAllOrders();
+    await renderOverview();
   }
 
   /* ================================================================
      CUSTOMERS
   ================================================================ */
-  function renderCustomers() {
+  async function renderCustomers() {
     const users  = AuthDB.getUsers();
-    const orders = OrdersDB.getAll();
+    const orders = await OrdersDB.getAll();
     const tbody  = document.getElementById('customers-tbody');
 
     if (!users.length) {

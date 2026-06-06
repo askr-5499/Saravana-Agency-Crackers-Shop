@@ -175,53 +175,32 @@ const ADMIN_USER = {
    PRODUCTS API
    ================================================================ */
 const ProductsDB = {
-  _key: 'sac_products',
-
-  getAll() {
-    const data = localStorage.getItem(this._key);
-    if (!data) {
-      this.save(DEFAULT_PRODUCTS);
-      return DEFAULT_PRODUCTS;
-    }
-    return JSON.parse(data);
+  async getAll() {
+    return await SupabaseAPI.getProducts();
   },
 
-  getActive() {
-    return this.getAll().filter(p => p.active);
+  async getActive() {
+    return await SupabaseAPI.getActiveProducts();
   },
 
-  getById(id) {
-    return this.getAll().find(p => p.id === id);
+  async getById(id) {
+    return await SupabaseAPI.getProductById(id);
   },
 
-  save(products) {
-    localStorage.setItem(this._key, JSON.stringify(products));
+  async add(product) {
+    return await SupabaseAPI.addProduct(product);
   },
 
-  add(product) {
-    const products = this.getAll();
-    product.id = 'p' + Date.now();
-    products.push(product);
-    this.save(products);
-    return product;
+  async update(id, updates) {
+    return await SupabaseAPI.updateProduct(id, updates);
   },
 
-  update(id, updates) {
-    const products = this.getAll();
-    const idx = products.findIndex(p => p.id === id);
-    if (idx === -1) return null;
-    products[idx] = { ...products[idx], ...updates };
-    this.save(products);
-    return products[idx];
+  async delete(id) {
+    return await SupabaseAPI.deleteProduct(id);
   },
 
-  delete(id) {
-    const products = this.getAll().filter(p => p.id !== id);
-    this.save(products);
-  },
-
-  reset() {
-    this.save(DEFAULT_PRODUCTS);
+  async reset() {
+    console.warn('Resetting products via Supabase is not supported. Please execute SQL in the dashboard.');
   }
 };
 
@@ -326,10 +305,10 @@ const CartDB = {
     localStorage.setItem(this._key(), JSON.stringify(cart));
   },
 
-  add(productId, qty = 1) {
+  async add(productId, qty = 1) {
     const cart = this.get();
     cart[productId] = (cart[productId] || 0) + qty;
-    const product = ProductsDB.getById(productId);
+    const product = await ProductsDB.getById(productId);
     if (product && cart[productId] > product.stock) {
       cart[productId] = product.stock;
     }
@@ -357,20 +336,24 @@ const CartDB = {
     return Object.values(this.get()).reduce((a, b) => a + b, 0);
   },
 
-  total() {
+  async total() {
     const cart = this.get();
-    return Object.entries(cart).reduce((sum, [id, qty]) => {
-      const p = ProductsDB.getById(id);
-      return sum + (p ? p.price * qty : 0);
-    }, 0);
+    let sum = 0;
+    for (const [id, qty] of Object.entries(cart)) {
+      const p = await ProductsDB.getById(id);
+      if (p) sum += p.price * qty;
+    }
+    return sum;
   },
 
-  items() {
+  async items() {
     const cart = this.get();
-    return Object.entries(cart).map(([id, qty]) => {
-      const p = ProductsDB.getById(id);
-      return p ? { ...p, qty, lineTotal: p.price * qty } : null;
-    }).filter(Boolean);
+    const result = [];
+    for (const [id, qty] of Object.entries(cart)) {
+      const p = await ProductsDB.getById(id);
+      if (p) result.push({ ...p, qty, lineTotal: p.price * qty });
+    }
+    return result;
   }
 };
 
@@ -378,51 +361,41 @@ const CartDB = {
    ORDERS API
    ================================================================ */
 const OrdersDB = {
-  _key: 'sac_orders',
-
-  getAll() {
-    const data = localStorage.getItem(this._key);
-    return data ? JSON.parse(data) : [];
+  async getAll() {
+    return await SupabaseAPI.getOrders();
   },
 
-  getByUser(userId) {
-    return this.getAll().filter(o => o.userId === userId);
+  async getByUser(userId) {
+    return await SupabaseAPI.getOrdersByUser(userId);
   },
 
-  save(orders) {
-    localStorage.setItem(this._key, JSON.stringify(orders));
-  },
-
-  place(userId, userName, userPhone, userAddress, items, total) {
-    const orders = this.getAll();
-    const order = {
-      id: 'ORD' + Date.now(),
-      userId, userName, userPhone, userAddress,
-      items,
+  async place(userId, userName, userPhone, userAddress, items, total) {
+    const orderData = {
+      user_id: userId,
+      user_name: userName,
+      user_phone: userPhone,
+      user_address: userAddress,
+      items: items,
       subtotal: total,
       delivery: total >= 1000 ? 0 : 60,
       total: total + (total >= 1000 ? 0 : 60),
-      status: 'Confirmed',
-      placedAt: new Date().toISOString()
+      status: 'Confirmed'
     };
-    orders.unshift(order);
-    this.save(orders);
-    // Reduce stock
-    items.forEach(item => {
-      const p = ProductsDB.getById(item.id);
-      if (p) ProductsDB.update(item.id, { stock: Math.max(0, p.stock - item.qty) });
-    });
+
+    const order = await SupabaseAPI.storeOrder(orderData);
+
+    // Reduce stock asynchronously
+    for (const item of items) {
+      const p = await ProductsDB.getById(item.id);
+      if (p) await ProductsDB.update(item.id, { stock: Math.max(0, p.stock - item.qty) });
+    }
+
     CartDB.clear();
     return order;
   },
 
-  updateStatus(orderId, status) {
-    const orders = this.getAll();
-    const idx = orders.findIndex(o => o.id === orderId);
-    if (idx !== -1) {
-      orders[idx].status = status;
-      this.save(orders);
-    }
+  async updateStatus(orderId, status) {
+    return await SupabaseAPI.updateOrderStatus(orderId, status);
   }
 };
 

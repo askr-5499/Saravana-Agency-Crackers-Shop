@@ -1321,6 +1321,8 @@
   </div>
 
   <div id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
   <script src="data.js"></script>
   <script>
     /* ================================================================
@@ -1548,11 +1550,11 @@
     ================================================================ */
     let currentCat = 'all';
 
-    window.onload = function () {
+    window.onload = async function () {
       updateNavAccount();
       updateCartBadge();
-      renderProducts();
-      updateCategoryCounts();
+      await renderProducts();
+      await updateCategoryCounts();
     };
 
     /* ---- Nav account link ---- */
@@ -1573,21 +1575,21 @@
       document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function scrollToProductsFiltered(cat) {
+    async function scrollToProductsFiltered(cat) {
       currentCat = cat;
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       const btns = document.querySelectorAll('.cat-btn');
       const labels = { all: 'All Products', sparklers: ' Sparklers', ground: ' Ground', sky: ' Sky Shots', fancy: ' Fancy', gift: ' Gift Boxes' };
       btns.forEach(b => { if (b.textContent.trim() === (labels[cat] || '').trim()) b.classList.add('active'); });
-      renderProducts();
+      await renderProducts();
       setTimeout(() => {
         document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
 
     /* ---- Update category counts ---- */
-    function updateCategoryCounts() {
-      const products = ProductsDB.getActive();
+    async function updateCategoryCounts() {
+      const products = await ProductsDB.getActive();
       const cats = ['sparklers', 'sky', 'fancy', 'gift'];
       cats.forEach(c => {
         const count = products.filter(p => p.category === c).length;
@@ -1597,7 +1599,7 @@
     }
 
     /* ---- Category filter ---- */
-    function filterCat(cat, btn) {
+    async function filterCat(cat, btn) {
       currentCat = cat;
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1606,19 +1608,21 @@
         sky: ' Sky Shots', fancy: ' Fancy Items', gift: ' Gift Boxes'
       };
       document.getElementById('section-title').textContent = labels[cat] || 'Products';
-      renderProducts();
+      await renderProducts();
     }
 
     /* ---- Render Products ---- */
-    function renderProducts() {
+    async function renderProducts() {
       const grid = document.getElementById('products-grid');
+      grid.innerHTML = `<div class="empty-state"><div class="icon"></div><p>Loading products...</p></div>`;
+      
       const query = document.getElementById('search-input').value.toLowerCase();
-      let products = ProductsDB.getActive();
+      let products = await ProductsDB.getActive();
 
       if (currentCat !== 'all') products = products.filter(p => p.category === currentCat);
       if (query) products = products.filter(p =>
         p.name.toLowerCase().includes(query) ||
-        p.category.toLowerCase().includes(query) ||
+        (p.category && p.category.toLowerCase().includes(query)) ||
         (p.badge && p.badge.toLowerCase().includes(query))
       );
 
@@ -1677,8 +1681,9 @@
     }
 
     /* ---- Cart actions ---- */
-    function updateProductCard(id) {
-      const p = ProductsDB.getActive().find(x => x.id === id);
+    async function updateProductCard(id) {
+      const activeProducts = await ProductsDB.getActive();
+      const p = activeProducts.find(x => x.id === id);
       if (!p) return;
       const qty = CartDB.get()[p.id] || 0;
       const outOfStock = p.stock === 0;
@@ -1698,27 +1703,27 @@
       if (el) el.innerHTML = html;
     }
 
-    function addToCart(id) {
-      CartDB.add(id);
+    async function addToCart(id) {
+      await CartDB.add(id);
       updateCartBadge();
-      updateProductCard(id);
+      await updateProductCard(id);
       showToast('Added to cart!');
-      renderCartPanel();
+      await renderCartPanel();
     }
 
-    function changeQty(id, delta) {
+    async function changeQty(id, delta) {
       const cur = (CartDB.get()[id] || 0) + delta;
       CartDB.set(id, cur);
       updateCartBadge();
-      updateProductCard(id);
-      renderCartPanel();
+      await updateProductCard(id);
+      await renderCartPanel();
     }
 
-    function removeFromCart(id) {
+    async function removeFromCart(id) {
       CartDB.remove(id);
       updateCartBadge();
-      updateProductCard(id);
-      renderCartPanel();
+      await updateProductCard(id);
+      await renderCartPanel();
     }
 
     function updateCartBadge() {
@@ -1726,11 +1731,11 @@
     }
 
     /* ---- Cart Panel ---- */
-    function openCart() {
+    async function openCart() {
       document.getElementById('cart-panel').classList.add('open');
       document.getElementById('cart-overlay').classList.add('open');
       document.body.style.overflow = 'hidden';
-      renderCartPanel();
+      await renderCartPanel();
     }
     function closeCart() {
       document.getElementById('cart-panel').classList.remove('open');
@@ -1738,8 +1743,8 @@
       document.body.style.overflow = '';
     }
 
-    function renderCartPanel() {
-      const items = CartDB.items();
+    async function renderCartPanel() {
+      const items = await CartDB.items();
       const body = document.getElementById('cart-body');
       const footer = document.getElementById('cart-footer');
 
@@ -1773,7 +1778,7 @@
         </div>`;
       }).join('');
 
-      const sub = CartDB.total();
+      const sub = await CartDB.total();
       const del = sub >= 1000 ? 0 : 60;
       const grand = sub + del;
 
@@ -1792,10 +1797,10 @@
     }
 
     /* ---- WhatsApp Order ---- */
-    function orderViaWhatsApp() {
-      const items = CartDB.items();
+    async function orderViaWhatsApp() {
+      const items = await CartDB.items();
       if (!items.length) return;
-      const sub = CartDB.total();
+      const sub = await CartDB.total();
       const del = sub >= 1000 ? 0 : 60;
       const grand = sub + del;
       let msg = ' *New Order from Website*\n\n';
@@ -1811,9 +1816,9 @@
     }
 
     /* ---- Checkout ---- */
-    function goCheckout() {
+    async function goCheckout() {
       const user = AuthDB.current();
-      const items = CartDB.items();
+      const items = await CartDB.items();
       if (!items.length) return;
       if (!user || user.role !== 'customer') {
         closeCart();
@@ -1822,11 +1827,11 @@
         return;
       }
       closeCart();
-      openCheckoutModal(user, items);
+      await openCheckoutModal(user, items);
     }
 
-    function openCheckoutModal(user, items) {
-      const sub = CartDB.total();
+    async function openCheckoutModal(user, items) {
+      const sub = await CartDB.total();
       const del = sub >= 1000 ? 0 : 60;
       const grand = sub + del;
 
@@ -1868,16 +1873,23 @@
       document.getElementById('checkout-modal').classList.remove('open');
     }
 
-    function placeOrder() {
+    async function placeOrder() {
       const user = AuthDB.current();
       const address = document.getElementById('co-address').value.trim();
       const name = document.getElementById('co-name').value.trim();
       const phone = document.getElementById('co-phone').value.trim();
       if (!address) { showToast(' Please enter delivery address!'); return; }
       if (!phone) { showToast(' Please enter phone number!'); return; }
-      const items = CartDB.items();
-      const total = CartDB.total();
-      const order = OrdersDB.place(user.id, name, phone, address, items, total);
+      const items = await CartDB.items();
+      const total = await CartDB.total();
+      
+      const btn = document.querySelector('#checkout-modal button.btn-primary');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Processing...';
+      btn.disabled = true;
+
+      const order = await OrdersDB.place(user.id, name, phone, address, items, total);
+      
       closeCheckout();
       document.getElementById('checkout-content').innerHTML = `
       <div style="text-align:center;padding:32px 0;">
@@ -1889,7 +1901,7 @@
       </div>`;
       document.getElementById('checkout-modal').classList.add('open');
       updateCartBadge();
-      renderProducts();
+      await renderProducts();
     }
   </script>
 </body>
