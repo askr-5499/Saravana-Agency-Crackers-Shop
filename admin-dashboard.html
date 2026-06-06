@@ -426,7 +426,7 @@
       return `
         <div class="admin-product-card ${p.active ? '' : 'inactive'}">
           <div class="apc-img">
-            ${p.image ? `<img src="${p.image}" alt="${p.name}" />` : `<span style="font-size:48px;">${p.emoji || ''}</span>`}
+            ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" />` : `<span style="font-size:12px;color:#999;">${p.description || 'No Image'}</span>`}
             <div class="apc-status">
               ${p.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Hidden</span>'}
             </div>
@@ -559,7 +559,7 @@
     if (cat === 'new_cat_option') {
       cat = document.getElementById('p-cat-new').value.trim() || 'Uncategorized';
     }
-    const emoji = ''; // Emoji icon removed
+    const description = ''; // We will default description to empty since there's no input yet
     const price = parseFloat(document.getElementById('p-price').value);
     const mrp   = parseFloat(document.getElementById('p-mrp').value) || price;
     const stock = parseInt(document.getElementById('p-stock').value);
@@ -574,23 +574,31 @@
       return;
     }
 
-    const data = { name, category: cat, emoji, price, mrp, stock, unit, badge, active, image: editImageB64 };
+    const data = { name, category: cat, description, price, mrp, stock, unit, badge, active, image_url: editImageB64 };
 
     const btn = document.querySelector('.modal .btn-primary');
     const prevText = btn.innerHTML;
     btn.innerHTML = 'Saving...';
     btn.disabled = true;
 
+    let res;
     if (editId) {
-      await ProductsDB.update(editId, data);
-      showToast(' Product updated!');
+      res = await ProductsDB.update(editId, data);
     } else {
-      await ProductsDB.add(data);
-      showToast(' Product added!');
+      res = await ProductsDB.add(data);
     }
     
     btn.innerHTML = prevText;
     btn.disabled = false;
+
+    if (!res || !res.ok) {
+      err.textContent = res ? res.msg : 'Unknown error during save.';
+      err.style.display = 'block';
+      console.error('Save product error:', res);
+      return; // Do NOT close the modal on error
+    }
+
+    showToast(editId ? ' Product updated!' : ' Product added!');
 
     closeProductModal();
     await renderAdminProducts();

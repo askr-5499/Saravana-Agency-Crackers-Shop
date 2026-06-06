@@ -1667,9 +1667,9 @@
         const disc = discountPct(p.price, p.mrp);
         const qty = cart[p.id] || 0;
         const outOfStock = p.stock === 0;
-        const imgHtml = p.image
-          ? `<img src="${p.image}" alt="${p.name}" />`
-          : `<div class="emoji-placeholder">${p.emoji || ''}</div>`;
+        const imgHtml = p.image_url
+          ? `<img src="${p.image_url}" alt="${p.name}" />`
+          : `<div class="emoji-placeholder" style="font-size:14px;color:#999;display:flex;align-items:center;justify-content:center;height:100%;">${p.description || 'No Image'}</div>`;
 
         return `
         <div class="product-card">
@@ -1789,9 +1789,9 @@
       }
 
       body.innerHTML = items.map(item => {
-        const imgHtml = item.image
-          ? `<img src="${item.image}" alt="${item.name}" />`
-          : item.emoji || '';
+        const imgHtml = item.image_url
+          ? `<img src="${item.image_url}" alt="${item.name}" />`
+          : item.description || '';
         return `
         <div class="cart-item">
           <div class="cart-item-img">${typeof imgHtml === 'string' && imgHtml.startsWith('<') ? imgHtml : `<span style="font-size:28px;">${imgHtml}</span>`}</div>
@@ -1835,7 +1835,7 @@
       const grand = sub + del;
       let msg = ' *New Order from Website*\n\n';
       items.forEach(item => {
-        msg += `• ${item.emoji || ''} ${item.name} × ${item.qty} = ₹${item.lineTotal}\n`;
+        msg += `• ${item.description || ''} ${item.name} × ${item.qty} = ₹${item.lineTotal}\n`;
       });
       msg += `\n *Subtotal:* ₹${sub}`;
       msg += `\n *Delivery:* ${del === 0 ? 'FREE' : '₹' + del}`;

@@ -171,19 +171,18 @@ const SupabaseAPI = {
 
   async addProduct(productData) {
     try {
-      // Ensure it has an id
-      if (!productData.id) {
-        productData.id = 'p' + Date.now();
-      }
+      // Let Supabase handle ID generation if it's a UUID or Identity column.
+      // If we need to send an ID, we assume the DB is okay with strings.
+      // But we will remove the hardcoded 'p' + Date.now() to let the DB do it safely.
       const { data, error } = await supabaseClient
         .from('products')
         .insert([productData])
         .select();
       if (error) throw error;
-      return data ? data[0] : null;
+      return { ok: true, data: data ? data[0] : null };
     } catch (err) {
       console.error('Error adding product:', err.message);
-      return null;
+      return { ok: false, msg: err.message };
     }
   },
 
@@ -195,10 +194,10 @@ const SupabaseAPI = {
         .eq('id', id)
         .select();
       if (error) throw error;
-      return data ? data[0] : null;
+      return { ok: true, data: data ? data[0] : null };
     } catch (err) {
       console.error('Error updating product:', err.message);
-      return null;
+      return { ok: false, msg: err.message };
     }
   },
 
