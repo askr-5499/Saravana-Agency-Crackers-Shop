@@ -330,8 +330,15 @@
   let editImageB64 = '';   // holds current image for the modal
 
   window.onload = async function() {
-    user = await AuthDB.requireAdmin('login.html');
-    if (!user) return;
+    const { data: { user: supaUser } } = await supabaseClient.auth.getUser();
+
+    if (!supaUser || supaUser.email !== "askr5499@gmail.com") {
+        window.location.href = "login.html";
+        return;
+    }
+    
+    // Set global user for other functions that might need it
+    user = { email: supaUser.email, role: 'admin' };
     await showSection('overview');
   };
 

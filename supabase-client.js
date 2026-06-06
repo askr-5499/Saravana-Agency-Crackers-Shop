@@ -2,13 +2,15 @@
    Supabase Client Configuration & Wrappers
    ============================================================ */
 
-const SUPABASE_URL = 'https://irajyzoktwfsidtdqcpw.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_XXlz_F6Tm6dqqQNmMpUkrw_-PTsHykm';
+const supabaseUrl = 'https://irajyzoktwfsidtdqcpw.supabase.co';
+const supabaseAnonKey = 'sb_publishable_XXlz_F6Tm6dqqQNmMpUkrw_-PTsHykm';
 
-// Initialize Supabase Client
-const sb = window.supabase;
-const supabaseClient = sb.createClient(SUPABASE_URL, SUPABASE_KEY);
-const supabase = supabaseClient;
+const supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseAnonKey
+);
+
+window.supabaseClient = supabaseClient;
 
 const SupabaseAPI = {
   // --- Auth ---
@@ -81,7 +83,7 @@ const SupabaseAPI = {
   // --- Customers ---
   async createCustomerProfile(profile) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('customers')
         .insert([profile])
         .select();
@@ -95,7 +97,7 @@ const SupabaseAPI = {
 
   async getCustomerProfile(authUserId) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('customers')
         .select('*')
         .eq('auth_user_id', authUserId)
@@ -110,7 +112,7 @@ const SupabaseAPI = {
 
   async getAllCustomers() {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('customers')
         .select('*')
         .order('created_at', { ascending: false });
@@ -121,10 +123,11 @@ const SupabaseAPI = {
       return [];
     }
   },
+
   // --- Products ---
   async getProducts() {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('products')
         .select('*')
         .order('id', { ascending: true });
@@ -138,7 +141,7 @@ const SupabaseAPI = {
 
   async getProductById(id) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('products')
         .select('*')
         .eq('id', id)
@@ -153,7 +156,7 @@ const SupabaseAPI = {
 
   async getActiveProducts() {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('products')
         .select('*')
         .eq('active', true)
@@ -172,7 +175,7 @@ const SupabaseAPI = {
       if (!productData.id) {
         productData.id = 'p' + Date.now();
       }
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('products')
         .insert([productData])
         .select();
@@ -186,7 +189,7 @@ const SupabaseAPI = {
 
   async updateProduct(id, updates) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('products')
         .update(updates)
         .eq('id', id)
@@ -201,7 +204,7 @@ const SupabaseAPI = {
 
   async deleteProduct(id) {
     try {
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from('products')
         .delete()
         .eq('id', id);
@@ -216,7 +219,7 @@ const SupabaseAPI = {
   // --- Orders ---
   async getOrders() {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('orders')
         .select('*, order_items(*)')
         .order('created_at', { ascending: false });
@@ -243,7 +246,7 @@ const SupabaseAPI = {
 
   async getOrdersByUser(customerId) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('orders')
         .select('*, order_items(*)')
         .eq('customer_id', customerId)
@@ -275,7 +278,7 @@ const SupabaseAPI = {
       }
       
       // 1. Insert order
-      const { data: orderRes, error: orderErr } = await supabase
+      const { data: orderRes, error: orderErr } = await supabaseClient
         .from('orders')
         .insert([orderData])
         .select();
@@ -295,7 +298,7 @@ const SupabaseAPI = {
           line_total: item.lineTotal
         }));
 
-        const { error: itemsErr } = await supabase
+        const { error: itemsErr } = await supabaseClient
           .from('order_items')
           .insert(orderItems);
         if (itemsErr) throw itemsErr;
@@ -310,7 +313,7 @@ const SupabaseAPI = {
 
   async updateOrderStatus(orderId, status) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('orders')
         .update({ status })
         .eq('id', orderId)

@@ -301,7 +301,12 @@
     window.onload = async function() {
       const cur = await AuthDB.current();
       if (cur) {
-        window.location.href = cur.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+        const ADMIN_EMAIL = "askr5499@gmail.com";
+        if (cur.email === ADMIN_EMAIL) {
+          window.location.href = "admin-dashboard.html";
+        } else {
+          window.location.href = "index.html";
+        }
       }
     };
 
@@ -331,7 +336,13 @@
       btn.disabled = false;
 
       if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
-      window.location.href = result.user.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+      
+      const ADMIN_EMAIL = "askr5499@gmail.com";
+      if (result.user.email === ADMIN_EMAIL) {
+          window.location.href = "admin-dashboard.html";
+      } else {
+          window.location.href = "index.html";
+      }
     }
 
     async function doRegister() {
@@ -370,7 +381,7 @@
       suc.textContent = 'Account created! Logging you in…';
       suc.style.display = 'block';
       await AuthDB.login(email, pass);
-      setTimeout(() => window.location.href = 'customer-dashboard.html', 1200);
+      setTimeout(() => window.location.href = 'index.html', 1200);
     }
 
     // doAdminLogin removed as it's handled by doLogin -> AuthDB

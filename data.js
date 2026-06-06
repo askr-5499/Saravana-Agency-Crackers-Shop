@@ -226,7 +226,8 @@ const AuthDB = {
     const authRes = await SupabaseAPI.signIn(email, password);
     if (!authRes.ok) return authRes;
 
-    if (email === 'admin@saravana.com') {
+    const ADMIN_EMAIL = "askr5499@gmail.com";
+    if (email === ADMIN_EMAIL) {
       return { ok: true, user: { role: 'admin', email } };
     }
 
@@ -243,7 +244,8 @@ const AuthDB = {
     const session = await SupabaseAPI.getSession();
     if (!session) return null;
 
-    if (session.user.email === 'admin@saravana.com') {
+    const ADMIN_EMAIL = "askr5499@gmail.com";
+    if (session.user.email === ADMIN_EMAIL) {
       return { role: 'admin', email: session.user.email, id: session.user.id };
     }
 
