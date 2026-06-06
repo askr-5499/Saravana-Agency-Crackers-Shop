@@ -1551,15 +1551,15 @@
     let currentCat = 'all';
 
     window.onload = async function () {
+      user = await AuthDB.current();
       updateNavAccount();
-      updateCartBadge();
+      await updateCartBadge();
       await renderProducts();
       await updateCategoryCounts();
     };
 
     /* ---- Nav account link ---- */
     function updateNavAccount() {
-      const user = AuthDB.current();
       const el = document.getElementById('nav-account');
       if (user) {
         el.innerHTML = user.role === 'admin'
@@ -1634,7 +1634,7 @@
         return;
       }
 
-      const cart = CartDB.get();
+      const cart = await CartDB.get();
       grid.innerHTML = products.map(p => {
         const disc = discountPct(p.price, p.mrp);
         const qty = cart[p.id] || 0;
@@ -1685,7 +1685,8 @@
       const activeProducts = await ProductsDB.getActive();
       const p = activeProducts.find(x => x.id === id);
       if (!p) return;
-      const qty = CartDB.get()[p.id] || 0;
+      const cart = await CartDB.get();
+      const qty = cart[p.id] || 0;
       const outOfStock = p.stock === 0;
       let html = '';
       if (outOfStock) {
@@ -1705,29 +1706,30 @@
 
     async function addToCart(id) {
       await CartDB.add(id);
-      updateCartBadge();
+      await updateCartBadge();
       await updateProductCard(id);
       showToast('Added to cart!');
       await renderCartPanel();
     }
 
     async function changeQty(id, delta) {
-      const cur = (CartDB.get()[id] || 0) + delta;
-      CartDB.set(id, cur);
-      updateCartBadge();
+      const cart = await CartDB.get();
+      const cur = (cart[id] || 0) + delta;
+      await CartDB.set(id, cur);
+      await updateCartBadge();
       await updateProductCard(id);
       await renderCartPanel();
     }
 
     async function removeFromCart(id) {
-      CartDB.remove(id);
-      updateCartBadge();
+      await CartDB.remove(id);
+      await updateCartBadge();
       await updateProductCard(id);
       await renderCartPanel();
     }
 
-    function updateCartBadge() {
-      document.getElementById('cart-badge').textContent = CartDB.count();
+    async function updateCartBadge() {
+      document.getElementById('cart-badge').textContent = await CartDB.count();
     }
 
     /* ---- Cart Panel ---- */
@@ -1817,7 +1819,7 @@
 
     /* ---- Checkout ---- */
     async function goCheckout() {
-      const user = AuthDB.current();
+      user = await AuthDB.current();
       const items = await CartDB.items();
       if (!items.length) return;
       if (!user || user.role !== 'customer') {
@@ -1874,7 +1876,7 @@
     }
 
     async function placeOrder() {
-      const user = AuthDB.current();
+      user = await AuthDB.current();
       const address = document.getElementById('co-address').value.trim();
       const name = document.getElementById('co-name').value.trim();
       const phone = document.getElementById('co-phone').value.trim();

@@ -298,10 +298,12 @@
   <script src="data.js"></script>
   <script>
     // If already logged in, redirect
-    const cur = AuthDB.current();
-    if (cur) {
-      window.location.href = cur.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
-    }
+    window.onload = async function() {
+      const cur = await AuthDB.current();
+      if (cur) {
+        window.location.href = cur.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
+      }
+    };
 
     function switchTab(name) {
       document.querySelectorAll('.tab-btn').forEach((b, i) => {
@@ -311,18 +313,28 @@
       document.getElementById('tab-' + name).classList.add('active');
     }
 
-    function doLogin() {
+    async function doLogin() {
       const email = document.getElementById('login-email').value.trim();
       const pass = document.getElementById('login-password').value;
       const err = document.getElementById('login-error');
       err.style.display = 'none';
       if (!email || !pass) { err.textContent = 'Please fill all fields.'; err.style.display = 'block'; return; }
-      const result = AuthDB.login(email, pass);
+      
+      const btn = document.querySelector('#tab-login .btn-primary');
+      const prevText = btn.innerHTML;
+      btn.innerHTML = 'Logging in...';
+      btn.disabled = true;
+
+      const result = await AuthDB.login(email, pass);
+      
+      btn.innerHTML = prevText;
+      btn.disabled = false;
+
       if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
       window.location.href = result.user.role === 'admin' ? 'admin-dashboard.html' : 'customer-dashboard.html';
     }
 
-    function doRegister() {
+    async function doRegister() {
       const name = document.getElementById('reg-name').value.trim();
       const email = document.getElementById('reg-email').value.trim();
       const phone = document.getElementById('reg-phone').value.trim();
@@ -339,11 +351,25 @@
       if (!/^\d{10}$/.test(phone)) {
         err.textContent = 'Enter a valid 10-digit phone number.'; err.style.display = 'block'; return;
       }
-      const result = AuthDB.register(name, email, phone, pass);
-      if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
+
+      const btn = document.querySelector('#tab-register .btn-primary');
+      const prevText = btn.innerHTML;
+      btn.innerHTML = 'Creating...';
+      btn.disabled = true;
+
+      const result = await AuthDB.register(name, email, phone, pass);
+      
+      if (!result.ok) { 
+        err.textContent = result.msg; 
+        err.style.display = 'block'; 
+        btn.innerHTML = prevText;
+        btn.disabled = false;
+        return; 
+      }
+      
       suc.textContent = 'Account created! Logging you in…';
       suc.style.display = 'block';
-      AuthDB.login(email, pass);
+      await AuthDB.login(email, pass);
       setTimeout(() => window.location.href = 'customer-dashboard.html', 1200);
     }
 

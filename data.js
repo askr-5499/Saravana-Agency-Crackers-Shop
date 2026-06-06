@@ -208,68 +208,55 @@ const ProductsDB = {
    AUTH API
    ================================================================ */
 const AuthDB = {
-  _keyUsers:   'sac_users',
-  _keyCurrent: 'sac_current_user',
-
-  getUsers() {
-    const data = localStorage.getItem(this._keyUsers);
-    return data ? JSON.parse(data) : [];
-  },
-
-  saveUsers(users) {
-    localStorage.setItem(this._keyUsers, JSON.stringify(users));
-  },
-
-  register(name, email, phone, password) {
-    const users = this.getUsers();
-    if (users.find(u => u.email === email)) {
-      return { ok: false, msg: 'Email already registered.' };
-    }
-    const user = {
-      id: 'u' + Date.now(),
-      name, email, phone, password,
-      role: 'customer',
-      createdAt: new Date().toISOString()
+  async register(name, email, phone, password) {
+    const authRes = await SupabaseAPI.signUp(email, password);
+    if (!authRes.ok) return authRes;
+    
+    const profile = {
+      auth_user_id: authRes.data.user.id,
+      name, email, phone
     };
-    users.push(user);
-    this.saveUsers(users);
-    return { ok: true, user };
+    const profRes = await SupabaseAPI.createCustomerProfile(profile);
+    if (!profRes.ok) return profRes;
+
+    return { ok: true, user: profRes.data };
   },
 
-  login(emailOrUser, password) {
-    // Check admin
-    if (emailOrUser === ADMIN_USER.username && password === ADMIN_USER.password) {
-      const admin = { id: 'admin', name: ADMIN_USER.name, role: 'admin', email: 'admin@saravana.com' };
-      localStorage.setItem(this._keyCurrent, JSON.stringify(admin));
-      return { ok: true, user: admin };
+  async login(email, password) {
+    const authRes = await SupabaseAPI.signIn(email, password);
+    if (!authRes.ok) return authRes;
+
+    if (email === 'admin@saravana.com') {
+      return { ok: true, user: { role: 'admin', email } };
     }
-    // Check customers
-    const users = this.getUsers();
-    const user = users.find(u => u.email === emailOrUser && u.password === password);
-    if (!user) return { ok: false, msg: 'Invalid email or password.' };
-    localStorage.setItem(this._keyCurrent, JSON.stringify(user));
-    return { ok: true, user };
+
+    const profile = await SupabaseAPI.getCustomerProfile(authRes.data.user.id);
+    if (profile) profile.role = 'customer';
+    return { ok: true, user: profile };
   },
 
-  logout() {
-    localStorage.removeItem(this._keyCurrent);
+  async logout() {
+    await SupabaseAPI.signOut();
   },
 
-  current() {
-    const data = localStorage.getItem(this._keyCurrent);
-    return data ? JSON.parse(data) : null;
-  },
-
-  requireLogin(redirectTo = 'login.html') {
-    if (!this.current()) {
-      window.location.href = redirectTo;
-      return null;
+  async current() {
+    const session = await SupabaseAPI.getSession();
+    if (!session) return null;
+    
+    if (session.user.email === 'admin@saravana.com') {
+      return { role: 'admin', email: session.user.email, id: session.user.id };
     }
-    return this.current();
+
+    const profile = await SupabaseAPI.getCustomerProfile(session.user.id);
+    if (profile) {
+      profile.role = 'customer';
+      return profile;
+    }
+    return null;
   },
 
-  requireAdmin(redirectTo = 'login.html') {
-    const user = this.current();
+  async requireAdmin(redirectTo = 'login.html') {
+    const user = await this.current();
     if (!user || user.role !== 'admin') {
       window.location.href = redirectTo;
       return null;
@@ -277,8 +264,8 @@ const AuthDB = {
     return user;
   },
 
-  requireCustomer(redirectTo = 'login.html') {
-    const user = this.current();
+  async requireCustomer(redirectTo = 'login.html') {
+    const user = await this.current();
     if (!user || user.role !== 'customer') {
       window.location.href = redirectTo;
       return null;
@@ -291,53 +278,57 @@ const AuthDB = {
    CART API
    ================================================================ */
 const CartDB = {
-  _key() {
-    const u = AuthDB.current();
+  async _key() {
+    const u = await AuthDB.current();
     return u ? `sac_cart_${u.id}` : 'sac_cart_guest';
   },
 
-  get() {
-    const data = localStorage.getItem(this._key());
+  async get() {
+    const key = await this._key();
+    const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : {};
   },
 
-  save(cart) {
-    localStorage.setItem(this._key(), JSON.stringify(cart));
+  async save(cart) {
+    const key = await this._key();
+    localStorage.setItem(key, JSON.stringify(cart));
   },
 
   async add(productId, qty = 1) {
-    const cart = this.get();
+    const cart = await this.get();
     cart[productId] = (cart[productId] || 0) + qty;
     const product = await ProductsDB.getById(productId);
     if (product && cart[productId] > product.stock) {
       cart[productId] = product.stock;
     }
-    this.save(cart);
+    await this.save(cart);
   },
 
-  set(productId, qty) {
-    const cart = this.get();
+  async set(productId, qty) {
+    const cart = await this.get();
     if (qty <= 0) { delete cart[productId]; }
     else { cart[productId] = qty; }
-    this.save(cart);
+    await this.save(cart);
   },
 
-  remove(productId) {
-    const cart = this.get();
+  async remove(productId) {
+    const cart = await this.get();
     delete cart[productId];
-    this.save(cart);
+    await this.save(cart);
   },
 
-  clear() {
-    localStorage.removeItem(this._key());
+  async clear() {
+    const key = await this._key();
+    localStorage.removeItem(key);
   },
 
-  count() {
-    return Object.values(this.get()).reduce((a, b) => a + b, 0);
+  async count() {
+    const cart = await this.get();
+    return Object.values(cart).reduce((a, b) => a + b, 0);
   },
 
   async total() {
-    const cart = this.get();
+    const cart = await this.get();
     let sum = 0;
     for (const [id, qty] of Object.entries(cart)) {
       const p = await ProductsDB.getById(id);
@@ -347,7 +338,7 @@ const CartDB = {
   },
 
   async items() {
-    const cart = this.get();
+    const cart = await this.get();
     const result = [];
     for (const [id, qty] of Object.entries(cart)) {
       const p = await ProductsDB.getById(id);
@@ -369,20 +360,19 @@ const OrdersDB = {
     return await SupabaseAPI.getOrdersByUser(userId);
   },
 
-  async place(userId, userName, userPhone, userAddress, items, total) {
+  async place(customerId, userName, userPhone, userAddress, items, total) {
     const orderData = {
-      user_id: userId,
+      customer_id: customerId, // Storing Supabase customer ID
       user_name: userName,
       user_phone: userPhone,
       user_address: userAddress,
-      items: items,
       subtotal: total,
       delivery: total >= 1000 ? 0 : 60,
-      total: total + (total >= 1000 ? 0 : 60),
+      total_amount: total + (total >= 1000 ? 0 : 60),
       status: 'Confirmed'
     };
 
-    const order = await SupabaseAPI.storeOrder(orderData);
+    const order = await SupabaseAPI.storeOrder(orderData, items);
 
     // Reduce stock asynchronously
     for (const item of items) {
@@ -390,7 +380,7 @@ const OrdersDB = {
       if (p) await ProductsDB.update(item.id, { stock: Math.max(0, p.stock - item.qty) });
     }
 
-    CartDB.clear();
+    await CartDB.clear();
     return order;
   },
 

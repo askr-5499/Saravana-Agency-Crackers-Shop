@@ -326,10 +326,14 @@
 <script src="data.js"></script>
 <script>
   /* ---- Auth guard ---- */
-  const admin = AuthDB.requireAdmin('login.html');
-  if (!admin) throw new Error('Not admin');
-
+  let user = null;
   let editImageB64 = '';   // holds current image for the modal
+
+  window.onload = async function() {
+    user = await AuthDB.requireAdmin('login.html');
+    if (!user) return;
+    await showSection('overview');
+  };
 
   /* ---- Section switch ---- */
   async function showSection(name) {
@@ -340,7 +344,7 @@
     if (name === 'overview')   await renderOverview();
     if (name === 'products')   await renderAdminProducts();
     if (name === 'orders')     await renderAllOrders();
-    if (name === 'customers')  renderCustomers(); // Not async yet, Auth is local
+    if (name === 'customers')  await renderCustomers();
   }
 
   /* ================================================================
@@ -349,7 +353,7 @@
   async function renderOverview() {
     const products  = await ProductsDB.getAll();
     const orders    = await OrdersDB.getAll();
-    const customers = AuthDB.getUsers();
+    const customers = await SupabaseAPI.getAllCustomers();
     const revenue   = orders.reduce((s, o) => s + o.total, 0);
 
     document.getElementById('stats-grid').innerHTML = `
@@ -664,36 +668,35 @@
      CUSTOMERS
   ================================================================ */
   async function renderCustomers() {
-    const users  = AuthDB.getUsers();
+    const users  = await SupabaseAPI.getAllCustomers();
     const orders = await OrdersDB.getAll();
     const tbody  = document.getElementById('customers-tbody');
 
     if (!users.length) {
-      tbody.innerHTML = `<tr><td colspan="6" class="no-data">No customers registered yet.</td></tr>`;
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:24px;">No customers registered yet.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = users.map((u, i) => {
-      const orderCount = orders.filter(o => o.userId === u.id).length;
+    tbody.innerHTML = users.map(u => {
+      const uOrders = orders.filter(o => o.customer_id === u.id);
+      const totalSp = uOrders.reduce((s, o) => s + o.total, 0);
       return `
         <tr>
-          <td>${i + 1}</td>
-          <td><strong>${u.name}</strong></td>
-          <td>${u.email}</td>
-          <td>${u.phone}</td>
-          <td style="color:var(--text-muted);">${formatDate(u.createdAt)}</td>
-          <td><span class="badge badge-blue">${orderCount} orders</span></td>
+          <td>
+             <div style="font-weight:600;color:var(--text-primary);">${u.name}</div>
+          </td>
+          <td style="color:var(--text-secondary);">${u.email}</td>
+          <td style="color:var(--text-secondary);">${u.phone}</td>
+          <td style="font-weight:600;">${uOrders.length}</td>
+          <td style="font-weight:600;color:var(--gold);">₹${totalSp}</td>
         </tr>`;
     }).join('');
   }
 
-  function doLogout() {
-    AuthDB.logout();
+  async function doLogout() {
+    await AuthDB.logout();
     window.location.href = 'index.html';
   }
-
-  /* ---- Init ---- */
-  renderOverview();
 </script>
 </body>
 </html>

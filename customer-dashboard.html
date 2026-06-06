@@ -170,11 +170,18 @@
 <script src="data.js"></script>
 <script>
   /* ---- Auth guard ---- */
-  const user = AuthDB.requireCustomer('login.html');
-  if (!user) throw new Error('Not logged in');
+  let user = null;
+  
+  window.onload = async function() {
+    user = await AuthDB.requireCustomer('login.html');
+    if (!user) return;
 
-  document.getElementById('nav-username').textContent = ' ' + user.name;
-  document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
+    document.getElementById('nav-username').textContent = ' ' + user.name;
+    document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
+
+    await renderOrders();
+    renderProfile();
+  };
 
   /* ---- Section switch ---- */
   function showSection(name) {
@@ -228,33 +235,30 @@
 
   /* ---- Render Profile ---- */
   function renderProfile() {
-    const users = AuthDB.getUsers();
-    const full  = users.find(u => u.id === user.id);
-    if (!full) return;
+    if (!user) return;
     document.getElementById('profile-info').innerHTML = `
       <div class="profile-info-row">
-        <span class="label">Name</span><span class="value">${full.name}</span>
+        <span class="label">Name</span><span class="value">${user.name}</span>
       </div>
       <div class="profile-info-row">
-        <span class="label">Email</span><span class="value">${full.email}</span>
+        <span class="label">Email</span><span class="value">${user.email}</span>
       </div>
       <div class="profile-info-row">
-        <span class="label">Phone</span><span class="value">${full.phone}</span>
+        <span class="label">Phone</span><span class="value">${user.phone}</span>
       </div>
       <div class="profile-info-row">
-        <span class="label">Member Since</span><span class="value">${formatDate(full.createdAt)}</span>
+        <span class="label">Member Since</span><span class="value">${formatDate(user.created_at || new Date().toISOString())}</span>
       </div>`;
   }
 
   /* ---- Change Password ---- */
-  function changePassword() {
-    const curPass  = document.getElementById('cur-pass').value;
+  async function changePassword() {
     const newPass  = document.getElementById('new-pass').value;
     const msg      = document.getElementById('pass-msg');
     msg.style.display = 'none';
 
-    if (!curPass || !newPass) {
-      msg.className = 'alert alert-danger'; msg.textContent = 'Please fill both fields.';
+    if (!newPass) {
+      msg.className = 'alert alert-danger'; msg.textContent = 'Please fill the new password field.';
       msg.style.display = 'block'; return;
     }
     if (newPass.length < 6) {
@@ -262,28 +266,31 @@
       msg.style.display = 'block'; return;
     }
 
-    const users = AuthDB.getUsers();
-    const idx   = users.findIndex(u => u.id === user.id);
-    if (idx === -1 || users[idx].password !== curPass) {
-      msg.className = 'alert alert-danger'; msg.textContent = 'Current password is incorrect.';
+    const btn = document.querySelector('.btn-primary');
+    const prevText = btn.innerHTML;
+    btn.innerHTML = 'Updating...';
+    btn.disabled = true;
+
+    const res = await SupabaseAPI.updatePassword(newPass);
+
+    btn.innerHTML = prevText;
+    btn.disabled = false;
+
+    if (!res.ok) {
+      msg.className = 'alert alert-danger'; msg.textContent = res.msg;
       msg.style.display = 'block'; return;
     }
-    users[idx].password = newPass;
-    AuthDB.saveUsers(users);
+
     msg.className = 'alert alert-success'; msg.textContent = ' Password updated successfully!';
     msg.style.display = 'block';
-    document.getElementById('cur-pass').value = '';
     document.getElementById('new-pass').value = '';
+    document.getElementById('cur-pass').value = '';
   }
 
-  function doLogout() {
-    AuthDB.logout();
+  async function doLogout() {
+    await AuthDB.logout();
     window.location.href = 'index.html';
   }
-
-  /* ---- Init ---- */
-  renderOrders();
-  renderProfile();
 </script>
 </body>
 </html>
