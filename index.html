@@ -1566,6 +1566,7 @@
       }
       updateAuthNav();
       try {
+        await CartDB.items(); // Validate and clean cart first
         await updateCartBadge();
         await renderProducts();
         await updateCategoryCounts();

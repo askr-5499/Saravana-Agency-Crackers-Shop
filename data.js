@@ -342,10 +342,17 @@ const CartDB = {
   async items() {
     const cart = await this.get();
     const result = [];
+    let changed = false;
     for (const [id, qty] of Object.entries(cart)) {
       const p = await ProductsDB.getById(id);
-      if (p) result.push({ ...p, qty, lineTotal: p.price * qty });
+      if (p && p.active) {
+        result.push({ ...p, qty, lineTotal: p.price * qty });
+      } else {
+        delete cart[id];
+        changed = true;
+      }
     }
+    if (changed) await this.save(cart);
     return result;
   }
 };
