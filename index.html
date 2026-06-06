@@ -1549,25 +1549,43 @@
        STATE & INIT
     ================================================================ */
     let currentCat = 'all';
+    let user = null;
 
     window.onload = async function () {
-      user = await AuthDB.current();
-      updateNavAccount();
-      await updateCartBadge();
-      await renderProducts();
-      await updateCategoryCounts();
+      try {
+        user = await AuthDB.current();
+        updateNavAccount();
+        await updateCartBadge();
+        await renderProducts();
+        await updateCategoryCounts();
+      } catch (err) {
+        console.error('window.onload error:', err);
+      }
     };
 
     /* ---- Nav account link ---- */
     function updateNavAccount() {
       const el = document.getElementById('nav-account');
       if (user) {
-        el.innerHTML = user.role === 'admin'
-          ? `<a href="admin-dashboard.html"> Admin</a>`
-          : `<a href="customer-dashboard.html"> ${user.name.split(' ')[0]}</a>`;
+        const displayName = user.name ? user.name.split(' ')[0] : user.email;
+        el.innerHTML = `
+          <span style="color:var(--gold);margin-right:16px;font-weight:600;">Welcome, ${displayName}</span>
+          <a href="#" onclick="doLogout(); return false;" style="color:var(--text-secondary);transition:var(--transition-fast);">Logout</a>
+        `;
+        el.style.display = 'inline-flex';
+        el.style.alignItems = 'center';
       } else {
-        el.innerHTML = `<a href="login.html">Login / Register</a>`;
+        el.innerHTML = `
+          <a href="login.html" class="btn-outline" style="padding:6px 16px; border-radius:50px; font-weight:600;">Login</a>
+        `;
+        el.style.display = 'inline-flex';
+        el.style.alignItems = 'center';
       }
+    }
+
+    async function doLogout() {
+      await AuthDB.logout();
+      window.location.href = 'index.html';
     }
 
     /* ---- Scroll to products ---- */

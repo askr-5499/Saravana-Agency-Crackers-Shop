@@ -6,13 +6,15 @@ const SUPABASE_URL = 'https://irajyzoktwfsidtdqcpw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_XXlz_F6Tm6dqqQNmMpUkrw_-PTsHykm';
 
 // Initialize Supabase Client
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase;
+const supabaseClient = sb.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = supabaseClient;
 
 const SupabaseAPI = {
   // --- Auth ---
   async signUp(email, password) {
     try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
       if (error) throw error;
       return { ok: true, data };
     } catch (err) {
@@ -23,7 +25,7 @@ const SupabaseAPI = {
 
   async signIn(email, password) {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
       if (error) throw error;
       return { ok: true, data };
     } catch (err) {
@@ -34,7 +36,7 @@ const SupabaseAPI = {
 
   async signOut() {
     try {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabaseClient.auth.signOut();
       if (error) throw error;
       return true;
     } catch (err) {
@@ -45,7 +47,7 @@ const SupabaseAPI = {
 
   async updatePassword(newPassword) {
     try {
-      const { data, error } = await supabase.auth.updateUser({ password: newPassword });
+      const { data, error } = await supabaseClient.auth.updateUser({ password: newPassword });
       if (error) throw error;
       return { ok: true };
     } catch (err) {
@@ -56,7 +58,7 @@ const SupabaseAPI = {
 
   async getSession() {
     try {
-      const { data: { session }, error } = await supabase.auth.getSession();
+      const { data: { session }, error } = await supabaseClient.auth.getSession();
       if (error) throw error;
       return session;
     } catch (err) {
@@ -67,7 +69,7 @@ const SupabaseAPI = {
 
   async getUser() {
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      const { data: { user }, error } = await supabaseClient.auth.getUser();
       if (error) throw error;
       return user;
     } catch (err) {

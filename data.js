@@ -211,7 +211,7 @@ const AuthDB = {
   async register(name, email, phone, password) {
     const authRes = await SupabaseAPI.signUp(email, password);
     if (!authRes.ok) return authRes;
-    
+
     const profile = {
       auth_user_id: authRes.data.user.id,
       name, email, phone
@@ -242,7 +242,7 @@ const AuthDB = {
   async current() {
     const session = await SupabaseAPI.getSession();
     if (!session) return null;
-    
+
     if (session.user.email === 'admin@saravana.com') {
       return { role: 'admin', email: session.user.email, id: session.user.id };
     }
@@ -425,21 +425,21 @@ function categoryLabel(cat) {
   if (!cat) return '';
   const labels = {
     sparklers: ' Sparklers',
-    ground:    ' Ground Crackers',
-    sky:       ' Sky Shots',
-    fancy:     ' Fancy Items',
-    gift:      ' Gift Boxes'
+    ground: ' Ground Crackers',
+    sky: ' Sky Shots',
+    fancy: ' Fancy Items',
+    gift: ' Gift Boxes'
   };
   return labels[cat.toLowerCase()] || cat;
 }
 
 function statusBadge(status) {
   const map = {
-    'Confirmed':  'badge-blue',
-    'Packed':     'badge-gold',
-    'Shipped':    'badge-blue',
-    'Delivered':  'badge-green',
-    'Cancelled':  'badge-red'
+    'Confirmed': 'badge-blue',
+    'Packed': 'badge-gold',
+    'Shipped': 'badge-blue',
+    'Delivered': 'badge-green',
+    'Cancelled': 'badge-red'
   };
   return `<span class="badge ${map[status] || 'badge-gray'}">${status}</span>`;
 }
