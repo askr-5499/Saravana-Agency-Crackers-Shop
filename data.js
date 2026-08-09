@@ -259,7 +259,7 @@ const AuthDB = {
       profile.role = 'customer';
       return profile;
     }
-    return null;
+    return { role: 'customer', email: session.user.email, id: session.user.id };
   },
 
   async requireAdmin(redirectTo = 'login.html') {

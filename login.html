@@ -332,10 +332,13 @@
 
       const result = await AuthDB.login(email, pass);
       
-      btn.innerHTML = prevText;
-      btn.disabled = false;
-
-      if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
+      if (!result.ok) { 
+        btn.innerHTML = prevText;
+        btn.disabled = false;
+        err.textContent = result.msg; 
+        err.style.display = 'block'; 
+        return; 
+      }
       
       const ADMIN_EMAIL = "askr5499@gmail.com";
       if (result.user?.email === ADMIN_EMAIL) {
