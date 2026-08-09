@@ -232,8 +232,13 @@ const AuthDB = {
     }
 
     const profile = await SupabaseAPI.getCustomerProfile(authRes.data.user.id);
-    if (profile) profile.role = 'customer';
-    return { ok: true, user: profile };
+    if (profile) {
+      profile.role = 'customer';
+      return { ok: true, user: profile };
+    } else {
+      // Fallback if profile is missing in the customers table
+      return { ok: true, user: { role: 'customer', email: email, id: authRes.data.user.id } };
+    }
   },
 
   async logout() {

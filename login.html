@@ -338,7 +338,7 @@
       if (!result.ok) { err.textContent = result.msg; err.style.display = 'block'; return; }
       
       const ADMIN_EMAIL = "askr5499@gmail.com";
-      if (result.user.email === ADMIN_EMAIL) {
+      if (result.user?.email === ADMIN_EMAIL) {
           window.location.href = "admin-dashboard.html";
       } else {
           window.location.href = "index.html";
