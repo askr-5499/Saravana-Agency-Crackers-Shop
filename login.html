@@ -244,6 +244,12 @@
         <button class="btn btn-primary btn-full" onclick="doLogin()" style="padding:14px;font-size:16px;">
           Login →
         </button>
+        
+        <div class="or-divider"><span>OR</span></div>
+        <button class="btn btn-outline btn-full" onclick="doGoogleLogin()" style="padding:14px;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
+          <img src="https://www.google.com/favicon.ico" alt="Google" style="width:18px;height:18px;" />
+          Sign in with Google
+        </button>
         <div class="switch-link">
           Don't have an account? <a onclick="switchTab('register')">Register here</a>
         </div>
@@ -275,6 +281,12 @@
         </div>
         <button class="btn btn-primary btn-full" onclick="doRegister()" style="padding:14px;font-size:16px;">
           Create Account →
+        </button>
+        
+        <div class="or-divider"><span>OR</span></div>
+        <button class="btn btn-outline btn-full" onclick="doGoogleLogin()" style="padding:14px;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
+          <img src="https://www.google.com/favicon.ico" alt="Google" style="width:18px;height:18px;" />
+          Sign up with Google
         </button>
         <div class="switch-link">
           Already have an account? <a onclick="switchTab('login')">Login</a>
@@ -396,7 +408,24 @@
       if (active === 'tab-login') doLogin();
       if (active === 'tab-register') doRegister();
     });
+
+    async function doGoogleLogin() {
+      const btnLog = document.querySelector('#tab-login .btn-outline');
+      const btnReg = document.querySelector('#tab-register .btn-outline');
+      if (btnLog) btnLog.innerHTML = 'Connecting to Google...';
+      if (btnReg) btnReg.innerHTML = 'Connecting to Google...';
+      
+      const res = await SupabaseAPI.signInWithGoogle();
+      if (!res.ok) {
+        if (btnLog) btnLog.innerHTML = 'Sign in with Google';
+        if (btnReg) btnReg.innerHTML = 'Sign up with Google';
+        const err = document.getElementById('login-error');
+        if(err) {
+          err.textContent = res.msg || 'Google Sign-in failed';
+          err.style.display = 'block';
+        }
+      }
+    }
   </script>
 </body>
-
 </html>

@@ -47,6 +47,22 @@ const SupabaseAPI = {
     }
   },
 
+  async signInWithGoogle() {
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/login.html' // Or an OAuth callback page
+        }
+      });
+      if (error) throw error;
+      return { ok: true, data };
+    } catch (err) {
+      console.error('Google Sign-in error:', err.message);
+      return { ok: false, msg: err.message };
+    }
+  },
+
   async updatePassword(newPassword) {
     try {
       const { data, error } = await supabaseClient.auth.updateUser({ password: newPassword });

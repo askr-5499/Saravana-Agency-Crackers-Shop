@@ -266,7 +266,21 @@ const AuthDB = {
       return { role: 'admin', email: session.user.email, id: session.user.id };
     }
 
-    const profile = await SupabaseAPI.getCustomerProfile(session.user.id);
+    let profile = await SupabaseAPI.getCustomerProfile(session.user.id);
+    if (!profile) {
+      // Auto-create profile for OAuth users who just signed in
+      const newProfile = {
+        auth_user_id: session.user.id,
+        name: session.user.user_metadata?.full_name || session.user.email.split('@')[0],
+        email: session.user.email,
+        phone: '' // Optional for OAuth
+      };
+      const profRes = await SupabaseAPI.createCustomerProfile(newProfile);
+      if (profRes.ok) {
+        profile = profRes.data;
+      }
+    }
+
     if (profile) {
       profile.role = 'customer';
       return profile;
