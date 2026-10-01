@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saravana Agency Crackers — Premium Sivakasi Fireworks</title>
+  <meta name="description"
+    content="Buy premium quality Sivakasi crackers online. Sparklers, sky shots, fancy items, gift boxes with up to 40% off. Safe, certified, fast delivery across India." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ========== HERO SECTION ========== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #1a1020 0%, #0a0a0f 60%);
+    }
+
+    .hero-bg-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg-canvas canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(10, 10, 15, 0.3) 0%, rgba(10, 10, 15, 0.85) 80%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 40px 24px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244, 162, 37, 0.1);
+      border: 1px solid rgba(244, 162, 37, 0.25);
+      color: var(--gold);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      color: var(--text-primary);
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--neon-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--text-secondary);
+      font-size: clamp(16px, 2vw, 20px);
+      max-width: 550px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat .value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--gold);
+      text-shadow: 0 0 15px rgba(244, 162, 37, 0.3);
+    }
+
+    .hero-stat .label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator .arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.5;
+    }
+
+    @keyframes scrollBounce {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(10px);
+      }
+    }
+
+    /* ========== FLOATING DIYA DECORATORS ========== */
+    .diya-float {
+      position: absolute;
+      font-size: 24px;
+      animation: diayFloat 6s ease-in-out infinite;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes diayFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(10deg);
+      }
+    }
+
+    /* ========== SECTION HEADERS ========== */
+    .section-wrapper {
+      position: relative;
+      z-index: 1;
+      padding: 80px 0;
+    }
+
+    .section-wrapper .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+
+    .section-header .section-label::before,
+    .section-header .section-label::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .section-header .section-label::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .section-header h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .section-header h2 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ========== CATEGORIES SECTION ========== */
+    .categories-section {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .category-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 40px 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(244, 162, 37, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .category-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), var(--shadow-gold);
+    }
+
+    .category-card:hover::before {
+      opacity: 1;
+    }
+
+    .category-card .cat-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(244, 162, 37, 0.3));
+      transition: transform 0.4s;
+    }
+
+    .category-card:hover .cat-icon {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    .category-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .category-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .category-card .cat-count {
+      margin-top: 14px;
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      background: var(--gold-subtle);
+      border: 1px solid var(--border-gold);
+    }
+
+    /* ========== PRODUCTS SECTION ========== */
+    .products-section {
+      background: var(--bg-secondary);
+    }
+
+    .products-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .cat-filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      border: 1px solid var(--border);
+      background: var(--bg-glass);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: linear-gradient(135deg, var(--gold), var(--neon-orange));
+      color: #0a0a0f;
+      border-color: var(--gold);
+      box-shadow: 0 4px 15px rgba(244, 162, 37, 0.3);
+      font-weight: 700;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-container input {
+      width: 280px;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--bg-glass);
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      backdrop-filter: blur(10px);
+      transition: var(--transition-fast);
+    }
+
+    .search-container input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(244, 162, 37, 0.1);
+    }
+
+    .search-container input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-container .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .products-count {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* ========== OFFERS SECTION ========== */
+    .offers-section {
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offers-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(244, 162, 37, 0.03) 0%, transparent 50%);
+      animation: rotateGlow 20s linear infinite;
+    }
+
+    @keyframes rotateGlow {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--neon-orange), var(--neon-pink));
+    }
+
+    .offer-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .offer-card .offer-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .offer-card .offer-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold-subtle), rgba(244, 162, 37, 0.2));
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+
+    .offer-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .offer-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== WHY CHOOSE US ========== */
+    .why-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+    }
+
+    .why-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .why-card .why-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: var(--gold-subtle);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      transition: var(--transition);
+    }
+
+    .why-card:hover .why-icon {
+      background: linear-gradient(135deg, var(--gold), var(--neon-orange));
+      box-shadow: 0 0 30px rgba(244, 162, 37, 0.3);
+      transform: scale(1.1);
+    }
+
+    .why-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .why-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========== CONTACT / CTA SECTION ========== */
+    .cta-section {
+      position: relative;
+      background: linear-gradient(135deg, #1a0f05, #0f0a15);
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(244, 162, 37, 0.08), transparent 60%);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .cta-info h2 {
+      font-family: var(--font-head);
+      font-size: 36px;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .cta-info h2 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-info p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .cta-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cta-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .cta-contact-item .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold-subtle);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .cta-contact-item a {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .cta-map {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .cta-map .store-icon {
+      font-size: 56px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .cta-map h3 {
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .cta-map p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .cta-map-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .cta-map-details .detail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    footer .footer-brand {
+      font-family: var(--font-head);
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(244, 162, 37, 0.2);
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--gold);
+      transition: var(--transition-fast);
+    }
+
+    footer a:hover {
+      text-shadow: 0 0 10px rgba(244, 162, 37, 0.3);
+    }
+
+    /* ========== PARALLAX DECORATORS ========== */
+    .parallax-deco {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 90vh;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      .hero-stat .value {
+        font-size: 22px;
+      }
+
+      .cta-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .products-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-container input {
+        width: 100%;
+      }
+
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .category-card {
+        padding: 24px 16px;
+      }
+
+      .category-card .cat-icon {
+        font-size: 36px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Particles Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Promo Banner -->
+  <div class="page-banner" id="promo-banner">
+    🎉 Diwali Special Sale — Up to 40% OFF! &nbsp;|&nbsp; 🚚 Free Delivery above ₹1000 &nbsp;|&nbsp; 📞 96779 84858
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="main-navbar">
+    <div class="navbar-brand">
+      <div style="display:flex; align-items:center;">
+        <img src="logo.png" alt="Saravana Agency"
+          style="height:42px; width:42px; border-radius:50%; margin-right:12px; border:2px solid var(--gold); object-fit:cover;"
+          onerror="this.style.display='none'">
+        <div>
+          <div class="logo-text" style="font-size: clamp(16px, 2vw, 20px);">Saravana Agency</div>
+          <div class="logo-sub">Crackers Shop</div>
+        </div>
+      </div>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="index.html">🏠 Shop</a></li>
+      <li>
+        <div id="auth-nav" style="display:inline-flex;align-items:center;gap:12px;">
+          <a href="login.html" style="color:var(--gold);font-weight:600;text-decoration:none;padding:6px 16px;border:1px solid var(--gold);border-radius:50px;transition:all 0.3s ease;">Login</a>
+        </div>
+      </li>
+      <li>
+        <button class="btn-accent" onclick="openCart()"
+          style="border-radius:50px;padding:8px 20px;font-size:14px;font-weight:700;border:none;background:linear-gradient(135deg,var(--gold),var(--neon-orange));color:#0a0a0f;display:inline-flex;align-items:center;gap:6px;">
+          🛒 Cart <span class="cart-count-badge" id="cart-badge">0</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-canvas">
+      <canvas id="fireworks-canvas"></canvas>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✨ Premium Sivakasi Crackers</div>
+      <h1>Light Up Your <span class="gold">Celebration</span></h1>
+      <p class="hero-sub">Experience the magic of Diwali with our handcrafted, premium quality fireworks. Safe,
+        certified, and delivered right to your doorstep.</p>
+      <div class="hero-actions">
+        <button class="btn btn-glow" onclick="scrollToProducts()" id="hero-shop-btn">
+          🎇 Shop Now
+        </button>
+        <a href="tel:9677984858" class="btn btn-outline"
+          style="font-size:16px;padding:16px 32px;border-radius:var(--radius-md);">
+          📞 Call to Order
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="value">500+</div>
+          <div class="label">Products</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">4.4</div>
+          <div class="label">Rating</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">10K+</div>
+          <div class="label">Happy Customers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">24/7</div>
+          <div class="label">Support</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ==================== QUICK LINKS SECTION ==================== -->
+  <section class="section-wrapper categories-section" id="quick-links-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">ℹ️ Discover More</div>
+        <h2>Important <span class="gold">Information</span></h2>
+        <p>Find everything you need to know about our shop and safety</p>
+      </div>
+      <div class="categories-grid stagger-children" id="quick-links-grid">
+        <div class="category-card"
+          onclick="document.getElementById('info-section').scrollIntoView({behavior: 'smooth'})">
+          <span class="cat-icon" style="font-size:40px;">🏬</span>
+          <h3>About Us</h3>
+          <p>Learn more about Saravana Agency Crackers</p>
+          <span class="cat-count"
+            style="cursor:pointer; background:var(--gold-subtle); color:var(--gold); padding:6px 16px; border-radius:20px; display:inline-block; margin-top:16px;">Read
+            More →</span>
+        </div>
+        <div class="category-card"
+          onclick="document.getElementById('safety-section').scrollIntoView({behavior: 'smooth'})">
+          <span class="cat-icon" style="font-size:40px;">🛡️</span>
+          <h3>Safety Tips</h3>
+          <p>Important Dos and Don'ts for a safe celebration</p>
+          <span class="cat-count"
+            style="cursor:pointer; background:var(--gold-subtle); color:var(--gold); padding:6px 16px; border-radius:20px; display:inline-block; margin-top:16px;">Read
+            More →</span>
+        </div>
+        <div class="category-card"
+          onclick="document.getElementById('contact-section').scrollIntoView({behavior: 'smooth'})">
+          <span class="cat-icon" style="font-size:40px;">📞</span>
+          <h3>Contact Us</h3>
+          <p>Get in touch for orders, details, and queries</p>
+          <span class="cat-count"
+            style="cursor:pointer; background:var(--gold-subtle); color:var(--gold); padding:6px 16px; border-radius:20px; display:inline-block; margin-top:16px;">Read
+            More →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURED PRODUCTS ==================== -->
+  <section class="section-wrapper products-section" id="products-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">🎆 Shop Crackers</div>
+        <h2>Our <span class="gold">Products</span></h2>
+        <p>Premium quality crackers at unbeatable prices</p>
+      </div>
+
+      <div class="products-toolbar reveal" id="products-top">
+        <div class="cat-filter-bar" id="cat-section">
+          <button class="cat-btn active" onclick="filterCat('all', this)">All Products</button>
+          <button class="cat-btn" onclick="filterCat('sparklers', this)">✨ Sparklers</button>
+          <button class="cat-btn" onclick="filterCat('ground', this)">🌀 Ground</button>
+          <button class="cat-btn" onclick="filterCat('sky', this)">🚀 Sky Shots</button>
+          <button class="cat-btn" onclick="filterCat('fancy', this)">🎇 Fancy</button>
+          <button class="cat-btn" onclick="filterCat('gift', this)">🎁 Gift Boxes</button>
+        </div>
+        <div class="search-container">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search products..." oninput="renderProducts()" />
+        </div>
+      </div>
+
+      <div class="products-count"><span id="section-title">All Products</span> — <span id="product-count">0</span> items
+      </div>
+      <div class="products-grid stagger-children" id="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== OFFERS SECTION ==================== -->
+  <section class="section-wrapper offers-section" id="offers-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">🏷️ Special Deals</div>
+        <h2>Festival <span class="gold">Offers</span></h2>
+        <p>Grab these exclusive Diwali deals before they expire</p>
+      </div>
+      <div class="offers-grid stagger-children">
+        <div class="offer-card">
+          <span class="offer-icon">🔥</span>
+          <div class="offer-badge badge-glow">40% OFF</div>
+          <h3>Diwali Mega Sale</h3>
+          <p>Up to 40% off on all premium sky shots and fancy crackers this festive season</p>
+        </div>
+        <div class="offer-card">
+          <span class="offer-icon">🚚</span>
+          <div class="offer-badge badge-glow">FREE</div>
+          <h3>Free Delivery</h3>
+          <p>Free home delivery on all orders above ₹1000. No hidden charges, door-to-door service</p>
+        </div>
+        <div class="offer-card">
+          <span class="offer-icon">🎉</span>
+          <div class="offer-badge badge-glow">COMBO</div>
+          <h3>Family Gift Boxes</h3>
+          <p>Special combo packs starting at ₹399 — save up to 30% with our curated gift boxes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHY CHOOSE US ==================== -->
+  <section class="section-wrapper why-section" id="why-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">⭐ Why Us</div>
+        <h2>Why Choose <span class="gold">Saravana Agency</span></h2>
+        <p>Trusted by thousands of families across Tamil Nadu</p>
+      </div>
+      <div class="why-grid stagger-children">
+        <div class="why-card">
+          <div class="why-icon">🛡️</div>
+          <h3>100% Safe & Tested</h3>
+          <p>Every product is quality tested and meets all safety standards. Your family's safety is our priority.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🏭</div>
+          <h3>Sivakasi Certified</h3>
+          <p>Direct from Sivakasi manufacturers. Authentic quality crackers with proper ISO certification.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">⏱️</div>
+          <h3>Fast Delivery</h3>
+          <p>Same day dispatch. Get your crackers delivered in 2-3 business days with careful packaging.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💰</div>
+          <h3>Best Prices</h3>
+          <p>Factory-direct pricing. No middleman means you get the best deals with up to 40% savings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT / CTA ==================== -->
+  <section class="section-wrapper cta-section" id="cta-section">
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="cta-info">
+          <h2>Visit Our <span class="gold">Store</span></h2>
+          <p>Come explore our massive collection of premium crackers. Walk-in customers get special in-store discounts
+            and instant pickup.</p>
+          <div class="cta-contacts">
+            <div class="cta-contact-item">
+              <div class="icon">📍</div>
+              <span>Sri Ramapuram - Reddiyarchatram Rd, Eranampatti, TN 624622</span>
+            </div>
+            <div class="cta-contact-item">
+              <div class="icon">📞</div>
+              <a href="tel:9677984858">96779 84858</a>
+            </div>
+            <div class="cta-contact-item">
+              <div class="icon">🕒</div>
+              <span>Open 24 Hours</span>
+            </div>
+          </div>
+        </div>
+        <div class="cta-map">
+          <span class="store-icon">🏪</span>
+          <h3>Saravana Agency</h3>
+          <p>Premium Crackers Shop</p>
+          <div class="cta-map-details">
+            <div class="detail"> 4.4 Rating (17+ Reviews)</div>
+            <div class="detail"> Direct from Sivakasi</div>
+            <div class="detail"> Free Delivery above ₹1000</div>
+            <div class="detail"> Kids-Safe Products Available</div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap;">
+            <a href="https://wa.me/919677984858?text=Hi Sir, I want to order crackers" target="_blank"
+              class="btn btn-glow" style="font-size:14px;padding:12px 24px;">
+              💬 WhatsApp
+            </a>
+            <a href="https://maps.app.goo.gl/9Hg13Uy5Mi6ztae89" target="_blank" class="btn btn-outline"
+              style="font-size:14px;padding:12px 24px;background:var(--bg-glass);">
+              📍 Get Directions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .info-section {
+      background: var(--bg-card);
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .info-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 15px;
+      padding: 0 24px;
+    }
+
+    .info-content h2 {
+      font-family: var(--font-head);
+      color: var(--gold);
+      font-size: 32px;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-gold);
+      padding-bottom: 12px;
+    }
+
+    .info-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .info-content p {
+      margin-bottom: 16px;
+    }
+
+    .info-content ul {
+      margin-left: 24px;
+      margin-bottom: 24px;
+    }
+
+    .info-content li {
+      margin-bottom: 10px;
+    }
+  </style>
+
+  <!-- ==================== DETAILS SECTION ==================== -->
+  <section class="section-wrapper info-section" id="info-section">
+    <div class="container info-content">
+      <h2>✨ About Us</h2>
+      <p><strong>Saravana Agency Crackers Shop</strong> is one of the trusted and well-known firecracker dealers located
+        in Reddiarchatram, Dindigul. We have been serving customers with quality fireworks for several years, making
+        every celebration more colorful, exciting, and memorable.</p>
+      <p>We offer a wide range of crackers including standard brands like Anil, Sony, and Sri Krishna, along with flower
+        pots, rockets, sparklers, kids special items, and festival combo boxes. Our goal is to provide high-quality
+        products at affordable prices while ensuring customer satisfaction.</p>
+      <p>Whether you are buying for personal celebrations or bulk orders for events, we are here to serve you with the
+        best deals and friendly support. During festive seasons like Diwali, we bring special offers and discounts to
+        make your shopping experience even better.</p>
+      <p>At Saravana Agency Crackers Shop, safety and quality are our top priorities. We also encourage the use of
+        eco-friendly (green) crackers for a safer and cleaner environment.</p>
+      <p>Visit us or contact us through WhatsApp to place your orders easily and celebrate your festival with joy and
+        brightness!</p>
+
+      <!-- Embedded styles for Safety Grid -->
+      <style>
+        .safety-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          margin-top: 40px;
+          margin-bottom: 40px;
+          background: var(--bg-glass);
+          border-radius: 16px;
+          padding: 40px;
+          border: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+          .safety-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 24px;
+          }
+        }
+
+        .safety-col h3 {
+          font-family: var(--font-head);
+          font-size: 28px;
+          color: var(--gold);
+          border-bottom: 3px solid var(--gold);
+          display: inline-block;
+          padding-bottom: 8px;
+          margin-top: 0;
+          margin-bottom: 32px;
+        }
+
+        .safety-col.donts h3 {
+          color: #ff4757;
+          border-bottom-color: #ff4757;
+        }
+
+        .safety-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 28px;
+        }
+
+        .safety-item-icon {
+          font-size: 20px;
+          flex-shrink: 0;
+          margin-top: -2px;
+        }
+
+        .safety-item-text h4 {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: 6px;
+          margin-top: 0;
+        }
+
+        .safety-item-text p {
+          font-size: 14px;
+          color: var(--text-secondary);
+          line-height: 1.6;
+          margin: 0;
+        }
+      </style>
+
+      <div class="safety-grid" id="safety-section">
+        <div class="safety-col">
+          <h3>Do's</h3>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Instructions</h4>
+              <p>Display fireworks as per the instructions mentioned on the pack.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Outdoor</h4>
+              <p>Use fireworks only outdoor.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Branded Fireworks</h4>
+              <p>Buy fireworks from authorized / reputed manufacturers only.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Distance</h4>
+              <p>Light only one firework at a time, by one person. Others should watch from a safe distance.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#2ed573;">✔</div>
+            <div class="safety-item-text">
+              <h4>Water</h4>
+              <p>Keep two buckets of water handy. In the event of fire or any mishap.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="safety-col donts">
+          <h3>Don'ts</h3>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't make tricks</h4>
+              <p>Never make your own fireworks.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't relight</h4>
+              <p>Never try to re-light or pick up fireworks that have not ignited fully.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't carry it</h4>
+              <p>Never carry fireworks in your pockets.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't Touch it</h4>
+              <p>After fireworks display never pick up fireworks that may be left over, they still may be active.</p>
+            </div>
+          </div>
+          <div class="safety-item">
+            <div class="safety-item-icon" style="color:#ff4757;">✖</div>
+            <div class="safety-item-text">
+              <h4>Don't wear loose clothes</h4>
+              <p>Do not wear loose clothing while using fireworks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="contact-section">📞 Contact Information</h2>
+      <div
+        style="background:var(--bg-glass); border:1px solid var(--border-gold); box-shadow:0 0 20px rgba(244,162,37,0.1); border-radius:12px; padding:24px; margin-top:20px; border-left:4px solid var(--gold);">
+        <p style="font-size:18px; margin-bottom:12px; color:var(--text-primary);">📞 <strong>Phone & WhatsApp:</strong>
+          <a href="tel:9677984858" style="color:var(--gold); text-decoration:none; font-weight:bold;">96779 84858</a>
+        </p>
+        <p style="font-size:16px; margin-bottom:24px;">📍 <strong>Store Address:</strong> Sri Ramapuram, Eranampatti,
+          Tamil Nadu</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="tel:9677984858" class="btn btn-glow"
+            style="padding:10px 24px; font-size:14px; background:linear-gradient(135deg, var(--gold), var(--neon-orange)); color:#000; border:none;">📞
+            Call Now</a>
+          <a href="https://wa.me/919677984858?text=Hi%20Sir%2C%20I%20want%20to%20order%20crackers" target="_blank"
+            class="btn btn-outline" style="padding:10px 24px; font-size:14px; background:var(--bg-primary);">💬 WhatsApp
+            Us</a>
+          <a href="https://maps.app.goo.gl/9Hg13Uy5Mi6ztae89" target="_blank" class="btn btn-outline"
+            style="padding:10px 24px; font-size:14px; background:var(--bg-primary);">🗺️ Get Directions</a>
+        </div>
+        <div style="margin-top: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border);">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9033.616972675352!2d77.85774045374613!3d10.4304050289912!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba9ff905a8ab29d%3A0xece180781532c3d3!2sSaravana%20Agency%20Crackers%20Shop!5e0!3m2!1sen!2sin!4v1776759464976!5m2!1sen!2sin" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand"> Saravana Agency Crackers Shop</div>
+    <p>&copy; 2025 All rights reserved. &nbsp;|&nbsp;
+      <a href="login.html">Login / Register</a>
+    </p>
+  </footer>
+
+  <!-- WhatsApp FAB completely removed as requested -->
+
+  <!-- Cart Side Panel -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-panel-header">
+      <h3> Your Cart</h3>
+      <button onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-panel-body" id="cart-body"></div>
+    <div class="cart-panel-footer" id="cart-footer"></div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3> Place Order</h3>
+        <button class="modal-close" onclick="closeCheckout()">✕</button>
+      </div>
+      <div id="checkout-content"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="data.js"></script>
+  <script>
+    /* ================================================================
+       FIREWORKS CANVAS ANIMATION
+    ================================================================ */
+    (function () {
+      const canvas = document.getElementById('fireworks-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H;
+      let particles = [];
+      let fireworks = [];
+      let hue = 30;
+
+      function resize() {
+        W = canvas.width = canvas.parentElement.clientWidth;
+        H = canvas.height = canvas.parentElement.clientHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      class Firework {
+        constructor() {
+          this.x = W * (0.2 + Math.random() * 0.6);
+          this.y = H;
+          this.targetY = H * (0.15 + Math.random() * 0.35);
+          this.speed = 3 + Math.random() * 3;
+          this.angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.3;
+          this.vx = Math.cos(this.angle) * this.speed;
+          this.vy = Math.sin(this.angle) * this.speed;
+          this.hue = 20 + Math.random() * 40;
+          this.trail = [];
+          this.alive = true;
+        }
+        update() {
+          this.trail.push({ x: this.x, y: this.y });
+          if (this.trail.length > 8) this.trail.shift();
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.y <= this.targetY) {
+            this.explode();
+            this.alive = false;
+          }
+        }
+        explode() {
+          const count = 40 + Math.floor(Math.random() * 40);
+          const baseHue = this.hue;
+          for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 / count) * i;
+            const speed = 1 + Math.random() * 4;
+            particles.push(new Particle(this.x, this.y, angle, speed, baseHue));
+          }
+        }
+        draw() {
+          for (let i = 0; i < this.trail.length; i++) {
+            const alpha = i / this.trail.length * 0.5;
+            ctx.beginPath();
+            ctx.arc(this.trail[i].x, this.trail[i].y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${alpha})`;
+            ctx.fill();
+          }
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = `hsl(${this.hue}, 100%, 80%)`;
+          ctx.fill();
+        }
+      }
+
+      class Particle {
+        constructor(x, y, angle, speed, hue) {
+          this.x = x;
+          this.y = y;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.hue = hue + Math.random() * 30 - 15;
+          this.alpha = 1;
+          this.decay = 0.01 + Math.random() * 0.02;
+          this.gravity = 0.04;
+          this.size = 1.5 + Math.random() * 1.5;
+        }
+        update() {
+          this.vx *= 0.98;
+          this.vy *= 0.98;
+          this.vy += this.gravity;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= this.decay;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 65%, ${this.alpha})`;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 65%, ${this.alpha * 0.3})`;
+          ctx.fill();
+        }
+      }
+
+      let lastFirework = 0;
+      function animate(t) {
+        requestAnimationFrame(animate);
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(10, 10, 15, 0.15)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'lighter';
+
+        if (t - lastFirework > (800 + Math.random() * 1200)) {
+          fireworks.push(new Firework());
+          lastFirework = t;
+        }
+
+        fireworks = fireworks.filter(f => f.alive);
+        fireworks.forEach(f => { f.update(); f.draw(); });
+        particles = particles.filter(p => p.alpha > 0.01);
+        particles.forEach(p => { p.update(); p.draw(); });
+      }
+      requestAnimationFrame(animate);
+    })();
+
+    /* ================================================================
+       FLOATING PARTICLES (Sparks)
+    ================================================================ */
+    (function () {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H;
+      let sparks = [];
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      class Spark {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * W;
+          this.y = Math.random() * H;
+          this.size = 0.5 + Math.random() * 2;
+          this.vx = (Math.random() - 0.5) * 0.3;
+          this.vy = -0.2 - Math.random() * 0.5;
+          this.alpha = 0.1 + Math.random() * 0.4;
+          this.hue = 25 + Math.random() * 25;
+          this.pulse = Math.random() * Math.PI * 2;
+          this.pulseSpeed = 0.02 + Math.random() * 0.03;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.pulse += this.pulseSpeed;
+          if (this.y < -10 || this.x < -10 || this.x > W + 10) this.reset();
+          if (this.y < -10) { this.y = H + 10; }
+        }
+        draw() {
+          const a = this.alpha * (0.5 + Math.sin(this.pulse) * 0.5);
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${a})`;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${a * 0.2})`;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 50; i++) sparks.push(new Spark());
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, W, H);
+        sparks.forEach(s => { s.update(); s.draw(); });
+      }
+      animate();
+    })();
+
+    /* ================================================================
+       SCROLL REVEAL ANIMATIONS
+    ================================================================ */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    /* ================================================================
+       NAVBAR SCROLL EFFECT
+    ================================================================ */
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('main-navbar');
+      if (window.scrollY > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    /* ================================================================
+       PARALLAX EFFECT ON HERO
+    ================================================================ */
+    window.addEventListener('scroll', () => {
+      const hero = document.getElementById('hero');
+      const scrollY = window.scrollY;
+      const heroH = hero.offsetHeight;
+      if (scrollY < heroH) {
+        const content = hero.querySelector('.hero-content');
+        content.style.transform = `translateY(${scrollY * 0.3}px)`;
+        content.style.opacity = 1 - scrollY / heroH;
+      }
+    });
+
+    /* ================================================================
+       STATE & INIT
+    ================================================================ */
+    let currentCat = 'all';
+    let user = null;
+
+    window.onload = async function () {
+      console.log('[index.html] window.onload fired');
+      try {
+        user = await AuthDB.current();
+        console.log('[index.html] AuthDB.current() returned:', user);
+      } catch (err) {
+        console.error('[index.html] AuthDB.current() FAILED:', err);
+        user = null;
+      }
+      updateAuthNav();
+      try {
+        await CartDB.items(); // Validate and clean cart first
+        await updateCartBadge();
+        await renderProducts();
+        await updateCategoryCounts();
+      } catch (err) {
+        console.error('[index.html] Render error:', err);
+      }
+    };
+
+    /* ---- Nav auth display ---- */
+    function updateAuthNav() {
+      const el = document.getElementById('auth-nav');
+      if (!el) {
+        console.error('[index.html] FATAL: #auth-nav element not found in DOM!');
+        return;
+      }
+      console.log('[index.html] updateAuthNav() — user:', user);
+      if (user) {
+        const displayName = user.name ? user.name.split(' ')[0] : user.email;
+        el.innerHTML =
+          '<span style="color:var(--gold);margin-right:16px;font-weight:600;">Welcome, ' + escapeHtml(displayName) + '</span>' +
+          '<a href="#" onclick="doLogout(); return false;" style="color:var(--text-secondary);font-weight:600;text-decoration:none;padding:6px 16px;border:1px solid var(--text-secondary);border-radius:50px;transition:all 0.3s ease;">Logout</a>';
+      } else {
+        el.innerHTML =
+          '<a href="login.html" style="color:var(--gold);font-weight:600;text-decoration:none;padding:6px 16px;border:1px solid var(--gold);border-radius:50px;transition:all 0.3s ease;">Login</a>';
+      }
+    }
+
+    async function doLogout() {
+      await AuthDB.logout();
+      window.location.href = 'index.html';
+    }
+
+    /* ---- Scroll to products ---- */
+    function scrollToProducts() {
+      document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function scrollToProductsFiltered(cat) {
+      currentCat = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      const btns = document.querySelectorAll('.cat-btn');
+      const labels = { all: 'All Products', sparklers: ' Sparklers', ground: ' Ground', sky: ' Sky Shots', fancy: ' Fancy', gift: ' Gift Boxes' };
+      btns.forEach(b => { if (b.textContent.trim() === (labels[cat] || '').trim()) b.classList.add('active'); });
+      await renderProducts();
+      setTimeout(() => {
+        document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    /* ---- Update category counts ---- */
+    async function updateCategoryCounts() {
+      const products = await ProductsDB.getActive();
+      const cats = ['sparklers', 'sky', 'fancy', 'gift'];
+      cats.forEach(c => {
+        const count = products.filter(p => p.category === c).length;
+        const el = document.getElementById('cat-count-' + c);
+        if (el) el.textContent = count + ' products';
+      });
+    }
+
+    /* ---- Category filter ---- */
+    async function filterCat(cat, btn) {
+      currentCat = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const labels = {
+        all: 'All Products', sparklers: ' Sparklers', ground: ' Ground Crackers',
+        sky: ' Sky Shots', fancy: ' Fancy Items', gift: ' Gift Boxes'
+      };
+      document.getElementById('section-title').textContent = labels[cat] || 'Products';
+      await renderProducts();
+    }
+
+    /* ---- Render Products ---- */
+    async function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = `<div class="empty-state"><div class="icon"></div><p>Loading products...</p></div>`;
+      
+      const query = document.getElementById('search-input').value.toLowerCase();
+      let products = await ProductsDB.getActive();
+
+      if (currentCat !== 'all') products = products.filter(p => p.category === currentCat);
+      if (query) products = products.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        (p.category && p.category.toLowerCase().includes(query)) ||
+        (p.badge && p.badge.toLowerCase().includes(query))
+      );
+
+      document.getElementById('product-count').textContent = products.length;
+      updateCartBadge();
+
+      if (!products.length) {
+        grid.innerHTML = `<div class="empty-state"><div class="icon"></div><p>No products found.</p></div>`;
+        return;
+      }
+
+      const cart = await CartDB.get();
+      grid.innerHTML = products.map(p => {
+        p = { ...p, name: escapeHtml(p.name), description: escapeHtml(p.description), badge: escapeHtml(p.badge), image_url: escapeHtml(p.image_url) };
+        const disc = discountPct(p.price, p.mrp);
+        const qty = cart[p.id] || 0;
+        const outOfStock = p.stock === 0;
+        const imgHtml = p.image_url
+          ? `<img src="${p.image_url}" alt="${p.name}" />`
+          : `<div class="emoji-placeholder" style="font-size:14px;color:#999;display:flex;align-items:center;justify-content:center;height:100%;">${p.description || 'No Image'}</div>`;
+
+        return `
+        <div class="product-card">
+          <div class="product-card-img">
+            ${imgHtml}
+            ${outOfStock ? '<div class="out-of-stock-overlay">OUT OF STOCK</div>' : ''}
+          </div>
+          <div class="product-card-body">
+            <div class="cat-tag">${escapeHtml(categoryLabel(p.category))}</div>
+            <h4>${p.name}</h4>
+            ${p.badge ? `<div class="product-badge"><span class="badge badge-gold badge-glow">${p.badge}</span></div>` : ''}
+            <div class="price-row">
+              <span class="price">₹${p.price}</span>
+              <span class="mrp">₹${p.mrp}</span>
+              ${disc > 0 ? `<span class="disc">${disc}% off</span>` : ''}
+            </div>
+            <small style="color:var(--text-muted);font-size:12px;">per ${escapeHtml(p.unit)} &nbsp;|&nbsp; Stock: ${p.stock}</small>
+            <div style="margin-top:12px;" id="action-${escapeHtml(p.id)}">
+              ${outOfStock
+            ? `<button class="btn btn-outline btn-full" disabled style="opacity:.4;cursor:not-allowed;">Out of Stock</button>`
+            : qty === 0
+              ? `<button class="btn btn-primary btn-full" onclick="addToCart('${escapeJs(p.id)}')">+ Add to Cart</button>`
+              : `<div class="qty-ctrl" style="width:100%;justify-content:space-between;">
+                      <button onclick="changeQty('${escapeJs(p.id)}', -1)">−</button>
+                      <span>${qty}</span>
+                      <button onclick="changeQty('${escapeJs(p.id)}', 1)">+</button>
+                    </div>`
+          }
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Re-observe new elements for stagger animation
+      grid.classList.remove('visible');
+      setTimeout(() => grid.classList.add('visible'), 50);
+    }
+
+    /* ---- Cart actions ---- */
+    async function updateProductCard(id) {
+      const activeProducts = await ProductsDB.getActive();
+      const p = activeProducts.find(x => x.id === id);
+      if (!p) return;
+      const cart = await CartDB.get();
+      const qty = cart[p.id] || 0;
+      const outOfStock = p.stock === 0;
+      let html = '';
+      if (outOfStock) {
+        html = '<button class="btn btn-outline btn-full" disabled style="opacity:.4;cursor:not-allowed;">Out of Stock</button>';
+      } else if (qty === 0) {
+        html = `<button class="btn btn-primary btn-full" onclick="addToCart('${escapeJs(p.id)}')">+ Add to Cart</button>`;
+      } else {
+        html = `<div class="qty-ctrl" style="width:100%;justify-content:space-between;">
+                  <button onclick="changeQty('${escapeJs(p.id)}', -1)">−</button>
+                  <span>${qty}</span>
+                  <button onclick="changeQty('${escapeJs(p.id)}', 1)">+</button>
+                </div>`;
+      }
+      const el = document.getElementById(`action-${escapeHtml(p.id)}`);
+      if (el) el.innerHTML = html;
+    }
+
+    async function addToCart(id) {
+      await CartDB.add(id);
+      await updateCartBadge();
+      await updateProductCard(id);
+      showToast('Added to cart!');
+      await renderCartPanel();
+    }
+
+    async function changeQty(id, delta) {
+      const cart = await CartDB.get();
+      const cur = (cart[id] || 0) + delta;
+      await CartDB.set(id, cur);
+      await updateCartBadge();
+      await updateProductCard(id);
+      await renderCartPanel();
+    }
+
+    async function removeFromCart(id) {
+      await CartDB.remove(id);
+      await updateCartBadge();
+      await updateProductCard(id);
+      await renderCartPanel();
+    }
+
+    async function updateCartBadge() {
+      document.getElementById('cart-badge').textContent = await CartDB.count();
+    }
+
+    /* ---- Cart Panel ---- */
+    async function openCart() {
+      document.getElementById('cart-panel').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      await renderCartPanel();
+    }
+    function closeCart() {
+      document.getElementById('cart-panel').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    async function renderCartPanel() {
+      const items = await CartDB.items();
+      const body = document.getElementById('cart-body');
+      const footer = document.getElementById('cart-footer');
+
+      if (!items.length) {
+        body.innerHTML = `<div style="text-align:center;padding:60px 16px;color:var(--text-muted);">
+        <div style="font-size:56px;margin-bottom:16px;"></div>
+        <p style="font-size:16px;font-weight:600;margin-bottom:6px;">Your cart is empty</p>
+        <p style="font-size:13px;">Add some crackers to get started!</p>
+      </div>`;
+        footer.innerHTML = '';
+        return;
+      }
+
+      body.innerHTML = items.map(item => {
+        item = { ...item, name: escapeHtml(item.name), image_url: escapeHtml(item.image_url), description: escapeHtml(item.description) };
+        const imgHtml = item.image_url
+          ? `<img src="${item.image_url}" alt="${item.name}" />`
+          : item.description || '';
+        return `
+        <div class="cart-item">
+          <div class="cart-item-img">${typeof imgHtml === 'string' && imgHtml.startsWith('<') ? imgHtml : `<span style="font-size:28px;">${imgHtml}</span>`}</div>
+          <div class="cart-item-info">
+            <h5>${item.name}</h5>
+            <div class="ci-price">₹${item.price} × ${item.qty} = ₹${item.lineTotal}</div>
+            <div class="qty-ctrl" style="margin-top:8px;width:110px;">
+              <button onclick="changeQty('${escapeJs(item.id)}',-1)">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeQty('${escapeJs(item.id)}',1)">+</button>
+            </div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart('${escapeJs(item.id)}')">🗑️</button>
+        </div>`;
+      }).join('');
+
+      const sub = await CartDB.total();
+      const del = sub >= 1000 ? 0 : 60;
+      const grand = sub + del;
+
+      footer.innerHTML = `
+      <div class="cart-total-row"><span>Subtotal</span><span>₹${sub}</span></div>
+      <div class="cart-total-row"><span>Delivery</span>
+        <span>${del === 0 ? '<b style="color:var(--neon-green)">FREE</b>' : '₹' + del}</span>
+      </div>
+      <div class="cart-grand-total"><span>Total</span><span>₹${grand}</span></div>
+      <button class="btn btn-primary btn-full" style="font-size:16px;padding:14px;" onclick="goCheckout()">
+        Proceed to Checkout →
+      </button>
+      <button class="btn btn-full" onclick="orderViaWhatsApp()" style="margin-top:10px;font-size:14px;padding:12px;background:#25D366;color:#fff;border:none;border-radius:var(--radius-sm);">
+         Order via WhatsApp
+      </button>`;
+    }
+
+    /* ---- WhatsApp Order ---- */
+    async function orderViaWhatsApp() {
+      const items = await CartDB.items();
+      if (!items.length) return;
+      const sub = await CartDB.total();
+      const del = sub >= 1000 ? 0 : 60;
+      const grand = sub + del;
+      let msg = ' *New Order from Website*\n\n';
+      items.forEach(item => {
+        msg += `• ${item.description || ''} ${item.name} × ${item.qty} = ₹${item.lineTotal}\n`;
+      });
+      msg += `\n *Subtotal:* ₹${sub}`;
+      msg += `\n *Delivery:* ${del === 0 ? 'FREE' : '₹' + del}`;
+      msg += `\n *Total:* ₹${grand}`;
+      msg += '\n\nPlease confirm my order. ';
+      const url = 'https://wa.me/919677984858?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
+    }
+
+    /* ---- Checkout ---- */
+    async function goCheckout() {
+      user = await AuthDB.current();
+      const items = await CartDB.items();
+      if (!items.length) return;
+      if (!user || user.role !== 'customer') {
+        closeCart();
+        showToast('Please login to place order!');
+        setTimeout(() => window.location.href = 'login.html', 1500);
+        return;
+      }
+      closeCart();
+      await openCheckoutModal(user, items);
+    }
+
+    let checkoutState = { step: 1, address: '', name: '', phone: '', items: [], total: 0, grand: 0 };
+    
+    async function openCheckoutModal(user, items) {
+      const sub = await CartDB.total();
+      const del = sub >= 1000 ? 0 : 60;
+      checkoutState = {
+         step: 1,
+         name: user.name || '',
+         phone: user.phone || '',
+         address: '',
+         items: items,
+         total: sub,
+         del: del,
+         grand: sub + del,
+         user: user
+      };
+      renderCheckoutStep();
+      document.getElementById('checkout-modal').classList.add('open');
+    }
+
+    function renderCheckoutStep() {
+      const { step, items, grand, total, del, name, phone, address } = checkoutState;
+      const content = document.getElementById('checkout-content');
+      
+      let html = `<div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:12px; font-weight:bold; color:var(--text-muted);">
+         <span style="${step===1?'color:var(--gold)':''}">1. Cart Review</span>
+         <span style="${step===2?'color:var(--gold)':''}">2. Delivery Info</span>
+         <span style="${step===3?'color:var(--gold)':''}">3. Place Order</span>
+      </div>`;
+
+      if (step === 1) {
+         html += `
+         <h4 style="margin-bottom:12px; color:var(--text-primary);">Review Cart</h4>
+         <div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;">
+           ${items.map(i => {
+             const eEmoji = escapeHtml(i.emoji || '');
+             i = { ...i, name: escapeHtml(i.name) };
+             return `
+             <div style="display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;">
+               <span>${eEmoji} ${i.name} × ${i.qty}</span>
+               <span style="font-weight:600;color:var(--gold);">₹${i.lineTotal}</span>
+             </div>`}).join('')}
+         </div>
+         <button class="btn btn-primary btn-full" style="padding:14px;font-size:16px;" onclick="nextCheckoutStep(2)">Proceed to Details →</button>
+         `;
+      } else if (step === 2) {
+         html += `
+         <h4 style="margin-bottom:12px; color:var(--text-primary);">Delivery Details</h4>
+         <div class="form-group">
+           <label>Delivery Address</label>
+           <textarea id="co-address" rows="3" placeholder="Enter your full delivery address" onchange="checkoutState.address = this.value">${escapeHtml(address)}</textarea>
+         </div>
+         <div class="form-row">
+           <div class="form-group">
+             <label>Name</label>
+             <input id="co-name" value="${escapeHtml(name)}" onchange="checkoutState.name = this.value" />
+           </div>
+           <div class="form-group">
+             <label>Phone</label>
+             <input id="co-phone" value="${escapeHtml(phone)}" placeholder="Mobile number" onchange="checkoutState.phone = this.value" />
+           </div>
+         </div>
+         <div style="display:flex; gap:12px;">
+           <button class="btn btn-outline btn-full" style="padding:14px;font-size:16px;" onclick="nextCheckoutStep(1)">← Back</button>
+           <button class="btn btn-primary btn-full" style="padding:14px;font-size:16px;" onclick="nextCheckoutStep(3)">Review Order →</button>
+         </div>
+         `;
+      } else if (step === 3) {
+         html += `
+         <h4 style="margin-bottom:12px; color:var(--text-primary);">Order Summary</h4>
+         <div style="background:var(--bg-secondary); padding:16px; border-radius:var(--radius-sm); margin-bottom:16px; font-size:14px;">
+           <p><strong>Deliver to:</strong> ${escapeHtml(name)}</p>
+           <p>${escapeHtml(address)}</p>
+           <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+         </div>
+         <div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;">
+           <div style="display:flex;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;">
+             <span>Subtotal</span><span>₹${total}</span>
+           </div>
+           <div style="display:flex;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;">
+             <span>Delivery</span><span>${del===0?'FREE':'₹'+del}</span>
+           </div>
+           <div style="display:flex;justify-content:space-between;padding:12px 14px;background:var(--gold-subtle);font-weight:700;font-size:16px;color:var(--gold);">
+             <span>Grand Total</span><span>₹${grand}</span>
+           </div>
+         </div>
+         <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;text-align:center;">Payment: Cash on Delivery</p>
+         <div style="display:flex; gap:12px;">
+           <button class="btn btn-outline btn-full" style="padding:14px;font-size:16px;" onclick="nextCheckoutStep(2)">← Back</button>
+           <button class="btn btn-primary btn-full" id="confirm-btn" style="padding:14px;font-size:16px;" onclick="placeOrder()">Confirm Order ✓</button>
+         </div>
+         `;
+      }
+      
+      content.innerHTML = html;
+    }
+
+    function nextCheckoutStep(step) {
+      if (checkoutState.step === 2 && step === 3) {
+        checkoutState.address = document.getElementById('co-address').value.trim();
+        checkoutState.name = document.getElementById('co-name').value.trim();
+        checkoutState.phone = document.getElementById('co-phone').value.trim();
+        if (!checkoutState.address) { showToast('Please enter delivery address!'); return; }
+        if (!checkoutState.phone) { showToast('Please enter phone number!'); return; }
+      }
+      checkoutState.step = step;
+      renderCheckoutStep();
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkout-modal').classList.remove('open');
+    }
+
+    async function placeOrder() {
+      const { user, address, name, phone, items, total } = checkoutState;
+      const btn = document.getElementById('confirm-btn');
+      btn.innerHTML = 'Processing...';
+      btn.disabled = true;
+
+      const order = await OrdersDB.place(user.id, name, phone, address, items, total);
+      if (!order) {
+         showToast('Failed to place order. Please try again.');
+         btn.innerHTML = 'Confirm Order ✓';
+         btn.disabled = false;
+         return;
+      }
+      
+      closeCheckout();
+      document.getElementById('checkout-content').innerHTML = `
+      <div style="text-align:center;padding:32px 0;">
+        <div style="font-size:64px;margin-bottom:16px;">🎉</div>
+        <h3 style="color:var(--neon-green);margin-bottom:10px;font-size:22px;">Order Placed!</h3>
+        <p style="color:var(--text-secondary);">Order ID: <strong style="color:var(--gold);">${escapeHtml(String(order.id))}</strong></p>
+        <p style="color:var(--text-muted);margin-top:8px;">We'll deliver to your address within 2-3 days.</p>
+        <a href="customer-dashboard.html" class="btn btn-primary" style="margin-top:24px;">View My Orders</a>
+      </div>`;
+      document.getElementById('checkout-modal').classList.add('open');
+      updateCartBadge();
+      await renderProducts();
+    }
+  </script>
+</body>
+
+</html>

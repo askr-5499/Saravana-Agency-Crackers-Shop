@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Saravana Agency Crackers Shop</title>
+  <meta name="description" content="Admin panel for Saravana Agency Crackers Shop — manage products, orders, and customers." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* --- Product grid (admin) --- */
+    .admin-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 12px;
+    }
+    .admin-product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transition: var(--transition);
+    }
+    .admin-product-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-gold);
+    }
+    .admin-product-card.inactive { opacity: 0.45; }
+    .apc-img {
+      height: 120px;
+      background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .apc-img img { width: 100%; height: 100%; object-fit: cover; }
+    .apc-status {
+      position: absolute;
+      top: 8px; right: 8px;
+      font-size: 11px;
+    }
+    .apc-body { padding: 14px; }
+    .apc-body h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary); }
+    .apc-body .apc-price { font-size: 16px; font-weight: 800; color: var(--gold); }
+    .apc-body .apc-mrp  { font-size: 12px; color: var(--text-muted); text-decoration: line-through; margin-left: 6px; }
+    .apc-body .apc-stock { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+    .apc-body .apc-stock.low { color: var(--neon-red); font-weight: 600; }
+    .apc-actions { display: flex; gap: 8px; padding: 0 14px 14px; }
+
+    /* --- Order management --- */
+    .order-row-actions select {
+      font-size: 13px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-glass);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .order-row-actions select:focus {
+      border-color: var(--gold);
+      outline: none;
+    }
+
+    /* --- Image upload area --- */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--bg-glass);
+      transition: var(--transition-fast);
+    }
+    .upload-area:hover { border-color: var(--gold); background: var(--gold-subtle); }
+    .upload-area input[type="file"] { display: none; }
+    #img-preview {
+      max-width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      display: none;
+    }
+
+    /* --- No data --- */
+    .no-data { text-align: center; padding: 48px; color: var(--text-muted); font-size: 15px; }
+
+    /* --- Order cards --- */
+    .order-admin-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transition: var(--transition);
+    }
+    .order-admin-card:hover {
+      border-color: var(--border-gold);
+    }
+    .order-admin-head {
+      background: var(--gold-subtle);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-admin-body { padding: 16px 20px; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="main-navbar">
+  <div class="navbar-brand">
+    <div>
+      <div class="logo-text"> Saravana Agency — Admin</div>
+      <div class="logo-sub">Shop Management Panel</div>
+    </div>
+  </div>
+  <ul class="navbar-links">
+    <li><a href="index.html" target="_blank"> View Shop</a></li>
+    <li><button onclick="doLogout()"> Logout</button></li>
+  </ul>
+</nav>
+
+<!-- Dashboard Layout -->
+<div class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section-title">Admin Panel</div>
+    <a class="sidebar-link active" onclick="showSection('overview')" id="link-overview">
+      <span class="icon"></span> Overview
+    </a>
+    <a class="sidebar-link" onclick="showSection('products')" id="link-products">
+      <span class="icon"></span> Products
+    </a>
+    <a class="sidebar-link" onclick="showSection('orders')" id="link-orders">
+      <span class="icon"></span> All Orders
+    </a>
+    <a class="sidebar-link" onclick="showSection('customers')" id="link-customers">
+      <span class="icon"></span> Customers
+    </a>
+    <a class="sidebar-link" onclick="doLogout()">
+      <span class="icon"></span> Logout
+    </a>
+  </div>
+
+  <!-- Main -->
+  <div class="dashboard-main">
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="section-page active" id="section-overview">
+      <h2> Dashboard Overview</h2>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="card" style="margin-bottom:24px;">
+        <h4 style="color:var(--gold);margin-bottom:16px;font-family:var(--font-head);font-size:18px;"> Low Stock Products (≤ 10 units)</h4>
+        <div id="low-stock-list"></div>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--gold);margin-bottom:16px;font-family:var(--font-head);font-size:18px;"> Recent Orders</h4>
+        <div id="recent-orders-list"></div>
+      </div>
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="section-page" id="section-products">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+        <h2 style="margin-bottom:0;"> Products</h2>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <input type="text" id="product-search" placeholder=" Search..." oninput="renderAdminProducts()"
+            style="padding:10px 16px;border:1px solid var(--border);border-radius:50px;font-size:14px;outline:none;width:220px;background:var(--bg-glass);color:var(--text-primary);" />
+          <button class="btn btn-primary" onclick="openProductModal()">+ Add Product</button>
+        </div>
+      </div>
+      <div class="admin-products-grid" id="admin-products-grid"></div>
+    </div>
+
+    <!-- ===== ORDERS ===== -->
+    <div class="section-page" id="section-orders">
+      <h2> All Orders</h2>
+      <div id="all-orders-container"></div>
+    </div>
+
+    <!-- ===== CUSTOMERS ===== -->
+    <div class="section-page" id="section-customers">
+      <h2> Customers</h2>
+      <div class="table-wrap">
+        <table id="customers-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Joined</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody id="customers-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PRODUCT MODAL ===== -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-header">
+      <h3 id="modal-title">Add New Product</h3>
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+    </div>
+
+    <input type="hidden" id="edit-id" />
+
+    <!-- Image Upload -->
+    <div class="form-group">
+      <label>Product Image (optional)</label>
+      <div class="upload-area" onclick="document.getElementById('img-input').click()">
+        <img id="img-preview" src="" alt="Preview" />
+        <div id="upload-hint">
+          <div style="font-size:36px;margin-bottom:8px;"></div>
+          <p style="font-size:13px;color:var(--text-muted);">Click to upload image (JPG, PNG)</p>
+        </div>
+        <input type="file" id="img-input" accept="image/*" onchange="previewImage(event)" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Product Name *</label>
+      <input type="text" id="p-name" placeholder="e.g. Gold Sparklers (36 pcs)" />
+    </div>
+
+    <div class="form-group" id="cat-group">
+      <label>Category *</label>
+      <select id="p-cat" onchange="handleCategoryChange()">
+        <option value="sparklers"> Sparklers</option>
+        <option value="ground"> Ground Crackers</option>
+        <option value="sky"> Sky Shots</option>
+        <option value="fancy"> Fancy Items</option>
+        <option value="gift"> Gift Boxes</option>
+        <option value="new_cat_option" style="color: var(--neon-green); font-weight: bold;">+ Add New Category...</option>
+      </select>
+      <input type="text" id="p-cat-new" placeholder="Enter custom category name..." style="display:none; margin-top:8px;" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Selling Price (₹) *</label>
+        <input type="number" id="p-price" placeholder="120" min="0" oninput="calcDiscount()" />
+      </div>
+      <div class="form-group">
+        <label>MRP / Original Price (₹)</label>
+        <input type="number" id="p-mrp" placeholder="180" min="0" oninput="calcDiscount()" />
+      </div>
+    </div>
+
+    <div id="discount-preview" style="font-size:13px;color:var(--neon-green);margin:-8px 0 14px;font-weight:600;"></div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Stock Quantity *</label>
+        <input type="number" id="p-stock" placeholder="50" min="0" />
+      </div>
+      <div class="form-group">
+        <label>Unit</label>
+        <select id="p-unit">
+          <option value="box">Box</option>
+          <option value="pcs">Piece (pcs)</option>
+          <option value="set">Set</option>
+          <option value="roll">Roll</option>
+          <option value="kit">Kit</option>
+          <option value="pack">Pack</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Badge Label (optional)</label>
+        <input type="text" id="p-badge" placeholder="e.g. Bestseller, New, Popular" />
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="p-active">
+          <option value="true"> Active (visible)</option>
+          <option value="false"> Hidden from shop</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="modal-error" class="alert alert-danger" style="display:none;"></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary btn-full" onclick="saveProduct()"> Save Product</button>
+      <button class="btn btn-outline" onclick="closeProductModal()" style="min-width:100px;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ORDER DETAIL MODAL ===== -->
+<div class="modal-overlay" id="order-detail-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Order Details</h3>
+      <button class="modal-close" onclick="document.getElementById('order-detail-modal').classList.remove('open')">✕</button>
+    </div>
+    <div id="order-detail-content"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script src="data.js"></script>
+<script>
+  /* ---- Auth guard ---- */
+  let user = null;
+  let editImageB64 = '';   // holds current image for the modal
+
+  window.onload = async function() {
+    user = await AuthDB.requireAdmin('login.html');
+    if (!user) return;
+    
+    await showSection('overview');
+  };
+
+  /* ---- Section switch ---- */
+  async function showSection(name) {
+    document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + name).classList.add('active');
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('link-' + name)?.classList.add('active');
+    if (name === 'overview')   await renderOverview();
+    if (name === 'products')   await renderAdminProducts();
+    if (name === 'orders')     await renderAllOrders();
+    if (name === 'customers')  await renderCustomers();
+  }
+
+  /* ================================================================
+     OVERVIEW
+  ================================================================ */
+  async function renderOverview() {
+    const products  = await ProductsDB.getAll();
+    const orders    = await OrdersDB.getAll();
+    const customers = await SupabaseAPI.getAllCustomers();
+    const revenue   = orders.reduce((s, o) => s + o.total, 0);
+
+    document.getElementById('stats-grid').innerHTML = `
+      <div class="stat-card"><div class="stat-icon"></div>
+        <div class="stat-value">${products.filter(p => p.active).length}</div>
+        <div class="stat-label">Active Products</div></div>
+      <div class="stat-card"><div class="stat-icon"></div>
+        <div class="stat-value">${orders.length}</div>
+        <div class="stat-label">Total Orders</div></div>
+      <div class="stat-card"><div class="stat-icon"></div>
+        <div class="stat-value">${customers.length}</div>
+        <div class="stat-label">Customers</div></div>
+      <div class="stat-card"><div class="stat-icon"></div>
+        <div class="stat-value">₹${revenue.toLocaleString('en-IN')}</div>
+        <div class="stat-label">Total Revenue</div></div>`;
+
+    // Low stock
+    const low = products.filter(p => p.stock <= 10 && p.active);
+    document.getElementById('low-stock-list').innerHTML = low.length
+      ? `<div class="table-wrap"><table>
+          <thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Action</th></tr></thead>
+          <tbody>${low.map(p => {
+             const eName = escapeHtml(p.name);
+             const jName = escapeHtml(escapeJs(p.name));
+             const eId = escapeHtml(p.id);
+             const jId = escapeHtml(escapeJs(p.id));
+             return `
+            <tr>
+              <td>${escapeHtml(p.emoji || '')} ${eName}</td>
+              <td>${escapeHtml(categoryLabel(p.category))}</td>
+              <td><span class="badge badge-red">${p.stock} left</span></td>
+              <td><button class="btn btn-outline btn-sm" onclick="quickEditStock('${jId}', '${jName}')">Update Stock</button></td>
+            </tr>`}).join('')}
+          </tbody>
+        </table></div>`
+      : `<p style="color:var(--neon-green);font-size:14px;"> All products have sufficient stock.</p>`;
+
+    // Recent orders
+    const recent = orders.slice(0, 5);
+    document.getElementById('recent-orders-list').innerHTML = recent.length
+      ? `<div class="table-wrap"><table>
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>${recent.map(o => {
+            const eId = escapeHtml(o.id);
+            const eName = escapeHtml(o.userName);
+            return `
+            <tr>
+              <td><code style="font-size:12px;color:var(--gold);">${eId}</code></td>
+              <td>${eName}</td>
+              <td style="color:var(--gold);font-weight:700;">₹${o.total}</td>
+              <td>${statusBadge(escapeHtml(o.status))}</td>
+              <td style="color:var(--text-muted);">${escapeHtml(formatDate(o.placedAt))}</td>
+            </tr>`}).join('')}
+          </tbody>
+        </table></div>`
+      : `<p class="no-data">No orders yet.</p>`;
+  }
+
+  /* ================================================================
+     PRODUCTS
+  ================================================================ */
+  async function renderAdminProducts() {
+    const query    = (document.getElementById('product-search')?.value || '').toLowerCase();
+    let products = await ProductsDB.getAll();
+    if (query) products = products.filter(p =>
+      p.name.toLowerCase().includes(query) || (p.category && p.category.toLowerCase().includes(query))
+    );
+
+    document.getElementById('admin-products-grid').innerHTML = products.map(p => {
+      const eName = escapeHtml(p.name);
+      const jName = escapeHtml(escapeJs(p.name));
+      const eId = escapeHtml(p.id);
+      const jId = escapeHtml(escapeJs(p.id));
+      const eBadge = escapeHtml(p.badge);
+      const eImg = escapeHtml(p.image_url);
+      const eDesc = escapeHtml(p.description);
+      const eCat = escapeHtml(categoryLabel(p.category));
+      const disc    = discountPct(p.price, p.mrp);
+      return `
+        <div class="admin-product-card ${p.active ? '' : 'inactive'}">
+          <div class="apc-img">
+            ${eImg ? `<img src="${eImg}" alt="${eName}" />` : `<span style="font-size:12px;color:#999;">${eDesc || 'No Image'}</span>`}
+            <div class="apc-status">
+              ${p.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Hidden</span>'}
+            </div>
+          </div>
+          <div class="apc-body">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">${eCat}</div>
+            <h4>${eName}</h4>
+            ${eBadge ? `<span class="badge badge-gold" style="margin:6px 0;display:inline-block;">${eBadge}</span>` : ''}
+            <div style="margin-top:8px;">
+              <span class="apc-price">₹${p.price}</span>
+              <span class="apc-mrp">₹${p.mrp}</span>
+              ${disc > 0 ? `<span class="badge badge-green" style="margin-left:6px;">${disc}% off</span>` : ''}
+            </div>
+            <div class="apc-stock ${p.stock <= 10 ? 'low' : ''}">
+               Stock: ${p.stock} ${escapeHtml(p.unit)}${p.stock <= 10 ? ' ' : ''}
+            </div>
+          </div>
+          <div class="apc-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="openProductModal('${jId}')"> Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${jId}','${jName}')" title="Delete">🗑️</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  /* ---- Open Product Modal ---- */
+  async function openProductModal(id) {
+    editImageB64 = '';
+    document.getElementById('modal-error').style.display = 'none';
+    document.getElementById('discount-preview').textContent = '';
+    document.getElementById('img-preview').style.display = 'none';
+    document.getElementById('upload-hint').style.display = 'block';
+
+    if (id) {
+      const p = await ProductsDB.getById(id);
+      if (!p) return;
+      document.getElementById('modal-title').textContent = ' Edit Product';
+      document.getElementById('edit-id').value  = id;
+      document.getElementById('p-name').value   = p.name;
+      const sel = document.getElementById('p-cat');
+      let optionExists = false;
+      for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === p.category) { optionExists = true; break; }
+      }
+      if (optionExists) {
+        sel.value = p.category;
+      } else {
+        sel.value = 'new_cat_option';
+        document.getElementById('p-cat-new').style.display = 'block';
+        document.getElementById('p-cat-new').value = p.category;
+      }
+      document.getElementById('p-price').value  = p.price;
+      document.getElementById('p-mrp').value    = p.mrp;
+      document.getElementById('p-stock').value  = p.stock;
+      document.getElementById('p-unit').value   = p.unit;
+      document.getElementById('p-badge').value  = p.badge;
+      document.getElementById('p-active').value = String(p.active);
+      if (p.image) {
+        editImageB64 = p.image;
+        document.getElementById('img-preview').src   = p.image;
+        document.getElementById('img-preview').style.display = 'block';
+        document.getElementById('upload-hint').style.display = 'none';
+      }
+      calcDiscount();
+    } else {
+      document.getElementById('modal-title').textContent = '+ Add New Product';
+      document.getElementById('edit-id').value  = '';
+      document.getElementById('p-name').value   = '';
+      document.getElementById('p-cat').value    = 'sparklers';
+      document.getElementById('p-cat-new').style.display = 'none';
+      document.getElementById('p-cat-new').value = '';
+      document.getElementById('p-price').value  = '';
+      document.getElementById('p-mrp').value    = '';
+      document.getElementById('p-stock').value  = '';
+      document.getElementById('p-unit').value   = 'box';
+      document.getElementById('p-badge').value  = '';
+      document.getElementById('p-active').value = 'true';
+    }
+
+    document.getElementById('product-modal').classList.add('open');
+  }
+
+  function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('open');
+  }
+
+  function calcDiscount() {
+    const price = parseFloat(document.getElementById('p-price').value);
+    const mrp   = parseFloat(document.getElementById('p-mrp').value);
+    const el    = document.getElementById('discount-preview');
+    if (price > 0 && mrp > price) {
+      el.textContent = ' Discount: ' + Math.round((1 - price / mrp) * 100) + '% off';
+    } else {
+      el.textContent = '';
+    }
+  }
+
+  /* ---- Image preview ---- */
+  function previewImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      editImageB64 = e.target.result;
+      document.getElementById('img-preview').src   = editImageB64;
+      document.getElementById('img-preview').style.display = 'block';
+      document.getElementById('upload-hint').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleCategoryChange() {
+    const sel = document.getElementById('p-cat');
+    if (sel.value === 'new_cat_option') {
+      document.getElementById('p-cat-new').style.display = 'block';
+      document.getElementById('p-cat-new').focus();
+    } else {
+      document.getElementById('p-cat-new').style.display = 'none';
+      document.getElementById('p-cat-new').value = '';
+    }
+  }
+
+  /* ---- Save Product ---- */
+  async function saveProduct() {
+    const err   = document.getElementById('modal-error');
+    err.style.display = 'none';
+
+    const name  = document.getElementById('p-name').value.trim();
+    let cat   = document.getElementById('p-cat').value;
+    if (cat === 'new_cat_option') {
+      cat = document.getElementById('p-cat-new').value.trim() || 'Uncategorized';
+    }
+    const description = ''; // We will default description to empty since there's no input yet
+    const price = parseFloat(document.getElementById('p-price').value);
+    const mrp   = parseFloat(document.getElementById('p-mrp').value) || price;
+    const stock = parseInt(document.getElementById('p-stock').value);
+    const unit  = document.getElementById('p-unit').value;
+    const badge = document.getElementById('p-badge').value.trim();
+    const active = document.getElementById('p-active').value === 'true';
+    const editId = document.getElementById('edit-id').value;
+
+    if (!name || isNaN(price) || price <= 0 || isNaN(stock) || stock < 0) {
+      err.textContent = 'Please fill Name, Price, and Stock correctly.';
+      err.style.display = 'block';
+      return;
+    }
+
+    const data = { name, category: cat, description, price, mrp, stock, unit, badge, active, image_url: editImageB64 };
+
+    const btn = document.querySelector('.modal .btn-primary');
+    const prevText = btn.innerHTML;
+    btn.innerHTML = 'Saving...';
+    btn.disabled = true;
+
+    let res;
+    if (editId) {
+      res = await ProductsDB.update(editId, data);
+    } else {
+      res = await ProductsDB.add(data);
+    }
+    
+    btn.innerHTML = prevText;
+    btn.disabled = false;
+
+    if (!res || !res.ok) {
+      err.textContent = res ? res.msg : 'Unknown error during save.';
+      err.style.display = 'block';
+      console.error('Save product error:', res);
+      return; // Do NOT close the modal on error
+    }
+
+    showToast(editId ? ' Product updated!' : ' Product added!');
+
+    closeProductModal();
+    await renderAdminProducts();
+    await renderOverview();
+  }
+
+  /* ---- Delete Product ---- */
+  async function deleteProduct(id, name) {
+    if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
+    await ProductsDB.delete(id);
+    await renderAdminProducts();
+    await renderOverview();
+    showToast(' Product deleted.');
+  }
+
+  /* ---- Quick Stock Edit ---- */
+  async function quickEditStock(id, name) {
+    const p   = await ProductsDB.getById(id);
+    if (!p) return;
+    const val = prompt(`Update stock for "${name}":\nCurrent stock: ${p.stock}`, p.stock);
+    if (val === null) return;
+    const n = parseInt(val);
+    if (isNaN(n) || n < 0) { showToast('Invalid stock value.'); return; }
+    await ProductsDB.update(id, { stock: n });
+    await renderOverview();
+    await renderAdminProducts();
+    showToast(' Stock updated!');
+  }
+
+  /* ================================================================
+     ORDERS
+  ================================================================ */
+  async function renderAllOrders() {
+    const orders = await OrdersDB.getAll();
+    const el     = document.getElementById('all-orders-container');
+
+    if (!orders.length) {
+      el.innerHTML = `<div class="no-data">No orders placed yet.</div>`;
+      return;
+    }
+
+    el.innerHTML = orders.map(o => {
+      const eId = escapeHtml(o.id);
+      const jId = escapeHtml(escapeJs(o.id));
+      const eStatus = escapeHtml(o.status);
+      const eDate = escapeHtml(formatDate(o.placedAt));
+      o = { ...o, userName: escapeHtml(o.userName), userPhone: escapeHtml(o.userPhone), userAddress: escapeHtml(o.userAddress) };
+      return `
+      <div class="order-admin-card">
+        <div class="order-admin-head">
+          <div>
+            <strong style="color:var(--gold);font-size:14px;">${eId}</strong>
+            <span style="color:var(--text-muted);font-size:12px;margin-left:12px;">${eDate}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            ${statusBadge(eStatus)}
+            <div class="order-row-actions">
+              <select onchange="updateOrderStatus('${jId}', this.value)">
+                ${['Confirmed','Packed','Shipped','Delivered','Cancelled'].map(s =>
+                  `<option value="${s}" ${o.status === s ? 'selected' : ''}>${s}</option>`
+                ).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="order-admin-body">
+          <div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;">
+            <span> <strong>${o.userName}</strong></span>
+            <span> ${o.userPhone}</span>
+            <span> Total: <strong style="color:var(--gold);">₹${o.total}</strong></span>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;"> ${o.userAddress}</div>
+          <div style="font-size:13px;">
+            ${o.items.map(i => {
+               const eEmoji = escapeHtml(i.emoji || '');
+               const eName = escapeHtml(i.name);
+               return `<span style="display:inline-block;background:var(--gold-subtle);padding:4px 12px;border-radius:6px;margin:2px;border:1px solid var(--border-gold);">${eEmoji} ${eName} ×${i.qty}</span>`
+            }).join('')}
+          </div>
+        </div>
+      </div>`}).join('');
+  }
+
+  async function updateOrderStatus(id, status) {
+    await OrdersDB.updateStatus(id, status);
+    showToast(` Order status updated to "${status}"`);
+    await renderAllOrders();
+    await renderOverview();
+  }
+
+  /* ================================================================
+     CUSTOMERS
+  ================================================================ */
+  async function renderCustomers() {
+    const users  = await SupabaseAPI.getAllCustomers();
+    const orders = await OrdersDB.getAll();
+    const tbody  = document.getElementById('customers-tbody');
+
+    if (!users.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:24px;">No customers registered yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = users.map(u => {
+      u = { ...u, name: escapeHtml(u.name), email: escapeHtml(u.email), phone: escapeHtml(u.phone) };
+      const uOrders = orders.filter(o => o.customer_id === u.id);
+      const totalSp = uOrders.reduce((s, o) => s + o.total, 0);
+      return `
+        <tr>
+          <td>
+             <div style="font-weight:600;color:var(--text-primary);">${u.name}</div>
+          </td>
+          <td style="color:var(--text-secondary);">${u.email}</td>
+          <td style="color:var(--text-secondary);">${u.phone}</td>
+          <td style="font-weight:600;">${uOrders.length}</td>
+          <td style="font-weight:600;color:var(--gold);">₹${totalSp}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  async function doLogout() {
+    await AuthDB.logout();
+    window.location.href = 'index.html';
+  }
+</script>
+</body>
+</html>

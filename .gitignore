@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.agents/
+.gemini/
+*.log
+*.tmp
+*.temp
+*.zip
+*.rar
+*.7z
