@@ -275,6 +275,9 @@ const AuthDB = {
   },
 
   async requireAdmin(redirectTo = 'login.html') {
+    // SECURITY NOTE: This frontend check purely controls UI routing.
+    // The true boundary is enforced by Supabase RLS policies (e.g. products_all_admin)
+    // where only auth.email() = 'askr5499@gmail.com' can modify sensitive tables.
     const user = await this.current();
     if (!user || user.role !== 'admin') {
       window.location.href = redirectTo;

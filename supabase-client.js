@@ -278,6 +278,7 @@ const SupabaseAPI = {
       }
       
       // 1. Insert order
+      // SECURITY NOTE: This operates under RLS. `customer_id` must match `auth.uid()`.
       const { data: orderRes, error: orderErr } = await supabaseClient
         .from('orders')
         .insert([orderData])
@@ -288,6 +289,9 @@ const SupabaseAPI = {
       if (!newOrder) throw new Error('Order creation failed.');
 
       // 2. Insert order items
+      // LIMITATION NOTE: This is a second sequential HTTP call. If it fails (e.g. stock goes negative),
+      // the order_items insert is rolled back natively by Postgres triggers, but the parent
+      // order record from step 1 remains. A future update should move this to a Postgres RPC for true atomicity.
       if (items && items.length > 0) {
         const orderItems = items.map(item => ({
           order_id: newOrder.id,
