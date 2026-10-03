@@ -818,7 +818,8 @@
       <li><a href="index.html">🏠 Shop</a></li>
       <li>
         <div id="auth-nav" style="display:inline-flex;align-items:center;gap:12px;">
-          <a href="login.html" style="color:var(--gold);font-weight:600;text-decoration:none;padding:6px 16px;border:1px solid var(--gold);border-radius:50px;transition:all 0.3s ease;">Login</a>
+          <a href="login.html"
+            style="color:var(--gold);font-weight:600;text-decoration:none;padding:6px 16px;border:1px solid var(--gold);border-radius:50px;transition:all 0.3s ease;">Login</a>
         </div>
       </li>
       <li>
@@ -848,6 +849,10 @@
         <a href="tel:9677984858" class="btn btn-outline"
           style="font-size:16px;padding:16px 32px;border-radius:var(--radius-md);">
           📞 Call to Order
+        </a>
+        <a href="price-list/SARAVANA PRICE LIST 2026.pdf" target="_blank" rel="noopener noreferrer"
+          class="btn btn-outline" style="font-size:16px;padding:16px 32px;border-radius:var(--radius-md);">
+          📄 View 2026 Price List
         </a>
       </div>
       <div class="hero-stats">
@@ -1286,7 +1291,10 @@
             style="padding:10px 24px; font-size:14px; background:var(--bg-primary);">🗺️ Get Directions</a>
         </div>
         <div style="margin-top: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border);">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9033.616972675352!2d77.85774045374613!3d10.4304050289912!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba9ff905a8ab29d%3A0xece180781532c3d3!2sSaravana%20Agency%20Crackers%20Shop!5e0!3m2!1sen!2sin!4v1776759464976!5m2!1sen!2sin" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9033.616972675352!2d77.85774045374613!3d10.4304050289912!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba9ff905a8ab29d%3A0xece180781532c3d3!2sSaravana%20Agency%20Crackers%20Shop!5e0!3m2!1sen!2sin!4v1776759464976!5m2!1sen!2sin"
+            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </div>
@@ -1644,7 +1652,7 @@
     async function renderProducts() {
       const grid = document.getElementById('products-grid');
       grid.innerHTML = `<div class="empty-state"><div class="icon"></div><p>Loading products...</p></div>`;
-      
+
       const query = document.getElementById('search-input').value.toLowerCase();
       let products = await ProductsDB.getActive();
 
@@ -1864,20 +1872,20 @@
     }
 
     let checkoutState = { step: 1, address: '', name: '', phone: '', items: [], total: 0, grand: 0 };
-    
+
     async function openCheckoutModal(user, items) {
       const sub = await CartDB.total();
       const del = sub >= 1000 ? 0 : 60;
       checkoutState = {
-         step: 1,
-         name: user.name || '',
-         phone: user.phone || '',
-         address: '',
-         items: items,
-         total: sub,
-         del: del,
-         grand: sub + del,
-         user: user
+        step: 1,
+        name: user.name || '',
+        phone: user.phone || '',
+        address: '',
+        items: items,
+        total: sub,
+        del: del,
+        grand: sub + del,
+        user: user
       };
       renderCheckoutStep();
       document.getElementById('checkout-modal').classList.add('open');
@@ -1886,21 +1894,21 @@
     function renderCheckoutStep() {
       const { step, items, grand, total, del, name, phone, address } = checkoutState;
       const content = document.getElementById('checkout-content');
-      
+
       let html = `<div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:12px; font-weight:bold; color:var(--text-muted);">
-         <span style="${step===1?'color:var(--gold)':''}">1. Cart Review</span>
-         <span style="${step===2?'color:var(--gold)':''}">2. Delivery Info</span>
-         <span style="${step===3?'color:var(--gold)':''}">3. Place Order</span>
+         <span style="${step === 1 ? 'color:var(--gold)' : ''}">1. Cart Review</span>
+         <span style="${step === 2 ? 'color:var(--gold)' : ''}">2. Delivery Info</span>
+         <span style="${step === 3 ? 'color:var(--gold)' : ''}">3. Place Order</span>
       </div>`;
 
       if (step === 1) {
-         html += `
+        html += `
          <h4 style="margin-bottom:12px; color:var(--text-primary);">Review Cart</h4>
          <div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;">
            ${items.map(i => {
-             const eEmoji = escapeHtml(i.emoji || '');
-             i = { ...i, name: escapeHtml(i.name) };
-             return `
+          const eEmoji = escapeHtml(i.emoji || '');
+          i = { ...i, name: escapeHtml(i.name) };
+          return `
              <div style="display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;">
                <span>${eEmoji} ${i.name} × ${i.qty}</span>
                <span style="font-weight:600;color:var(--gold);">₹${i.lineTotal}</span>
@@ -1909,7 +1917,7 @@
          <button class="btn btn-primary btn-full" style="padding:14px;font-size:16px;" onclick="nextCheckoutStep(2)">Proceed to Details →</button>
          `;
       } else if (step === 2) {
-         html += `
+        html += `
          <h4 style="margin-bottom:12px; color:var(--text-primary);">Delivery Details</h4>
          <div class="form-group">
            <label>Delivery Address</label>
@@ -1931,7 +1939,7 @@
          </div>
          `;
       } else if (step === 3) {
-         html += `
+        html += `
          <h4 style="margin-bottom:12px; color:var(--text-primary);">Order Summary</h4>
          <div style="background:var(--bg-secondary); padding:16px; border-radius:var(--radius-sm); margin-bottom:16px; font-size:14px;">
            <p><strong>Deliver to:</strong> ${escapeHtml(name)}</p>
@@ -1943,7 +1951,7 @@
              <span>Subtotal</span><span>₹${total}</span>
            </div>
            <div style="display:flex;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;">
-             <span>Delivery</span><span>${del===0?'FREE':'₹'+del}</span>
+             <span>Delivery</span><span>${del === 0 ? 'FREE' : '₹' + del}</span>
            </div>
            <div style="display:flex;justify-content:space-between;padding:12px 14px;background:var(--gold-subtle);font-weight:700;font-size:16px;color:var(--gold);">
              <span>Grand Total</span><span>₹${grand}</span>
@@ -1956,7 +1964,7 @@
          </div>
          `;
       }
-      
+
       content.innerHTML = html;
     }
 
@@ -1984,12 +1992,12 @@
 
       const order = await OrdersDB.place(user.id, name, phone, address, items, total);
       if (!order) {
-         showToast('Failed to place order. Please try again.');
-         btn.innerHTML = 'Confirm Order ✓';
-         btn.disabled = false;
-         return;
+        showToast('Failed to place order. Please try again.');
+        btn.innerHTML = 'Confirm Order ✓';
+        btn.disabled = false;
+        return;
       }
-      
+
       closeCheckout();
       document.getElementById('checkout-content').innerHTML = `
       <div style="text-align:center;padding:32px 0;">
